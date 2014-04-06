@@ -8,7 +8,7 @@ public class TaskBarPanel extends JPanel {
 	private boolean showSearchBox;
 	
 	public void refresh() {
-		
+		System.out.println("Yo");
 	}
 
 }
