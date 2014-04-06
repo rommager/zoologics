@@ -3,12 +3,6 @@ package edu.radford.itec370.mainmethod.zoologic;
 import java.util.ArrayList;
 import java.util.Date;
 
-import zoologic.zoologic.Photos;
-import zoologic.zoologic.Printable;
-import zoologic.zoologic.Species;
-import zoologic.zoologic.Vaccination;
-import zoologic.zoologic.Vaccine;
-
 
 public class Animal implements Printable {
 
