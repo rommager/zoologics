@@ -4,9 +4,9 @@ import java.awt.Dimension;
 
 import javax.swing.JTextPane;
 
-public class zTextBox extends JTextPane 
+public class AppTextBox extends JTextPane 
 {
-	public zTextBox()
+	public AppTextBox()
 	{
 		super();
 		this.setPreferredSize(new Dimension(100,20));
@@ -15,7 +15,7 @@ public class zTextBox extends JTextPane
 		
 	}
 	
-	public zTextBox(String defaultText)
+	public AppTextBox(String defaultText)
 	{
 		this();
 		this.setText(defaultText);
