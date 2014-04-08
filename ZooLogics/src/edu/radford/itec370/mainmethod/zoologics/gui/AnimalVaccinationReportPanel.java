@@ -1,8 +1,11 @@
-package edu.radford.itec370.mainmethod.zoologic;
+package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import edu.radford.itec370.mainmethod.zoologic.Animal;
+import edu.radford.itec370.mainmethod.zoologic.Vaccination;
 
 public class AnimalVaccinationReportPanel extends JPanel {
 

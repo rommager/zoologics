@@ -5,14 +5,15 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import edu.radford.itec370.mainmethod.zoologics.gui.LogonFrame;
+
 public class Application {
+	protected final static String APPLICATION_NAME = "ZooLogics";
 	private ArrayList<Animal> animals = new ArrayList<Animal>();
 	private ArrayList<TaskList> taskList = new ArrayList<TaskList>();
 	private ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
 	private ArrayList<Species> species = new ArrayList<Species>();
 	private Staff currentUser;
-
-	private static final String APPLICATION_NAME = "ZooLogics";
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame(APPLICATION_NAME);
