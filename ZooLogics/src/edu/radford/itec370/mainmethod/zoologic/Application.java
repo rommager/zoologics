@@ -1,6 +1,9 @@
 package edu.radford.itec370.mainmethod.zoologic;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
 
 public class Application {
 	private ArrayList<Animal> animals = new ArrayList<Animal>();
@@ -9,13 +12,26 @@ public class Application {
 	private ArrayList<Species> species = new ArrayList<Species>();
 	private Staff currentUser;
 
+	private static final String APPLICATION_NAME = "ZooLogics";
+	
 	public static void main(String[] args) {
+		JFrame frame = new JFrame(APPLICATION_NAME);
 		
+		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );  // Set behavior to close program when GUI closed
+		frame.setSize( 800, 600 );                               // set frame size
+		frame.setLayout(new GridLayout(1, 1));                   // Use GridLayout with 2 rows and 2 columns
+		frame.setVisible(true);
+		displayLogon();
 	}
-	public Application displayLogon() {
-		
+	
+	
+	public static Application displayLogon() {
+		LogonFrame logon = new LogonFrame();
+		return null;
 	}
-	public Staff getCurrentUser() {
-		
+	
+	
+	public static Staff getCurrentUser() {
+		return null;
 	}
 }
