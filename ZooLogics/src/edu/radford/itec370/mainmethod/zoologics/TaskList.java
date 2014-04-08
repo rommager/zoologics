@@ -1,4 +1,4 @@
-package edu.radford.itec370.mainmethod.zoologic;
+package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.ArrayList;
 

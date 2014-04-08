@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import edu.radford.itec370.mainmethod.zoologic.Animal;
-import edu.radford.itec370.mainmethod.zoologic.Vaccination;
+import edu.radford.itec370.mainmethod.zoologics.Animal;
+import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 public class AnimalVaccinationReportPanel extends JPanel {
 

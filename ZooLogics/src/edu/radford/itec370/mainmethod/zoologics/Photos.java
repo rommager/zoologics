@@ -1,8 +1,8 @@
-package edu.radford.itec370.mainmethod.zoologic;
+package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.ArrayList;
 
-import edu.radford.itec370.mainmethod.zoologic.Animal;
+import edu.radford.itec370.mainmethod.zoologics.Animal;
 
 
 public class Photos {

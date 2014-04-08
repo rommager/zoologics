@@ -1,4 +1,4 @@
-package edu.radford.itec370.mainmethod.zoologics.gui;
+package edu.radford.itec370.mainmethod.zoologics.gui.components;
 
 import java.awt.Dimension;
 

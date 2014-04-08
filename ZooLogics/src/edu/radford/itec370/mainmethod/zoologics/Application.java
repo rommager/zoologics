@@ -1,4 +1,4 @@
-package edu.radford.itec370.mainmethod.zoologic;
+package edu.radford.itec370.mainmethod.zoologics;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonFrame;
 
 public class Application {
-	protected final static String APPLICATION_NAME = "ZooLogics";
+	public final static String APPLICATION_NAME = "ZooLogics";
 	private ArrayList<Animal> animals = new ArrayList<Animal>();
 	private ArrayList<TaskList> taskList = new ArrayList<TaskList>();
 	private ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();

@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 
-import edu.radford.itec370.mainmethod.zoologic.Application;
+import edu.radford.itec370.mainmethod.zoologics.*;
 
 public class LogonFrame extends JFrame {
 	protected final static int WINDOW_WIDTH = 300;
