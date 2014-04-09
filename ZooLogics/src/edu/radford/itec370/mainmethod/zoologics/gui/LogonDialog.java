@@ -17,15 +17,16 @@ import javax.swing.border.EmptyBorder;
 
 import edu.radford.itec370.mainmethod.zoologics.*;
 import edu.radford.itec370.mainmethod.zoologics.gui.components.*;
+import javax.swing.JPasswordField;
 
 public class LogonDialog extends JDialog {
 	protected final static String WINDOW_TITLE = Application.getAppName() + " Logon";
 	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUserName;
-	private JTextField txtPassword;
 	private JLabel lblUsername;
 	private JLabel lblPassword;
+	private JPasswordField passwordField;
 	//private Staff staff;
 	
 	public LogonDialog() 
@@ -40,35 +41,27 @@ public class LogonDialog extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		SpringLayout sl_contentPanel = new SpringLayout();
-		contentPanel.setLayout(sl_contentPanel);
+		contentPanel.setLayout(null);
 		{
 			lblUsername = new JLabel("User name: ");
-			sl_contentPanel.putConstraint(SpringLayout.NORTH, lblUsername, 30, SpringLayout.NORTH, contentPanel);
+			lblUsername.setBounds(32, 35, 58, 14);
 			contentPanel.add(lblUsername);
 		}
 		{
 			txtUserName = new JTextField();
-			sl_contentPanel.putConstraint(SpringLayout.NORTH, txtUserName, -3, SpringLayout.NORTH, lblUsername);
-			sl_contentPanel.putConstraint(SpringLayout.WEST, txtUserName, 30, SpringLayout.EAST, lblUsername);
-			sl_contentPanel.putConstraint(SpringLayout.EAST, txtUserName, -15, SpringLayout.EAST, contentPanel);
+			txtUserName.setBounds(120, 32, 100, 20);
 			contentPanel.add(txtUserName);
 			txtUserName.setColumns(10);
 		}
 		{
 			lblPassword = new JLabel("Password:");
-			sl_contentPanel.putConstraint(SpringLayout.NORTH, lblPassword, 15, SpringLayout.SOUTH, lblUsername);
-			sl_contentPanel.putConstraint(SpringLayout.WEST, lblPassword, 27, SpringLayout.WEST, contentPanel);
-			sl_contentPanel.putConstraint(SpringLayout.WEST, lblUsername, 0, SpringLayout.WEST, lblPassword);
+			lblPassword.setBounds(32, 64, 50, 14);
 			contentPanel.add(lblPassword);
 		}
 		{
-			txtPassword = new JTextField();
-			sl_contentPanel.putConstraint(SpringLayout.EAST, txtPassword, 0, SpringLayout.EAST, txtUserName);
-			sl_contentPanel.putConstraint(SpringLayout.WEST, txtPassword, 38, SpringLayout.EAST, lblPassword);
-			sl_contentPanel.putConstraint(SpringLayout.NORTH, txtPassword, -3, SpringLayout.NORTH, lblPassword);
-			contentPanel.add(txtPassword);
-			txtPassword.setColumns(10);
+			passwordField = new JPasswordField();
+			passwordField.setBounds(120, 63, 100, 20);
+			contentPanel.add(passwordField);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -98,5 +91,4 @@ public class LogonDialog extends JDialog {
 		}
 		setVisible(true);
 	}
-	
 }
