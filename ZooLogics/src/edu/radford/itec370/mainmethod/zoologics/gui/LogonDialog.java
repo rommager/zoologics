@@ -2,20 +2,20 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import javax.swing.JFrame;
+
+import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JTextPane;
 
 import edu.radford.itec370.mainmethod.zoologics.*;
 import edu.radford.itec370.mainmethod.zoologics.gui.components.*;
 
-public class LogonFrame extends JFrame {
+public class LogonDialog extends JDialog {
 	protected final static int WINDOW_WIDTH = 300;
 	protected final static int WINDOW_HEIGHT = 180;
 	protected final static String WINDOW_TITLE = Application.getAppName() + " Logon";
 	//private Staff staff;
 	
-	public LogonFrame() 
+	public LogonDialog() 
 	{
 		super();
 		this.setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -23,12 +23,13 @@ public class LogonFrame extends JFrame {
 		this.setTitle(WINDOW_TITLE);
 		this.setIconImage(Application.getAppIcon());
 		this.setLocation(50, 50);
+		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		
 		
-		JTextPane userNamePane = new AppTextBox();
-		userNamePane.setPreferredSize(new Dimension(100,25));
-		JTextPane passwordPane = new AppTextBox();
-		passwordPane.setPreferredSize(new Dimension(100,25));
+		
+		AppTextBox userNamePane = new AppTextBox();
+		AppTextBox passwordPane = new AppTextBox();
+		
 		
 		this.add(new JLabel("User Name:"));
 		this.add(userNamePane);

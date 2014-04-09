@@ -2,9 +2,9 @@ package edu.radford.itec370.mainmethod.zoologics.gui.components;
 
 import java.awt.Dimension;
 
-import javax.swing.JTextPane;
+import javax.swing.JTextField;
 
-public class AppTextBox extends JTextPane 
+public class AppTextBox extends JTextField
 {
 	public AppTextBox()
 	{

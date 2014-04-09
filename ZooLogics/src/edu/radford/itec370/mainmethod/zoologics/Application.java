@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import edu.radford.itec370.mainmethod.zoologics.gui.LogonFrame;
+import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 
 public class Application {
 	private final static String APPLICATION_NAME = "ZooLogics";
@@ -34,7 +34,7 @@ public class Application {
 	
 	public static Application displayLogon() 
 	{
-		LogonFrame logon = new LogonFrame();
+		LogonDialog logon = new LogonDialog();
 		return null;
 	}
 	
