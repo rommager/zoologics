@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
+import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 import java.awt.GridLayout;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 import java.awt.Button;
+
 import javax.swing.JButton;
 
 public class AnimalVaccinationReportPanel extends JDialog{
@@ -30,6 +32,7 @@ public class AnimalVaccinationReportPanel extends JDialog{
 	private JTextField textField_3;
 	
 	public AnimalVaccinationReportPanel() {
+		setIconImage(Application.getAppIcon());
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel panel = new JPanel();
