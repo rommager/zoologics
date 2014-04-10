@@ -21,15 +21,18 @@ import java.awt.Font;
 import java.awt.Button;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 public class AnimalVaccinationReportPanel extends JDialog{
 
 	private ArrayList <Vaccination> vaccinations;
 	private Animal animal;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTable table;
+	private JTable table_1;
 	
 	public AnimalVaccinationReportPanel() {
 		setIconImage(Application.getAppIcon());
@@ -40,18 +43,13 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		panel.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBounds(70, 23, 97, 20);
+		textField.setBounds(141, 23, 173, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(315, 23, 105, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblAnimal = new JLabel("Animal");
+		JLabel lblAnimal = new JLabel("Animal Name:");
 		lblAnimal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAnimal.setBounds(21, 24, 74, 14);
+		lblAnimal.setBounds(21, 24, 97, 14);
 		panel.add(lblAnimal);
 		
 		JLabel label = new JLabel("");
@@ -59,42 +57,40 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		label.setBounds(203, 48, 0, 0);
 		panel.add(label);
 		
-		JLabel lblAdministerDate = new JLabel("Administer Date");
-		lblAdministerDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAdministerDate.setBounds(203, 21, 105, 20);
-		panel.add(lblAdministerDate);
-		
-		JLabel lblAdministeredBy = new JLabel("Administered By:");
+		JLabel lblAdministeredBy = new JLabel("Vaccination History:");
 		lblAdministeredBy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAdministeredBy.setBounds(21, 69, 112, 20);
+		lblAdministeredBy.setBounds(21, 49, 139, 20);
 		panel.add(lblAdministeredBy);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(143, 71, 148, 20);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblNotes = new JLabel("Notes");
-		lblNotes.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNotes.setBounds(21, 111, 61, 29);
-		panel.add(lblNotes);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(92, 102, 330, 96);
-		panel.add(textField_3);
-		textField_3.setColumns(10);
-		
-		JButton btnCompleteItem = new JButton("Complete Item");
-		btnCompleteItem.setBounds(92, 209, 111, 23);
-		panel.add(btnCompleteItem);
-		
-		JButton btnDismiss = new JButton("Dismiss");
-		btnDismiss.setBounds(225, 209, 89, 23);
+		JButton btnDismiss = new JButton("Search");
+		btnDismiss.setBounds(451, 331, 65, 23);
 		panel.add(btnDismiss);
 		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(331, 209, 89, 23);
+		JButton btnCancel = new JButton("Close");
+		btnCancel.setBounds(540, 331, 65, 23);
 		panel.add(btnCancel);
+		
+		JFormattedTextField formattedTextField = new JFormattedTextField();
+		formattedTextField.setBounds(21, 68, 379, 107);
+		panel.add(formattedTextField);
+		
+		JLabel lblUpcomingVaccinations = new JLabel("Upcoming Vaccinations:");
+		lblUpcomingVaccinations.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUpcomingVaccinations.setBounds(21, 186, 157, 23);
+		panel.add(lblUpcomingVaccinations);
+		
+		table = new JTable();
+		table.setBounds(21, 209, 249, 107);
+		panel.add(table);
+		
+		JLabel lblPastDue = new JLabel("Past Due:");
+		lblPastDue.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPastDue.setBounds(313, 186, 84, 20);
+		panel.add(lblPastDue);
+		
+		table_1 = new JTable();
+		table_1.setBounds(313, 209, 292, 107);
+		panel.add(table_1);
 		
 	}
 	
