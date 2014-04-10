@@ -12,7 +12,7 @@ public class Animal implements Printable {
 	private char sex;
 	private String sire;
 	private String dam;
-	private boolean idenficationChip;
+	private boolean identificationChip;
 	private String chipId;
 	private String breed;
 	private Date dateOfBirth;
@@ -20,37 +20,40 @@ public class Animal implements Printable {
 	private StringBuffer notes;
 	private String thumbnail;
 	private Photos photos;
-	private ArrayList<Vaccination> vaccination;
+	private ArrayList<Vaccination> vaccinations;
 
 public Animal() {
 	super();
 }
 
-
-
 public Animal(int id, String name, Species species, char sex, String sire,
-		String dam, boolean idenficationChip, String chipId, String breed,
-		Date dateOfBirth, StringBuffer markings, StringBuffer notes,
-		String thumbnail, Photos photos, ArrayList<Vaccination> vaccination) {
-	super();
+		String dam, boolean identificationChip, String chipId, String breed,
+		Date dateOfBirth, String markings, String notes) {
+	this();
 	this.id = id;
 	this.name = name;
 	this.species = species;
 	this.sex = sex;
 	this.sire = sire;
 	this.dam = dam;
-	this.idenficationChip = idenficationChip;
+	this.identificationChip = identificationChip;
 	this.chipId = chipId;
 	this.breed = breed;
 	this.dateOfBirth = dateOfBirth;
-	this.markings = markings;
-	this.notes = notes;
-	this.thumbnail = thumbnail;
-	this.photos = photos;
-	this.vaccination = vaccination;
+	this.markings = new StringBuffer(markings);
+	this.notes = new StringBuffer(notes);
 }
 
+public Animal(int id, String name, Species species, char sex, String sire,
+		String dam, boolean identificationChip, String chipId, String breed,
+		Date dateOfBirth, String markings, String notes,
+		String thumbnail, Photos photos, ArrayList<Vaccination> vaccinations) {
+	this(id, name, species, sex, sire, dam, identificationChip, chipId, breed, dateOfBirth, markings, notes);
 
+	this.thumbnail = thumbnail;
+	this.photos = photos;
+	this.vaccinations = vaccinations;
+}
 
 public Animal(String name){
 	
@@ -116,11 +119,11 @@ public void setDame(String dam) {
 }
 
 public boolean isIdenficationChip() {
-	return idenficationChip;
+	return identificationChip;
 }
 
-public void setIdenficationChip(boolean idenficationChip) {
-	this.idenficationChip = idenficationChip;
+public void setIdenficationChip(boolean identificationChip) {
+	this.identificationChip = identificationChip;
 }
 
 public String getChipId() {
@@ -180,11 +183,11 @@ public void setPhotos(Photos photos) {
 }
 
 public ArrayList<Vaccination> getVaccination() {
-	return vaccination;
+	return vaccinations;
 }
 
-public void setVaccination(ArrayList<Vaccination> vaccination) {
-	this.vaccination = vaccination;
+public void setVaccination(ArrayList<Vaccination> vaccinations) {
+	this.vaccinations = vaccinations;
 }
 
 

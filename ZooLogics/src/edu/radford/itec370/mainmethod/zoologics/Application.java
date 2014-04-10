@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -40,8 +41,7 @@ public class Application {
 		frame.setVisible(true);
 		displayLogon();
 	}
-	
-	
+
 	public static Application displayLogon() 
 	{
 		LogonDialog logon = new LogonDialog();
@@ -70,9 +70,47 @@ public class Application {
 	{
 		Application newApp = new Application();
 		
+		newApp.animals.add(new Animal(1001, "Puja", new Species(), 'M', "Simba", "", true, "A12343212", "", new Date(), "stripes", "Gentle, needs special attention"));
+		
 		
 		
 		return newApp;
 		
+	}
+	
+	public ArrayList<Animal> getAnimals() {
+		return animals;
+	}
+
+	public void setAnimals(ArrayList<Animal> animals) {
+		this.animals = animals;
+	}
+
+	public TaskList getTaskList() {
+		return taskList;
+	}
+
+	public void setTaskList(TaskList taskList) {
+		this.taskList = taskList;
+	}
+
+	public ArrayList<Vaccine> getVaccines() {
+		return vaccines;
+	}
+
+	public void setVaccines(ArrayList<Vaccine> vaccines) {
+		this.vaccines = vaccines;
+	}
+
+	public ArrayList<Species> getSpecies() {
+		return species;
+	}
+
+	public void setSpecies(ArrayList<Species> species) {
+		this.species = species;
+	}
+
+	public void setCurrentUser(Staff currentUser) {
+		this.currentUser = currentUser;
 	}
 }
