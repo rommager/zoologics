@@ -56,9 +56,9 @@ public class Application {
 	
 	public static Image getAppIcon()
 	{
-		URL icon = Application.class.getResource(ICON_FILE);
-		Image icon2 = new ImageIcon(icon).getImage();
-		return icon2;
+		URL iconURL = Application.class.getResource(ICON_FILE);
+		Image icon = new ImageIcon(iconURL).getImage();
+		return icon;
 	}
 	
 	public static String getAppName()
