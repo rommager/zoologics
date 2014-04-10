@@ -44,23 +44,23 @@ public class LogonDialog extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			lblUsername = new JLabel("User name: ");
-			lblUsername.setBounds(32, 35, 58, 14);
+			lblUsername.setBounds(10, 24, 84, 14);
 			contentPanel.add(lblUsername);
 		}
 		{
 			txtUserName = new JTextField();
-			txtUserName.setBounds(120, 32, 100, 20);
+			txtUserName.setBounds(115, 21, 100, 20);
 			contentPanel.add(txtUserName);
 			txtUserName.setColumns(10);
 		}
 		{
 			lblPassword = new JLabel("Password:");
-			lblPassword.setBounds(32, 64, 50, 14);
+			lblPassword.setBounds(10, 65, 84, 14);
 			contentPanel.add(lblPassword);
 		}
 		{
 			passwordField = new JPasswordField();
-			passwordField.setBounds(120, 63, 100, 20);
+			passwordField.setBounds(115, 62, 100, 20);
 			contentPanel.add(passwordField);
 		}
 		{
