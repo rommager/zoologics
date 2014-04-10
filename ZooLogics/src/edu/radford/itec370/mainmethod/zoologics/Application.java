@@ -13,11 +13,21 @@ import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 public class Application {
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
-	private ArrayList<Animal> animals = new ArrayList<Animal>();
-	private ArrayList<TaskList> taskList = new ArrayList<TaskList>();
-	private ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
-	private ArrayList<Species> species = new ArrayList<Species>();
+	private ArrayList<Animal> animals;
+	private TaskList taskList;
+	private ArrayList<Vaccine> vaccines;
+	private ArrayList<Species> species;
 	private Staff currentUser;
+	
+	public Application()
+	{
+		super();
+		animals = new ArrayList<Animal>();
+		taskList = new TaskList();
+		vaccines = new ArrayList<Vaccine>();
+		species = new ArrayList<Species>();
+		//currentUser = new Staff();
+	}
 	
 	public static void main(String[] args) 
 	{
@@ -54,5 +64,15 @@ public class Application {
 	public static String getAppName()
 	{
 		return APPLICATION_NAME;
+	}
+	
+	public static Application generateTestData()
+	{
+		Application newApp = new Application();
+		
+		
+		
+		return newApp;
+		
 	}
 }

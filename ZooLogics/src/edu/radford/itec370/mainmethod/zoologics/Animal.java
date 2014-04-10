@@ -11,7 +11,7 @@ public class Animal implements Printable {
 	private Species species;
 	private char sex;
 	private String sire;
-	private String dame;
+	private String dam;
 	private boolean idenficationChip;
 	private String chipId;
 	private String breed;
@@ -23,8 +23,34 @@ public class Animal implements Printable {
 	private ArrayList<Vaccination> vaccination;
 
 public Animal() {
-	
+	super();
 }
+
+
+
+public Animal(int id, String name, Species species, char sex, String sire,
+		String dam, boolean idenficationChip, String chipId, String breed,
+		Date dateOfBirth, StringBuffer markings, StringBuffer notes,
+		String thumbnail, Photos photos, ArrayList<Vaccination> vaccination) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.species = species;
+	this.sex = sex;
+	this.sire = sire;
+	this.dam = dam;
+	this.idenficationChip = idenficationChip;
+	this.chipId = chipId;
+	this.breed = breed;
+	this.dateOfBirth = dateOfBirth;
+	this.markings = markings;
+	this.notes = notes;
+	this.thumbnail = thumbnail;
+	this.photos = photos;
+	this.vaccination = vaccination;
+}
+
+
 
 public Animal(String name){
 	
@@ -82,11 +108,11 @@ public void setSire(String sire) {
 }
 
 public String getDame() {
-	return dame;
+	return dam;
 }
 
-public void setDame(String dame) {
-	this.dame = dame;
+public void setDame(String dam) {
+	this.dam = dam;
 }
 
 public boolean isIdenficationChip() {
