@@ -14,6 +14,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AnimalPanel extends JPanel {
+	
+	private Animal animal;
+	private ArrayList <Animal> animals;
+	private JTextField textField;
+	
 	public AnimalPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
@@ -44,11 +49,28 @@ public class AnimalPanel extends JPanel {
 		gbc_btnNewButton.gridy = 2;
 		add(btnNewButton, gbc_btnNewButton);
 	}
-	private ArrayList <Animal> animals;
-	private JTextField textField;
+	
 	
 	public void refresh() {
 		
 	}
+	
+	public Animal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
+		this.textField.setText(animal.getName());
+	}
+
+	public ArrayList<Animal> getAnimals() {
+		return animals;
+	}
+
+	public void setAnimals(ArrayList<Animal> animals) {
+		this.animals = animals;
+	}
+
 	
 }
