@@ -25,12 +25,15 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class AnimalVaccinationReportPanel extends JDialog{
 
 	private ArrayList <Vaccination> vaccinations;
 	private Animal animal;
 	private JTextField textField;
+	private JTable table_2;
 	private JTable table;
 	private JTable table_1;
 	
@@ -43,13 +46,13 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		panel.setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBounds(141, 23, 173, 20);
+		textField.setBounds(140, 33, 173, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblAnimal = new JLabel("Animal Name:");
 		lblAnimal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAnimal.setBounds(21, 24, 97, 14);
+		lblAnimal.setBounds(21, 34, 97, 14);
 		panel.add(lblAnimal);
 		
 		JLabel label = new JLabel("");
@@ -59,38 +62,96 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		
 		JLabel lblAdministeredBy = new JLabel("Vaccination History:");
 		lblAdministeredBy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAdministeredBy.setBounds(21, 49, 139, 20);
+		lblAdministeredBy.setBounds(21, 79, 139, 20);
 		panel.add(lblAdministeredBy);
 		
 		JButton btnDismiss = new JButton("Search");
-		btnDismiss.setBounds(451, 331, 65, 23);
+		btnDismiss.setBounds(564, 404, 65, 23);
 		panel.add(btnDismiss);
 		
 		JButton btnCancel = new JButton("Close");
-		btnCancel.setBounds(540, 331, 65, 23);
+		btnCancel.setBounds(666, 404, 65, 23);
 		panel.add(btnCancel);
-		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(21, 68, 379, 107);
-		panel.add(formattedTextField);
 		
 		JLabel lblUpcomingVaccinations = new JLabel("Upcoming Vaccinations:");
 		lblUpcomingVaccinations.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUpcomingVaccinations.setBounds(21, 186, 157, 23);
+		lblUpcomingVaccinations.setBounds(33, 254, 157, 23);
 		panel.add(lblUpcomingVaccinations);
-		
-		table = new JTable();
-		table.setBounds(21, 209, 249, 107);
-		panel.add(table);
 		
 		JLabel lblPastDue = new JLabel("Past Due:");
 		lblPastDue.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPastDue.setBounds(313, 186, 84, 20);
+		lblPastDue.setBounds(438, 255, 84, 20);
 		panel.add(lblPastDue);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(21, 110, 649, 133);
+		panel.add(scrollPane);
+		
+		table_2 = new JTable();
+		table_2.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Vaccination Name/Dose", "Administered Date", "Administered By"},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"Vaccination Name/Dose", "New column", "New column"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setColumnHeaderView(table_2);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(21, 286, 322, 107);
+		panel.add(scrollPane_1);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Vaccination Name/Dose", "Due Date"},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"", "Due Date"
+			}
+		));
+		scrollPane_1.setColumnHeaderView(table);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(438, 286, 291, 107);
+		panel.add(scrollPane_2);
+		
 		table_1 = new JTable();
-		table_1.setBounds(313, 209, 292, 107);
-		panel.add(table_1);
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Vaccination Name/Dose", "Due Date"},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"Vaccination Name/Dose", "Due Date"
+			}
+		));
+		scrollPane_2.setRowHeaderView(table_1);
 		
 	}
 	
