@@ -103,7 +103,7 @@ public class AdminPanel extends JDialog
 	{
 		AdminPanel admin = new AdminPanel();
 
-                admin.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+                admin.setDefaultCloseOperation(HIDE_ON_CLOSE);
                 admin.setSize( 350, 200 );
                 admin.setVisible( true );
 	}
