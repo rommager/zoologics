@@ -1,5 +1,3 @@
-package edu.radford.itec370.mainmethod.zoologics;
-
 
 
 import java.awt.GridLayout;
