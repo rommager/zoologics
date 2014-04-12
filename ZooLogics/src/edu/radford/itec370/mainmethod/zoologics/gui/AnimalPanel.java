@@ -6,17 +6,25 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
+import edu.radford.itec370.mainmethod.zoologics.Application;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JTextField;
+
 import java.awt.GridBagConstraints;
+
 import javax.swing.JButton;
+
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-public class AnimalPanel extends JPanel {
+public class AnimalPanel extends JDialog {
 	
 	private Animal animal;
 	private ArrayList <Animal> animals;
@@ -34,6 +42,7 @@ public class AnimalPanel extends JPanel {
 	
 	public AnimalPanel() {
 		
+		setIconImage(Application.getAppIcon());
 		
 		setLayout(null);
 		
