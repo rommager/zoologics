@@ -44,142 +44,142 @@ public class AnimalPanel extends JDialog {
 		
 		setIconImage(Application.getAppIcon());
 		
-		setLayout(null);
+		getContentPane().setLayout(null);
 		
 		textField = new JTextField();
 		textField.setBounds(121, 30, 102, 20);
-		add(textField);
+		getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Search");
-		btnNewButton.setBounds(678, 331, 89, 23);
+		btnNewButton.setBounds(678, 315, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		add(btnNewButton);
+		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Save");
-		btnNewButton_1.setBounds(678, 365, 89, 23);
-		add(btnNewButton_1);
+		btnNewButton_1.setBounds(678, 349, 89, 23);
+		getContentPane().add(btnNewButton_1);
 		
 		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(678, 399, 89, 23);
-		add(btnClose);
+		btnClose.setBounds(678, 383, 89, 23);
+		getContentPane().add(btnClose);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(447, 260, 204, 179);
-		add(panel);
+		panel.setBounds(447, 227, 204, 179);
+		getContentPane().add(panel);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(121, 62, 102, 20);
-		add(textField_1);
+		getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
 		textField_2.setBounds(121, 93, 102, 20);
-		add(textField_2);
+		getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
 		textField_3.setBounds(121, 124, 102, 20);
-		add(textField_3);
+		getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
 		JLabel lblName = new JLabel("Name");
 		lblName.setBounds(28, 33, 46, 14);
-		add(lblName);
+		getContentPane().add(lblName);
 		
 		JLabel lblSpecies = new JLabel("Species");
 		lblSpecies.setBounds(28, 65, 46, 14);
-		add(lblSpecies);
+		getContentPane().add(lblSpecies);
 		
 		JLabel lblSex = new JLabel("Sex");
 		lblSex.setBounds(28, 96, 46, 14);
-		add(lblSex);
+		getContentPane().add(lblSex);
 		
 		JLabel lblNewLabel = new JLabel("Father");
 		lblNewLabel.setBounds(28, 127, 46, 14);
-		add(lblNewLabel);
+		getContentPane().add(lblNewLabel);
 		
 		textField_5 = new JTextField();
-		textField_5.setBounds(28, 211, 303, 63);
-		add(textField_5);
+		textField_5.setBounds(28, 202, 303, 63);
+		getContentPane().add(textField_5);
 		textField_5.setColumns(10);
 		
 		textField_6 = new JTextField();
-		textField_6.setBounds(28, 315, 303, 123);
-		add(textField_6);
+		textField_6.setBounds(28, 283, 303, 123);
+		getContentPane().add(textField_6);
 		textField_6.setColumns(10);
 		
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
-		lblDescriptiveMarkings.setBounds(10, 186, 114, 14);
-		add(lblDescriptiveMarkings);
+		lblDescriptiveMarkings.setBounds(10, 187, 114, 14);
+		getContentPane().add(lblDescriptiveMarkings);
 		
 		JLabel lblNotes = new JLabel("Notes");
-		lblNotes.setBounds(10, 290, 46, 14);
-		add(lblNotes);
+		lblNotes.setBounds(10, 266, 46, 14);
+		getContentPane().add(lblNotes);
 		
 		JLabel lblNewLabel_1 = new JLabel("Zoo ID");
 		lblNewLabel_1.setBounds(389, 33, 46, 14);
-		add(lblNewLabel_1);
+		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Breed");
 		lblNewLabel_2.setBounds(389, 65, 46, 14);
-		add(lblNewLabel_2);
+		getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Date of Birth");
 		lblNewLabel_3.setBounds(389, 96, 61, 14);
-		add(lblNewLabel_3);
+		getContentPane().add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Mother");
 		lblNewLabel_4.setBounds(389, 127, 46, 14);
-		add(lblNewLabel_4);
+		getContentPane().add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("ID Number");
 		lblNewLabel_5.setBounds(389, 158, 61, 14);
-		add(lblNewLabel_5);
+		getContentPane().add(lblNewLabel_5);
 		
 		JRadioButton rdbtnYes = new JRadioButton("Yes");
 		rdbtnYes.setBounds(121, 148, 55, 23);
-		add(rdbtnYes);
+		getContentPane().add(rdbtnYes);
 		
 		JRadioButton rdbtnNo = new JRadioButton("No");
 		rdbtnNo.setBounds(178, 148, 46, 23);
-		add(rdbtnNo);
+		getContentPane().add(rdbtnNo);
 		
 		JLabel lblIdChip = new JLabel("Tattoo or Chip?");
 		lblIdChip.setBounds(27, 152, 76, 14);
-		add(lblIdChip);
+		getContentPane().add(lblIdChip);
 		
 		textField_4 = new JTextField();
 		textField_4.setBounds(484, 30, 137, 20);
-		add(textField_4);
+		getContentPane().add(textField_4);
 		textField_4.setColumns(10);
 		
 		textField_7 = new JTextField();
 		textField_7.setBounds(484, 62, 137, 20);
-		add(textField_7);
+		getContentPane().add(textField_7);
 		textField_7.setColumns(10);
 		
 		textField_8 = new JTextField();
 		textField_8.setBounds(484, 93, 137, 20);
-		add(textField_8);
+		getContentPane().add(textField_8);
 		textField_8.setColumns(10);
 		
 		textField_9 = new JTextField();
 		textField_9.setBounds(484, 124, 137, 20);
-		add(textField_9);
+		getContentPane().add(textField_9);
 		textField_9.setColumns(10);
 		
 		textField_10 = new JTextField();
 		textField_10.setBounds(484, 155, 137, 20);
-		add(textField_10);
+		getContentPane().add(textField_10);
 		textField_10.setColumns(10);
 		
 		JLabel lblPhoto = new JLabel("Photo");
-		lblPhoto.setBounds(437, 235, 46, 14);
-		add(lblPhoto);
+		lblPhoto.setBounds(427, 202, 46, 14);
+		getContentPane().add(lblPhoto);
 	}
 	
 	
