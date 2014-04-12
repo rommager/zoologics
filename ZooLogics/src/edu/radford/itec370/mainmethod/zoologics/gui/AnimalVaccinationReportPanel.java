@@ -66,11 +66,11 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		panel.add(lblAdministeredBy);
 		
 		JButton btnDismiss = new JButton("Search");
-		btnDismiss.setBounds(564, 404, 65, 23);
+		btnDismiss.setBounds(477, 404, 65, 23);
 		panel.add(btnDismiss);
 		
 		JButton btnCancel = new JButton("Close");
-		btnCancel.setBounds(666, 404, 65, 23);
+		btnCancel.setBounds(605, 404, 65, 23);
 		panel.add(btnCancel);
 		
 		JLabel lblUpcomingVaccinations = new JLabel("Upcoming Vaccinations:");
@@ -80,7 +80,7 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		
 		JLabel lblPastDue = new JLabel("Past Due:");
 		lblPastDue.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPastDue.setBounds(438, 255, 84, 20);
+		lblPastDue.setBounds(380, 255, 84, 20);
 		panel.add(lblPastDue);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -134,7 +134,7 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		scrollPane_1.setColumnHeaderView(table);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(438, 286, 291, 107);
+		scrollPane_2.setBounds(382, 286, 291, 107);
 		panel.add(scrollPane_2);
 		
 		table_1 = new JTable();
