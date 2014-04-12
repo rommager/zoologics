@@ -1,9 +1,11 @@
-
+package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
@@ -13,10 +15,11 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+
 import java.sql.SQLException;
 
 
-public class AdminPanel extends User
+public class AdminPanel extends JDialog
 {
 	JTabbedPane tabbedPane;
 	JLabel label[];
@@ -76,7 +79,7 @@ public class AdminPanel extends User
                 {
                         String userString = "";
                         String passwordString = "";
-                        UserConnection userconnection = new UserConnection();
+//                        UserConnection userconnection = new UserConnection();
 
                         if ( event.getSource() == button[0] ) {
 
@@ -84,21 +87,21 @@ public class AdminPanel extends User
                                 userString = textfield[1].getText();
                                 passwordString = new String( password.getPassword() ) ;
 
-                                try {
-					userconnection.addUser( UserId, userString, passwordString );
-					JOptionPane.showMessageDialog( null, "User Created Successfully" );
-                                }
-                                catch ( SQLException sqlException )
-                                {
-                                        JOptionPane.showMessageDialog( null, sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
-                                }
+//                                try {
+//					userconnection.addUser( UserId, userString, passwordString );
+//					JOptionPane.showMessageDialog( null, "User Created Successfully" );
+//                                }
+//                                catch ( SQLException sqlException )
+//                                {
+//                                        JOptionPane.showMessageDialog( null, sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
+//                                }
                         }
                 }
         }
 
 	public static void main( String args[] )
 	{
-		Admin admin = new Admin();
+		AdminPanel admin = new AdminPanel();
 
                 admin.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
                 admin.setSize( 350, 200 );
