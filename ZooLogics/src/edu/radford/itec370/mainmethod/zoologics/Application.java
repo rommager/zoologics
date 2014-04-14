@@ -71,6 +71,7 @@ public class Application {
 		Application newApp = new Application();
 		
 		newApp.animals.add(new Animal(1001, "Puja", new Species(), 'M', "Simba", "", true, "A12343212", "", new Date(), "stripes", "Gentle, needs special attention"));
+		newApp.animals.add(new Animal(1001, "Sir Rawr", new Species(), 'M', "Simba", "Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
 		
 		
 		
