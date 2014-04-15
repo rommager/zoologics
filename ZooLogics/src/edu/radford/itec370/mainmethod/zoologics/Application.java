@@ -3,6 +3,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 public class Application {
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	private ArrayList<Animal> animals;
 	private TaskList taskList;
 	private ArrayList<Vaccine> vaccines;
@@ -70,8 +72,12 @@ public class Application {
 	{
 		Application newApp = new Application();
 		
-		newApp.animals.add(new Animal(1001, "Puja", new Species(), 'M', "Simba", "", true, "A12343212", "", new Date(), "stripes", "Gentle, needs special attention"));
-		newApp.animals.add(new Animal(1001, "Sir Rawr", new Species(), 'M', "Simba", "Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
+		Species s1 = new Species("Tiger");
+		Species s2 = new Species("Monkey");
+		Species s3 = new Species("Zebra");
+		
+		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true, "A12343212", "", new Date(), "stripes", "Gentle, needs special attention"));
+		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba", "Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
 		
 		
 		
@@ -114,4 +120,13 @@ public class Application {
 	public void setCurrentUser(Staff currentUser) {
 		this.currentUser = currentUser;
 	}
+
+	public static SimpleDateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public static void setDateFormat(SimpleDateFormat inDateFormat) {
+		dateFormat = inDateFormat;
+	}
+	
 }
