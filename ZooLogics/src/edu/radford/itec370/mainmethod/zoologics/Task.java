@@ -3,6 +3,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Queue;
 
 public abstract class Task {
 
@@ -11,7 +12,7 @@ public abstract class Task {
 	private boolean recurring;
 	private TaskStatus status;
 	private TaskList parentTaskList;
-	private ArrayList<TaskRecurrence> recurrences;
+	private Queue<TaskRecurrence> recurrences;
 	
 	public Task() {
 		super();
@@ -109,11 +110,11 @@ public abstract class Task {
 		this.parentTaskList = parentTaskList;
 	}
 
-	public ArrayList<TaskRecurrence> getRecurrences() {
+	public Queue<TaskRecurrence> getRecurrences() {
 		return recurrences;
 	}
 
-	public void setRecurrences(ArrayList<TaskRecurrence> recurrences) {
+	public void setRecurrences(Queue<TaskRecurrence> recurrences) {
 		this.recurrences = recurrences;
 	}
 			
