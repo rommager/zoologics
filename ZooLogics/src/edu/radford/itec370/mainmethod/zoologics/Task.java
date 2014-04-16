@@ -62,7 +62,7 @@ public abstract class Task {
 			throw new InvalidTaskCompletionException();
 		}
 	}
-	
+
 	public boolean isValid(){
 		return true;
 	}
