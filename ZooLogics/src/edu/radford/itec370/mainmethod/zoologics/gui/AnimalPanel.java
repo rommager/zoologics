@@ -10,6 +10,7 @@ import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
 import javax.swing.JTextField;
@@ -25,10 +26,11 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-public class AnimalPanel extends JDialog {
+public class AnimalPanel extends JFrame {
 	
 	private Animal animal;
 	private ArrayList <Animal> animals;
@@ -48,7 +50,7 @@ public class AnimalPanel extends JDialog {
 		AnimalPanel panel = new AnimalPanel();
 		
 		panel.setVisible(true);
-		
+		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Animal a1 = new Animal(1001, "Puja", new Species("Tiger"), 'M', "Simba", "", true, "A12343212", "breed", new Date(), "stripes", "Gentle, needs special attention");
 		panel.setAnimal(a1);
 		//System.exit(0);
@@ -57,6 +59,7 @@ public class AnimalPanel extends JDialog {
 	public AnimalPanel() {
 		
 		setIconImage(Application.getAppIcon());
+		this.setSize(new Dimension(800,475));
 		
 		getContentPane().setLayout(null);
 		
