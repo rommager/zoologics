@@ -36,7 +36,7 @@ public class NavigatorBar extends JPanel {
 	private NavigatorBar() {
 		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {120, 120};
+		gridBagLayout.columnWidths = new int[] {345, 160};
 		gridBagLayout.rowHeights = new int[]{0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};

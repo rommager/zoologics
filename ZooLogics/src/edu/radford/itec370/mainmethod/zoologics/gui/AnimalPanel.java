@@ -29,6 +29,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextPane;
+
 import java.awt.Font;
 
 public class AnimalPanel extends JFrame implements Navigable {
@@ -40,8 +42,6 @@ public class AnimalPanel extends JFrame implements Navigable {
 	private JTextField txtSpecies;
 	private JTextField txtSex;
 	private JTextField txtFather;
-	private JTextField txtMarkings;
-	private JTextField txtNotes;
 	private JTextField txtZooID;
 	private JTextField txtBreed;
 	private JTextField txtDOB;
@@ -49,6 +49,8 @@ public class AnimalPanel extends JFrame implements Navigable {
 	private JTextField txtIDNumber;
 	private JRadioButton rdbtnChipYes;
 	private JRadioButton rdbtnChipNo;
+	private JTextPane txtMarkings;
+	private JTextPane txtNotes;
 	
 	public static void main(String[] args) {
 		AnimalPanel panel = new AnimalPanel();
@@ -69,7 +71,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 		getContentPane().setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		setIconImage(Application.getAppIcon());
-		this.setSize(new Dimension(800, 512));
+		this.setSize(new Dimension(800, 480));
 		
 		getContentPane().setLayout(null);
 		
@@ -133,15 +135,13 @@ public class AnimalPanel extends JFrame implements Navigable {
 		lblNewLabel.setBounds(28, 127, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
-		txtMarkings = new JTextField();
+		txtMarkings = new JTextPane();
 		txtMarkings.setBounds(28, 202, 303, 63);
 		getContentPane().add(txtMarkings);
-		txtMarkings.setColumns(10);
 		
-		txtNotes = new JTextField();
+		txtNotes = new JTextPane();
 		txtNotes.setBounds(28, 283, 303, 123);
 		getContentPane().add(txtNotes);
-		txtNotes.setColumns(10);
 		
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
 		lblDescriptiveMarkings.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -228,7 +228,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 		getContentPane().add(lblPhoto);
 		
 		NavigatorBar navPanel = new NavigatorBar(this);
-		navPanel.setBounds(0, 415, 500, 30);
+		navPanel.setBounds(0, 415, 784, 30);
 		getContentPane().add(navPanel);
 	}
 	
