@@ -29,8 +29,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import java.awt.Font;
 
-public class AnimalPanel extends JFrame {
+public class AnimalPanel extends JFrame implements Navigable {
 	
 	private Animal animal;
 	private ArrayList <Animal> animals;
@@ -57,9 +58,11 @@ public class AnimalPanel extends JFrame {
 	}
 	
 	public AnimalPanel() {
+		setTitle("Animal Profile");
+		getContentPane().setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		setIconImage(Application.getAppIcon());
-		this.setSize(new Dimension(800,475));
+		this.setSize(new Dimension(800, 512));
 		
 		getContentPane().setLayout(null);
 		
@@ -104,18 +107,22 @@ public class AnimalPanel extends JFrame {
 		txtFather.setColumns(10);
 		
 		JLabel lblName = new JLabel("Name");
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblName.setBounds(28, 33, 46, 14);
 		getContentPane().add(lblName);
 		
 		JLabel lblSpecies = new JLabel("Species");
+		lblSpecies.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSpecies.setBounds(28, 65, 46, 14);
 		getContentPane().add(lblSpecies);
 		
 		JLabel lblSex = new JLabel("Sex");
+		lblSex.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSex.setBounds(28, 96, 46, 14);
 		getContentPane().add(lblSex);
 		
 		JLabel lblNewLabel = new JLabel("Father");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setBounds(28, 127, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
@@ -130,30 +137,37 @@ public class AnimalPanel extends JFrame {
 		txtNotes.setColumns(10);
 		
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
-		lblDescriptiveMarkings.setBounds(10, 187, 114, 14);
+		lblDescriptiveMarkings.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDescriptiveMarkings.setBounds(10, 187, 152, 14);
 		getContentPane().add(lblDescriptiveMarkings);
 		
 		JLabel lblNotes = new JLabel("Notes");
+		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNotes.setBounds(10, 266, 46, 14);
 		getContentPane().add(lblNotes);
 		
 		JLabel lblNewLabel_1 = new JLabel("Zoo ID");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1.setBounds(389, 33, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Breed");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_2.setBounds(389, 65, 46, 14);
 		getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Date of Birth");
-		lblNewLabel_3.setBounds(389, 96, 61, 14);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_3.setBounds(389, 96, 85, 14);
 		getContentPane().add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Mother");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_4.setBounds(389, 127, 46, 14);
 		getContentPane().add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("ID Number");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_5.setBounds(389, 158, 61, 14);
 		getContentPane().add(lblNewLabel_5);
 		
@@ -172,7 +186,8 @@ public class AnimalPanel extends JFrame {
 		group.add(rdbtnChipNo);
 		
 		JLabel lblIdChip = new JLabel("Tattoo or Chip?");
-		lblIdChip.setBounds(27, 152, 76, 14);
+		lblIdChip.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblIdChip.setBounds(27, 152, 102, 14);
 		getContentPane().add(lblIdChip);
 		
 		txtZooID = new JTextField();
@@ -201,8 +216,13 @@ public class AnimalPanel extends JFrame {
 		txtIDNumber.setColumns(10);
 		
 		JLabel lblPhoto = new JLabel("Photo");
+		lblPhoto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPhoto.setBounds(427, 202, 46, 14);
 		getContentPane().add(lblPhoto);
+		
+		NavigatorBar navPanel = new NavigatorBar(this);
+		navPanel.setBounds(0, 415, 500, 30);
+		getContentPane().add(navPanel);
 	}
 	
 	
@@ -226,5 +246,41 @@ public class AnimalPanel extends JFrame {
 
 	public void setAnimals(ArrayList<Animal> animals) {
 		this.animals = animals;
+	}
+
+	@Override
+	public void firstRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void previousRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lastRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyFilter(String filter) {
+		// TODO Auto-generated method stub
+		
 	}
 }
