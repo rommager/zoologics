@@ -2,6 +2,8 @@ package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class TaskRecurrence {
 
@@ -10,10 +12,13 @@ public class TaskRecurrence {
 	private int intervalType;
 	private int intervalCount;
 	private Task parentTask;
-	private ArrayList<TaskRecurrence> parentCollection;
+	private Queue<TaskRecurrence> parentQueue;
 	
 	public TaskRecurrence() {
 		super();
+		parentQueue = new LinkedList();
+		parentQueue.add(this);
+		
 	}
 	
 	public TaskRecurrence(Calendar currentDate, int recurrenceCount,
@@ -77,12 +82,12 @@ public class TaskRecurrence {
 		this.parentTask = parentTask;
 	}
 
-	public ArrayList<TaskRecurrence> getParentCollection() {
-		return parentCollection;
+	public Queue<TaskRecurrence> getParentQueue() {
+		return parentQueue;
 	}
 
-	public void setParentCollection(ArrayList<TaskRecurrence> parentCollection) {
-		this.parentCollection = parentCollection;
+	public void setParentQueue(Queue<TaskRecurrence> parentCollection) {
+		this.parentQueue = parentQueue;
 	}
 
 }
