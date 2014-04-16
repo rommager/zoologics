@@ -110,11 +110,11 @@ public void setSire(String sire) {
 	this.sire = sire;
 }
 
-public String getDame() {
+public String getDam() {
 	return dam;
 }
 
-public void setDame(String dam) {
+public void setDam(String dam) {
 	this.dam = dam;
 }
 
