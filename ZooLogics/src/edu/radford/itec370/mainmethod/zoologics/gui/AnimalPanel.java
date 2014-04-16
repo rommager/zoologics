@@ -2,11 +2,13 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
+import edu.radford.itec370.mainmethod.zoologics.Species;
 
 import java.awt.GridBagLayout;
 
@@ -19,7 +21,9 @@ import javax.swing.JButton;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -28,17 +32,27 @@ public class AnimalPanel extends JDialog {
 	
 	private Animal animal;
 	private ArrayList <Animal> animals;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_4;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
+	private JTextField txtName;
+	private JTextField txtSpecies;
+	private JTextField txtSex;
+	private JTextField txtFather;
+	private JTextField txtMarkings;
+	private JTextField txtNotes;
+	private JTextField txtZooID;
+	private JTextField txtBreed;
+	private JTextField txtDOB;
+	private JTextField txtMother;
+	private JTextField txtIDNumber;
+	
+	public static void main(String[] args) {
+		AnimalPanel panel = new AnimalPanel();
+		
+		panel.setVisible(true);
+		
+		Animal a1 = new Animal(1001, "Puja", new Species("Tiger"), 'M', "Simba", "", true, "A12343212", "breed", new Date(), "stripes", "Gentle, needs special attention");
+		panel.setAnimal(a1);
+		//System.exit(0);
+	}
 	
 	public AnimalPanel() {
 		
@@ -46,10 +60,10 @@ public class AnimalPanel extends JDialog {
 		
 		getContentPane().setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(121, 30, 102, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		txtName = new JTextField();
+		txtName.setBounds(121, 30, 102, 20);
+		getContentPane().add(txtName);
+		txtName.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.setBounds(678, 315, 89, 23);
@@ -71,20 +85,20 @@ public class AnimalPanel extends JDialog {
 		panel.setBounds(447, 227, 204, 179);
 		getContentPane().add(panel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(121, 62, 102, 20);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		txtSpecies = new JTextField();
+		txtSpecies.setBounds(121, 62, 102, 20);
+		getContentPane().add(txtSpecies);
+		txtSpecies.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(121, 93, 102, 20);
-		getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		txtSex = new JTextField();
+		txtSex.setBounds(121, 93, 102, 20);
+		getContentPane().add(txtSex);
+		txtSex.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(121, 124, 102, 20);
-		getContentPane().add(textField_3);
-		textField_3.setColumns(10);
+		txtFather = new JTextField();
+		txtFather.setBounds(121, 124, 102, 20);
+		getContentPane().add(txtFather);
+		txtFather.setColumns(10);
 		
 		JLabel lblName = new JLabel("Name");
 		lblName.setBounds(28, 33, 46, 14);
@@ -102,15 +116,15 @@ public class AnimalPanel extends JDialog {
 		lblNewLabel.setBounds(28, 127, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(28, 202, 303, 63);
-		getContentPane().add(textField_5);
-		textField_5.setColumns(10);
+		txtMarkings = new JTextField();
+		txtMarkings.setBounds(28, 202, 303, 63);
+		getContentPane().add(txtMarkings);
+		txtMarkings.setColumns(10);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(28, 283, 303, 123);
-		getContentPane().add(textField_6);
-		textField_6.setColumns(10);
+		txtNotes = new JTextField();
+		txtNotes.setBounds(28, 283, 303, 123);
+		getContentPane().add(txtNotes);
+		txtNotes.setColumns(10);
 		
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
 		lblDescriptiveMarkings.setBounds(10, 187, 114, 14);
@@ -140,42 +154,48 @@ public class AnimalPanel extends JDialog {
 		lblNewLabel_5.setBounds(389, 158, 61, 14);
 		getContentPane().add(lblNewLabel_5);
 		
-		JRadioButton rdbtnYes = new JRadioButton("Yes");
-		rdbtnYes.setBounds(121, 148, 55, 23);
-		getContentPane().add(rdbtnYes);
+		JRadioButton rdbtnChipYes = new JRadioButton("Yes");
+		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
+		rdbtnChipYes.setBounds(121, 148, 55, 23);
+		getContentPane().add(rdbtnChipYes);
 		
-		JRadioButton rdbtnNo = new JRadioButton("No");
-		rdbtnNo.setBounds(178, 148, 46, 23);
-		getContentPane().add(rdbtnNo);
+		JRadioButton rdbtnChipNo = new JRadioButton("No");
+		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
+		rdbtnChipNo.setBounds(178, 148, 46, 23);
+		getContentPane().add(rdbtnChipNo);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnChipYes);
+		group.add(rdbtnChipNo);
 		
 		JLabel lblIdChip = new JLabel("Tattoo or Chip?");
 		lblIdChip.setBounds(27, 152, 76, 14);
 		getContentPane().add(lblIdChip);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(484, 30, 137, 20);
-		getContentPane().add(textField_4);
-		textField_4.setColumns(10);
+		txtZooID = new JTextField();
+		txtZooID.setBounds(484, 30, 137, 20);
+		getContentPane().add(txtZooID);
+		txtZooID.setColumns(10);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(484, 62, 137, 20);
-		getContentPane().add(textField_7);
-		textField_7.setColumns(10);
+		txtBreed = new JTextField();
+		txtBreed.setBounds(484, 62, 137, 20);
+		getContentPane().add(txtBreed);
+		txtBreed.setColumns(10);
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(484, 93, 137, 20);
-		getContentPane().add(textField_8);
-		textField_8.setColumns(10);
+		txtDOB = new JTextField();
+		txtDOB.setBounds(484, 93, 137, 20);
+		getContentPane().add(txtDOB);
+		txtDOB.setColumns(10);
 		
-		textField_9 = new JTextField();
-		textField_9.setBounds(484, 124, 137, 20);
-		getContentPane().add(textField_9);
-		textField_9.setColumns(10);
+		txtMother = new JTextField();
+		txtMother.setBounds(484, 124, 137, 20);
+		getContentPane().add(txtMother);
+		txtMother.setColumns(10);
 		
-		textField_10 = new JTextField();
-		textField_10.setBounds(484, 155, 137, 20);
-		getContentPane().add(textField_10);
-		textField_10.setColumns(10);
+		txtIDNumber = new JTextField();
+		txtIDNumber.setBounds(484, 155, 137, 20);
+		getContentPane().add(txtIDNumber);
+		txtIDNumber.setColumns(10);
 		
 		JLabel lblPhoto = new JLabel("Photo");
 		lblPhoto.setBounds(427, 202, 46, 14);
@@ -193,7 +213,8 @@ public class AnimalPanel extends JDialog {
 
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
-		this.textField.setText(animal.getName());
+		this.txtName.setText(animal.getName());
+		this.txtBreed.setText(animal.getBreed());
 	}
 
 	public ArrayList<Animal> getAnimals() {
