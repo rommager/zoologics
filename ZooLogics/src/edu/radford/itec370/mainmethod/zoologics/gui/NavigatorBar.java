@@ -14,14 +14,17 @@ import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.SwingConstants;
 
 public class NavigatorBar extends JPanel {
 	private Navigable parentGUI;
 	private boolean showRecordNavigator;
 	private boolean showSearchBox;
-	private JTextField textField;
+	private JTextField txtSearch;
 	private JButton btnFirst;
 	private JButton btnPrevious;
 	private JButton btnNext;
@@ -60,19 +63,44 @@ public class NavigatorBar extends JPanel {
 		panel.add(btnFirst);
 		
 		btnPrevious = new JButton("<");
+		btnPrevious.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				parentGUI.previousRecord();
+			}
+		});
 		panel.add(btnPrevious);
 		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
+		txtSearch = new JTextField();
+		panel.add(txtSearch);
+		txtSearch.setColumns(10);
+		txtSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentGUI.applyFilter(txtSearch.getText());
+			}
+		});
 		
 		btnNext = new JButton(">");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentGUI.nextRecord();
+			}
+		});
 		panel.add(btnNext);
 		
 		btnLast = new JButton(">]");
+		btnLast.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentGUI.lastRecord();
+			}
+		});
 		panel.add(btnLast);
 		
 		btnNew = new JButton(">]*");
+		btnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentGUI.newRecord();
+			}
+		});
 		panel.add(btnNew);
 		
 		JPanel datePanel = new JPanel();
@@ -85,6 +113,7 @@ public class NavigatorBar extends JPanel {
 		datePanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		lblDateTime = new JLabel("Time");
+		lblDateTime.setHorizontalAlignment(SwingConstants.RIGHT);
 		datePanel.add(lblDateTime);
 		refresh();
 	}
@@ -95,9 +124,9 @@ public class NavigatorBar extends JPanel {
 	}
 		
 	public void refresh() {
-		SimpleDateFormat sdb = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd, yyyy h:mm a");
 		Date now = new Date();
-		lblDateTime.setText(sdb.format(now));
+		lblDateTime.setText(sdf.format(now));
 	}
 
 	public Navigable getParentGUI() {
@@ -108,7 +137,7 @@ public class NavigatorBar extends JPanel {
 		this.parentGUI = parentGUI;
 	}
 
-	public boolean isShowRecordNavigator() {
+	public boolean getShowRecordNavigator() {
 		return showRecordNavigator;
 	}
 
@@ -116,20 +145,21 @@ public class NavigatorBar extends JPanel {
 		this.showRecordNavigator = showRecordNavigator;
 	}
 
-	public boolean isShowSearchBox() {
+	public boolean getShowSearchBox() {
 		return showSearchBox;
 	}
 
 	public void setShowSearchBox(boolean showSearchBox) {
 		this.showSearchBox = showSearchBox;
+		txtSearch.setVisible(showSearchBox);
 	}
 
 	public JTextField getTextField() {
-		return textField;
+		return txtSearch;
 	}
 
 	public void setTextField(JTextField textField) {
-		this.textField = textField;
+		this.txtSearch = textField;
 	}
 
 }

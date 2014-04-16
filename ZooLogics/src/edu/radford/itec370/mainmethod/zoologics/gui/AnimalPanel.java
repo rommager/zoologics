@@ -35,6 +35,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 	
 	private Animal animal;
 	private ArrayList <Animal> animals;
+	private int animalIndex;
 	private JTextField txtName;
 	private JTextField txtSpecies;
 	private JTextField txtSex;
@@ -46,18 +47,24 @@ public class AnimalPanel extends JFrame implements Navigable {
 	private JTextField txtDOB;
 	private JTextField txtMother;
 	private JTextField txtIDNumber;
+	private JRadioButton rdbtnChipYes;
+	private JRadioButton rdbtnChipNo;
 	
 	public static void main(String[] args) {
 		AnimalPanel panel = new AnimalPanel();
 		
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		Animal a1 = new Animal(1001, "Puja", new Species("Tiger"), 'M', "Simba", "", true, "A12343212", "breed", new Date(), "stripes", "Gentle, needs special attention");
-		panel.setAnimal(a1);
+		panel.setAnimals(new ArrayList<Animal>());
+		panel.getAnimals().add(new Animal(1001, "Puja", new Species("Tiger"), 'M', "Simba", "", true, "A12343212", "white", new Date(), "white with stripes", "Gentle, needs special attention"));
+		panel.getAnimals().add(new Animal(1002, "Rawr", new Species("Tiger"), 'M', "Timbre", "Saber", false, "", "orange", new Date(), "orange with stripes", "Snappy"));
+		panel.getAnimals().add(new Animal(1003, "Fran", new Species("Tiger"), 'F', "Goomba", "Mush", true, "A12343201", "orange", new Date(), "not many stripes", "Will eat your hand if you let her"));
+		panel.setAnimal(panel.getAnimals().get(0));
 		//System.exit(0);
 	}
 	
 	public AnimalPanel() {
+		animalIndex = 0;
 		setTitle("Animal Profile");
 		getContentPane().setFont(new Font("Tahoma", Font.BOLD, 11));
 		
@@ -171,12 +178,12 @@ public class AnimalPanel extends JFrame implements Navigable {
 		lblNewLabel_5.setBounds(389, 158, 61, 14);
 		getContentPane().add(lblNewLabel_5);
 		
-		JRadioButton rdbtnChipYes = new JRadioButton("Yes");
+		rdbtnChipYes = new JRadioButton("Yes");
 		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
 		rdbtnChipYes.setBounds(121, 148, 55, 23);
 		getContentPane().add(rdbtnChipYes);
 		
-		JRadioButton rdbtnChipNo = new JRadioButton("No");
+		rdbtnChipNo = new JRadioButton("No");
 		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
 		rdbtnChipNo.setBounds(178, 148, 46, 23);
 		getContentPane().add(rdbtnChipNo);
@@ -237,7 +244,23 @@ public class AnimalPanel extends JFrame implements Navigable {
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
 		this.txtName.setText(animal.getName());
+		this.txtSpecies.setText(animal.getSpecies().getSpeciesName());
+		this.txtSex.setText(Character.toString(animal.getSex()));
+		this.txtFather.setText(animal.getSire());
+		this.txtMother.setText(animal.getDam());
+		this.txtZooID.setText(Integer.toString(animal.getId()));
 		this.txtBreed.setText(animal.getBreed());
+		this.txtIDNumber.setText(animal.getChipId());
+		this.txtMarkings.setText(animal.getMarkings().toString());
+		this.txtNotes.setText(animal.getNotes().toString());
+		if(animal.isIdenficationChip()){
+			this.rdbtnChipYes.setSelected(true);
+		}
+		else {
+			this.rdbtnChipNo.setSelected(true);
+		}
+			
+			
 	}
 
 	public ArrayList<Animal> getAnimals() {
@@ -247,40 +270,51 @@ public class AnimalPanel extends JFrame implements Navigable {
 	public void setAnimals(ArrayList<Animal> animals) {
 		this.animals = animals;
 	}
+	
+		public int getAnimalIndex() {
+		return animalIndex;
+	}
+
+	public void setAnimalIndex(int animalIndex) {
+		this.animalIndex = animalIndex;
+		setAnimal(animals.get(animalIndex));
+	}
 
 	@Override
 	public void firstRecord() {
-		// TODO Auto-generated method stub
-		
+		//txtDOB.setText("FIRST");
+		setAnimalIndex(0);
 	}
 
 	@Override
 	public void previousRecord() {
-		// TODO Auto-generated method stub
-		
+		//txtDOB.setText("PREVIOUS");
+		if (animalIndex > 0)
+			setAnimalIndex(--animalIndex);
 	}
 
 	@Override
 	public void nextRecord() {
-		// TODO Auto-generated method stub
-		
+		//txtDOB.setText("NEXT");
+		if (animalIndex < animals.size()-1)
+		setAnimalIndex(++animalIndex);
 	}
 
 	@Override
 	public void lastRecord() {
-		// TODO Auto-generated method stub
-		
+		//txtDOB.setText("LAST");
+		setAnimalIndex(animals.size()-1);
 	}
 
 	@Override
 	public void newRecord() {
-		// TODO Auto-generated method stub
+		txtDOB.setText("NEW");
 		
 	}
 
 	@Override
 	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
+		txtDOB.setText(filter);
 		
 	}
 }

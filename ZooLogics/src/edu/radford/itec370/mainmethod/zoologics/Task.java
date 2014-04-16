@@ -56,7 +56,7 @@ public abstract class Task {
 	public void complete() throws InvalidTaskCompletionException{
 		if (isValid()) {
 			setStatus(TaskStatus.COMPLETED);
-			generateNextRecurrence();
+//			generateNextRecurrence();
 		}
 		else {
 			throw new InvalidTaskCompletionException();
