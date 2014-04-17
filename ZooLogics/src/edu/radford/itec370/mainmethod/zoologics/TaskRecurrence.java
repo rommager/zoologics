@@ -16,7 +16,7 @@ public class TaskRecurrence {
 	
 	public TaskRecurrence() {
 		super();
-		parentQueue = new LinkedList();
+		parentQueue = new LinkedList<TaskRecurrence>();
 		parentQueue.add(this);
 		
 	}
@@ -30,11 +30,17 @@ public class TaskRecurrence {
 		this.intervalCount = intervalCount;
 	}
 	
-	public Task getNextRecurrence() {
-		
-		
-		
-		return null;
+	public Calendar getNextRecurrenceDate() {
+		if (recurrenceCount > 0) {
+			Calendar newDate = (Calendar) currentDate.clone();
+			newDate.add(intervalType, intervalCount);
+			recurrenceCount--;
+			return newDate;
+		}
+		else {
+			parentQueue.poll();  // pop this expired recurrence off of the queue
+			return parentQueue;
+		}
 	}
 
 	public Calendar getCurrentDate() {
