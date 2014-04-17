@@ -1,5 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -16,6 +17,11 @@ public class TaskPanel extends JDialog {
 	protected JButton btnCompleteTask;
 	
 	public TaskPanel() {
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SpeciesPanel.class.getResource("/edu/radford/itec370/mainmethod/zoologics/z_icon.png")));
+		setTitle("Task Panel");
+		setBounds(100, 100, 425, 320);
+		
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Name");
@@ -56,6 +62,12 @@ public class TaskPanel extends JDialog {
 		textField_2.setBounds(10, 99, 371, 101);
 		getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+	}
+	
+	public static void main(String[] args) {
+		TaskPanel taskPanel = new TaskPanel();
+		taskPanel.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+		taskPanel.setVisible(true);
 	}
 	private ArrayList <Task> tasks;
 	private JTextField textField;

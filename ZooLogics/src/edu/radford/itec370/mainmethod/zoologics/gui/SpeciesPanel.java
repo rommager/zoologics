@@ -44,12 +44,12 @@ public class SpeciesPanel extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblSpecies = new JLabel("Species:");
-			lblSpecies.setBounds(10, 11, 46, 14);
+			lblSpecies.setBounds(10, 11, 60, 14);
 			contentPanel.add(lblSpecies);
 		}
 		
 		textField = new JTextField();
-		textField.setBounds(66, 8, 133, 20);
+		textField.setBounds(65, 8, 133, 20);
 		contentPanel.add(textField);
 		textField.setColumns(10);
 		{
