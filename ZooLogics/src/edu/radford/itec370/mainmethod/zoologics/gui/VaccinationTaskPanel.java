@@ -35,7 +35,9 @@ public class VaccinationTaskPanel extends TaskPanel{
 	}
 	
 	public static void main(String[] args) {
-		
+		VaccinationTaskPanel vacTaskPanel = new VaccinationTaskPanel();
+		vacTaskPanel.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		vacTaskPanel.setVisible(true);
 	}
 
 }
