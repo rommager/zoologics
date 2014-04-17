@@ -38,6 +38,10 @@ public class AnimalVaccinationReportPanel extends JDialog{
 	private JTable table_1;
 	
 	public AnimalVaccinationReportPanel() {
+		
+		setBounds(10, 10, 700, 475);
+		setTitle("Animal Vaccination Reports");
+		
 		setIconImage(Application.getAppIcon());
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -66,11 +70,11 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		panel.add(lblAdministeredBy);
 		
 		JButton btnDismiss = new JButton("Search");
-		btnDismiss.setBounds(477, 404, 65, 23);
+		btnDismiss.setBounds(477, 404, 75, 23);
 		panel.add(btnDismiss);
 		
 		JButton btnCancel = new JButton("Close");
-		btnCancel.setBounds(605, 404, 65, 23);
+		btnCancel.setBounds(605, 404, 68, 23);
 		panel.add(btnCancel);
 		
 		JLabel lblUpcomingVaccinations = new JLabel("Upcoming Vaccinations:");
@@ -153,6 +157,12 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		));
 		scrollPane_2.setRowHeaderView(table_1);
 		
+	}
+	
+	public static void main(String[] args) {
+		AnimalVaccinationReportPanel anVacRepPanel = new AnimalVaccinationReportPanel();
+		anVacRepPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		anVacRepPanel.setVisible(true);
 	}
 	
 	public void refresh() {
