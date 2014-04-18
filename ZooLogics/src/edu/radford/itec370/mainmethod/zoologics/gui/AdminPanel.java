@@ -1,6 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.GridLayout;
+
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
@@ -10,15 +11,22 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
+import edu.radford.itec370.mainmethod.zoologics.Staff;
+
 public class AdminPanel extends JDialog {
+	Staff staff;
 	JTabbedPane tabbedPane;
 	JLabel label;
 	JTextField textfield;
-	JPasswordField password;
+	JPasswordField txtpassword;
 	JPanel panel1;
 	JPanel panel2;
 	JButton button;
-
+	JTextField txtUserID;
+	JTextField txtUserName;
+	JButton Submit;
+	
+	
 	public static void main(String args[]) {
 		AdminPanel admin = new AdminPanel();
 		admin.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -30,36 +38,45 @@ public class AdminPanel extends JDialog {
 
 		tabbedPane = new JTabbedPane();
 		this.addUser();
-		add(tabbedPane);
+		getContentPane().add(tabbedPane);
 		
 	}
 
 	void addUser() {
 
-		JLabel label0 = new JLabel("User ID", SwingConstants.CENTER);
-		JTextField textfield0 = new JTextField();
+		JLabel lblUserID = new JLabel("User ID", SwingConstants.CENTER);
+		txtUserID = new JTextField();
 
-		JLabel label1 = new JLabel("User Name", SwingConstants.CENTER);
-		JTextField textfield1 = new JTextField();
+		JLabel lblUserName = new JLabel("User Name", SwingConstants.CENTER);
+		txtUserName = new JTextField();
 
-		JLabel label2 = new JLabel("Password", SwingConstants.CENTER);
-		password = new JPasswordField();
+		JLabel lblPassword = new JLabel("Password", SwingConstants.CENTER);
+		txtpassword = new JPasswordField();
 
-		JButton button0 = new JButton("Submit");
+		JButton btnSubmit = new JButton("Submit");
 
 		panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(4, 2, 2, 2));
 
-		panel1.add(label0);
-		panel1.add(textfield0);
-		panel1.add(label1);
-		panel1.add(textfield1);
-		panel1.add(label2);
-		panel1.add(password);
-		panel1.add(button0);
+		panel1.add(lblUserID);
+		panel1.add(txtUserID);
+		panel1.add(lblUserName);
+		panel1.add(txtUserName);
+		panel1.add(lblPassword);
+		panel1.add(txtpassword);
+		panel1.add(btnSubmit);
 
 		tabbedPane.addTab("Add User", null, panel1, "First Panel");
 
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+		this.txtpassword.setText("");
 	}
 
 }
