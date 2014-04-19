@@ -2,6 +2,7 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.GridLayout;
 
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
@@ -10,6 +11,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+
 
 import edu.radford.itec370.mainmethod.zoologics.Staff;
 
@@ -25,6 +33,8 @@ public class AdminPanel extends JDialog {
 	JTextField txtUserID;
 	JTextField txtUserName;
 	JButton Submit;
+	JCheckBox User;
+	
 	
 	
 	public static void main(String args[]) {
@@ -43,7 +53,7 @@ public class AdminPanel extends JDialog {
 	}
 
 	void addUser() {
-
+		
 		JLabel lblUserID = new JLabel("User ID", SwingConstants.CENTER);
 		txtUserID = new JTextField();
 
@@ -54,6 +64,34 @@ public class AdminPanel extends JDialog {
 		txtpassword = new JPasswordField();
 
 		JButton btnSubmit = new JButton("Submit");
+		
+		 boolean User = true;
+
+		/**
+		 Are you a user?
+		 */
+		final Checkbox User1;
+
+		/* ... */
+
+		User1 = new Checkbox("user");
+
+		User1.addItemListener ( new ItemListener()
+		   {
+
+		   public void itemStateChanged( ItemEvent e )
+		      {
+		       boolean User;
+			User = User1.getState(); 
+			 
+		      /* ... */
+		      }
+		   });
+		/* ... */
+		
+
+
+
 
 		panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(4, 2, 2, 2));
@@ -65,6 +103,7 @@ public class AdminPanel extends JDialog {
 		panel1.add(lblPassword);
 		panel1.add(txtpassword);
 		panel1.add(btnSubmit);
+		panel1.add(User1);
 
 		tabbedPane.addTab("Add User", null, panel1, "First Panel");
 
