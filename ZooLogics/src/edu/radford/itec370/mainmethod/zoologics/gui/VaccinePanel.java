@@ -1,6 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.Container;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
-import edu.radford.itec370.mainmethod.zoologics.TaskRecurrence;
+
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 public class VaccinePanel extends JFrame {

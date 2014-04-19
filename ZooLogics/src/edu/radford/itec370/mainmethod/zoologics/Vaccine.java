@@ -9,7 +9,7 @@ public class Vaccine {
 	private String vaccineName;
 	private String dosage;
 	private boolean recurring;
-	private Queue<TaskRecurrence> frequencyDays;
+	private TaskRecurrences defaultRecurrency;
 	private Date dueAtAnimalAge;
 
 	public String getVaccineID() {
@@ -60,13 +60,13 @@ public class Vaccine {
 		this.recurring = recurring;
 	}
 
-	public Queue<TaskRecurrence> getFrequencyDays() {
-		return frequencyDays;
-	}
-
-	public void setFrequencyDays(Queue<TaskRecurrence> frequencyDays) {
-		this.frequencyDays = frequencyDays;
-	}
+//	public Queue<TaskRecurrence> getFrequencyDays() {
+//		return frequencyDays;
+//	}
+//
+//	public void setFrequencyDays(Queue<TaskRecurrence> frequencyDays) {
+//		this.frequencyDays = frequencyDays;
+//	}
 
 	//public int getDueAtAnimalAge() {
 		//return dueAtAnimalAge;
