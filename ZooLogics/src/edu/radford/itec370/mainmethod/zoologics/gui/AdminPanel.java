@@ -2,7 +2,10 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.GridLayout;
 
+
 import javax.swing.JCheckBox;
+
+
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
