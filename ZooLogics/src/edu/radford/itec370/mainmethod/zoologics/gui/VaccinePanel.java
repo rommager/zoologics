@@ -1,7 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.Container;
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Queue;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +23,6 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
-
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 public class VaccinePanel extends JFrame {
@@ -130,6 +129,10 @@ public class VaccinePanel extends JFrame {
 		btnClose.setBounds(678, 383, 89, 23);
 		getContentPane().add(btnClose);
 
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnRecurringYes);
+		group.add(rdbtnRecurringNo);
+		
 	}
 
 	private ArrayList<Vaccine> getVaccines() {
