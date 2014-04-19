@@ -7,16 +7,22 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Toolkit;
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
+
+import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 public class SpeciesPanel extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JTable table;
+	ArrayList<Vaccine> vaccineList = new ArrayList<Vaccine>();
 
 	/**
 	 * Launch the application.
