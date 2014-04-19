@@ -22,6 +22,11 @@ public class Vaccination {
 		this.administeredBy = administeredBy;
 	}
 
+	public String[] getTableRow() {
+		String[] outArray = new String[]{vaccineName,Application.getDateFormat().format(dateAdministered),administeredBy.getName()};
+		return outArray;
+	}
+	
 	public String getVaccineName() {
 		return vaccineName;
 	}

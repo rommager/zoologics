@@ -1,11 +1,13 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
+import edu.radford.itec370.mainmethod.zoologics.Staff;
 import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 import java.awt.GridLayout;
@@ -92,11 +94,25 @@ public class AnimalVaccinationReportPanel extends JDialog{
 		panel.add(scrollPane);
 		
 		table_2 = new JTable();
+		
+		Vaccination v1 = new Vaccination();
+		v1.setVaccineName("Vaccine 1");
+		v1.setAdministeredBy(new Staff("Crazy Nick"));
+		v1.setDateAdministered(new Date(2,2,2014));
+		
+		Vaccination v2 = new Vaccination();
+		v2.setVaccineName("Vaccine 2");
+		v2.setAdministeredBy(new Staff("Chase"));
+		v2.setDateAdministered(new Date(2,4,04));
+
+//		vaccinations.add(v1);
+//		vaccinations.add(v2);
+		
 		table_2.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Vaccination Name/Dose", "Administered Date", "Administered By"},
-				{null, null, null},
-				{null, null, null},
+				v1.getTableRow(),
+				v2.getTableRow(),
 				{null, null, null},
 				{null, null, null},
 				{null, null, null},
@@ -108,7 +124,7 @@ public class AnimalVaccinationReportPanel extends JDialog{
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, true, true
+				true, true, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -156,6 +172,16 @@ public class AnimalVaccinationReportPanel extends JDialog{
 			}
 		));
 		scrollPane_2.setRowHeaderView(table_1);
+		
+	}
+	
+	public String[][] getAllTableRows() {
+		
+		String[][] outArray;
+		for (Vaccination vacc : vaccinations) {
+		
+		}
+		return null;	
 		
 	}
 	

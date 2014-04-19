@@ -90,46 +90,7 @@ public class Task implements Serializable {
 			System.out.println("SPAWNED: " + newTask);
 			newTask =  newTask.spawnNextTaskRecurrence();
 			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
+
 
 			System.out.println(list.toString());
 			

@@ -10,8 +10,12 @@ public class Staff {
     public Staff() {
 		super();
 	}
+    public Staff(String name) {
+		this();
+		this.name = name;
+	}
 	public Staff(String name, boolean isUser, String passwordHash) {
-		super();
+		this();
 		this.name = name;
 		this.isUser = isUser;
 		this.passwordHash = passwordHash;
