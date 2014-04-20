@@ -28,7 +28,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MainScreen extends JFrame implements Navigable {
+public class MainScreen extends JFrame implements MainScreenNav {
 		// TODO Auto-generated method stub
 
 	
@@ -82,15 +82,6 @@ public class MainScreen extends JFrame implements Navigable {
 					}
 				});
 				scrollPane.setColumnHeaderView(table);
-				
-				NavigatorBar navigatorBar = new NavigatorBar((Navigable) null);
-				GridBagLayout gridBagLayout = (GridBagLayout) navigatorBar.getLayout();
-				gridBagLayout.rowWeights = new double[]{1.0};
-				gridBagLayout.rowHeights = new int[]{0};
-				gridBagLayout.columnWeights = new double[]{1.0, 0.0};
-				gridBagLayout.columnWidths = new int[]{345, 160};
-				navigatorBar.setBounds(10, 386, 764, 23);
-				getContentPane().add(navigatorBar);
 				
 				JButton btnOpenItem = new JButton("Open Item");
 				btnOpenItem.setBounds(294, 279, 89, 23);
@@ -160,28 +151,9 @@ public class MainScreen extends JFrame implements Navigable {
 			
 				
 				}
+			
 			@Override
-			public void firstRecord() {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void previousRecord() {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void nextRecord() {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void lastRecord() {
-				// TODO Auto-generated method stub
-				
-			}
-			@Override
-			public void newRecord() {
+			public void tasks() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -189,8 +161,7 @@ public class MainScreen extends JFrame implements Navigable {
 			public void applyFilter(String filter) {
 				// TODO Auto-generated method stub
 				
-			}
 			
 			
 	}
-
+}
