@@ -27,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class MainScreen extends JFrame implements MainScreenNav {
 		// TODO Auto-generated method stub
@@ -37,12 +39,13 @@ public class MainScreen extends JFrame implements MainScreenNav {
 			private JMenu fileMenu;
 			private JMenu aboutMenu;
 			private JMenuItem exitItem;
+			private final Action action = new SwingAction();
 
 			public MainScreen() {
 				
 			
 				setIconImage(Application.getAppIcon());
-				this.setSize(new Dimension(800, 480));
+				this.setSize(new Dimension(650, 449));
 				getContentPane().setLayout(null);
 				
 				JLabel lblTasks = new JLabel("Tasks:");
@@ -96,6 +99,7 @@ public class MainScreen extends JFrame implements MainScreenNav {
 				setJMenuBar(menuBar_1);
 				
 				JMenu mnFile = new JMenu("File");
+				mnFile.setMnemonic(KeyEvent.VK_F);
 				menuBar_1.add(mnFile);
 				
 				JMenuItem mntmAdminPanel = new JMenuItem("Admin Panel");
@@ -138,7 +142,13 @@ public class MainScreen extends JFrame implements MainScreenNav {
 				});
 				mnFile.add(mntmVaccinePanel);
 				
+				JMenuItem mntmExit = new JMenuItem("Exit");
+				mntmExit.setMnemonic(KeyEvent.VK_X);
+				mntmExit.addActionListener(new ExitListener());
+				mnFile.add(mntmExit);
+				
 				JMenu mnAbout = new JMenu("About");
+				mnAbout.setMnemonic(KeyEvent.VK_B);
 				menuBar_1.add(mnAbout);
 				
 				JMenuItem mntmAboutMain = new JMenuItem("About Main() Method");
@@ -163,5 +173,20 @@ public class MainScreen extends JFrame implements MainScreenNav {
 				
 			
 			
+	}
+			private class ExitListener implements ActionListener
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					System.exit(0);
+				}
+			}
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
 	}
 }
