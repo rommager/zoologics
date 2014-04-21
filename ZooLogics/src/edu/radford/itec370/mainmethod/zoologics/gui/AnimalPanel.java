@@ -4,14 +4,17 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 
 import javax.swing.JTextField;
 
@@ -23,8 +26,10 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,9 +37,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public class AnimalPanel extends JFrame implements Navigable {
 	
+	public static final String WINDOW_TITLE = "Animal Profile";
 	private Animal animal;
 	private ArrayList <Animal> animals;
 	private int animalIndex;
@@ -62,131 +72,169 @@ public class AnimalPanel extends JFrame implements Navigable {
 		panel.getAnimals().add(new Animal(1002, "Rawr", new Species("Tiger"), 'M', "Timbre", "Saber", false, "", "orange", new Date(), "orange with stripes", "Snappy"));
 		panel.getAnimals().add(new Animal(1003, "Fran", new Species("Tiger"), 'F', "Goomba", "Mush", true, "A12343201", "orange", new Date(), "not many stripes", "Will eat your hand if you let her"));
 		panel.setAnimal(panel.getAnimals().get(0));
-		//System.exit(0);
 	}
 	
 	public AnimalPanel() {
+		// initialize class variables;
 		animalIndex = 0;
-		setTitle("Animal Profile");
-		getContentPane().setFont(new Font("Tahoma", Font.BOLD, 11));
 		
+		// set up window
+		setTitle(WINDOW_TITLE);
 		setIconImage(Application.getAppIcon());
 		this.setSize(new Dimension(800, 480));
+		getContentPane().setLayout(new BorderLayout());
 		
-		getContentPane().setLayout(null);
+		// add navigator bar in south window area
+		NavigatorBar navPanel = new NavigatorBar(this);		
+		navPanel.setBounds(0, 415, 784, 30);
+		getContentPane().add(navPanel, BorderLayout.SOUTH);
+		
+		// set up animal panel and add to main frame		
+		JPanel animalPanel = new JPanel();
+		getContentPane().add(animalPanel, BorderLayout.CENTER);
+		
+		// build animal panel
+		animalPanel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		animalPanel.setLayout(null);
 		
 		txtName = new JTextField();
 		txtName.setBounds(121, 30, 102, 20);
-		getContentPane().add(txtName);
+		animalPanel.add(txtName);
 		txtName.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Search");
-		btnNewButton.setBounds(678, 315, 89, 23);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setBounds(678, 315, 89, 23);
+		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		getContentPane().add(btnNewButton);
+		animalPanel.add(btnSearch);
 		
-		JButton btnNewButton_1 = new JButton("Save");
-		btnNewButton_1.setBounds(678, 349, 89, 23);
-		getContentPane().add(btnNewButton_1);
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//this.save();
+			}
+		});
+		btnSave.setBounds(678, 349, 89, 23);
+		animalPanel.add(btnSave);
 		
 		JButton btnClose = new JButton("Close");
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton caller = (JButton) e.getSource();				
+				JFrame caller2 = (JFrame) caller.getParent().getParent().getParent().getParent().getParent();
+				caller2.dispose();
+			}
+		});
 		btnClose.setBounds(678, 383, 89, 23);
-		getContentPane().add(btnClose);
+		animalPanel.add(btnClose);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(447, 227, 204, 179);
-		getContentPane().add(panel);
+		JPanel pnlPhoto = new JPanel();
+		pnlPhoto.setBounds(447, 227, 204, 179);
+		animalPanel.add(pnlPhoto);
+		pnlPhoto.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		BufferedImage myPicture;
+		//try {
+			URL iconURL = Application.class.getClassLoader().getResource("edu/radford/itec370/mainmethod/zoologics/photos/mutosh.png");
+			Image icon = new ImageIcon(iconURL).getImage();
+			//myPicture = ImageIO.read(new File("../animal_photos/mutosh.png"));
+			JLabel picLabel = new JLabel(new ImageIcon(icon));
+			pnlPhoto.add(picLabel);
+			
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
 		txtSpecies = new JTextField();
 		txtSpecies.setBounds(121, 62, 102, 20);
-		getContentPane().add(txtSpecies);
+		animalPanel.add(txtSpecies);
 		txtSpecies.setColumns(10);
 		
 		txtSex = new JTextField();
 		txtSex.setBounds(121, 93, 102, 20);
-		getContentPane().add(txtSex);
+		animalPanel.add(txtSex);
 		txtSex.setColumns(10);
 		
 		txtFather = new JTextField();
 		txtFather.setBounds(121, 124, 102, 20);
-		getContentPane().add(txtFather);
+		animalPanel.add(txtFather);
 		txtFather.setColumns(10);
 		
 		JLabel lblName = new JLabel("Name");
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblName.setBounds(28, 33, 46, 14);
-		getContentPane().add(lblName);
+		animalPanel.add(lblName);
 		
 		JLabel lblSpecies = new JLabel("Species");
 		lblSpecies.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSpecies.setBounds(28, 65, 46, 14);
-		getContentPane().add(lblSpecies);
+		animalPanel.add(lblSpecies);
 		
 		JLabel lblSex = new JLabel("Sex");
 		lblSex.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSex.setBounds(28, 96, 46, 14);
-		getContentPane().add(lblSex);
+		animalPanel.add(lblSex);
 		
 		JLabel lblNewLabel = new JLabel("Father");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setBounds(28, 127, 46, 14);
-		getContentPane().add(lblNewLabel);
+		animalPanel.add(lblNewLabel);
 		
 		txtMarkings = new JTextPane();
 		txtMarkings.setBounds(28, 202, 303, 63);
-		getContentPane().add(txtMarkings);
+		animalPanel.add(txtMarkings);
 		
 		txtNotes = new JTextPane();
 		txtNotes.setBounds(28, 283, 303, 123);
-		getContentPane().add(txtNotes);
+		animalPanel.add(txtNotes);
 		
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
 		lblDescriptiveMarkings.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDescriptiveMarkings.setBounds(10, 187, 152, 14);
-		getContentPane().add(lblDescriptiveMarkings);
+		animalPanel.add(lblDescriptiveMarkings);
 		
 		JLabel lblNotes = new JLabel("Notes");
 		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNotes.setBounds(10, 266, 46, 14);
-		getContentPane().add(lblNotes);
+		animalPanel.add(lblNotes);
 		
 		JLabel lblNewLabel_1 = new JLabel("Zoo ID");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1.setBounds(389, 33, 46, 14);
-		getContentPane().add(lblNewLabel_1);
+		animalPanel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Breed");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_2.setBounds(389, 65, 46, 14);
-		getContentPane().add(lblNewLabel_2);
+		animalPanel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Date of Birth");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_3.setBounds(389, 96, 85, 14);
-		getContentPane().add(lblNewLabel_3);
+		animalPanel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Mother");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_4.setBounds(389, 127, 46, 14);
-		getContentPane().add(lblNewLabel_4);
+		animalPanel.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("ID Number");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_5.setBounds(389, 158, 61, 14);
-		getContentPane().add(lblNewLabel_5);
+		animalPanel.add(lblNewLabel_5);
 		
 		rdbtnChipYes = new JRadioButton("Yes");
 		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
 		rdbtnChipYes.setBounds(121, 148, 55, 23);
-		getContentPane().add(rdbtnChipYes);
+		animalPanel.add(rdbtnChipYes);
 		
 		rdbtnChipNo = new JRadioButton("No");
 		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
 		rdbtnChipNo.setBounds(178, 148, 46, 23);
-		getContentPane().add(rdbtnChipNo);
+		animalPanel.add(rdbtnChipNo);
 		
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnChipYes);
@@ -195,45 +243,45 @@ public class AnimalPanel extends JFrame implements Navigable {
 		JLabel lblIdChip = new JLabel("Tattoo or Chip?");
 		lblIdChip.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblIdChip.setBounds(27, 152, 102, 14);
-		getContentPane().add(lblIdChip);
+		animalPanel.add(lblIdChip);
 		
 		txtZooID = new JTextField();
 		txtZooID.setBounds(484, 30, 137, 20);
-		getContentPane().add(txtZooID);
+		animalPanel.add(txtZooID);
 		txtZooID.setColumns(10);
 		
 		txtBreed = new JTextField();
 		txtBreed.setBounds(484, 62, 137, 20);
-		getContentPane().add(txtBreed);
+		animalPanel.add(txtBreed);
 		txtBreed.setColumns(10);
 		
 		txtDOB = new JTextField();
 		txtDOB.setBounds(484, 93, 137, 20);
-		getContentPane().add(txtDOB);
+		animalPanel.add(txtDOB);
 		txtDOB.setColumns(10);
 		
 		txtMother = new JTextField();
 		txtMother.setBounds(484, 124, 137, 20);
-		getContentPane().add(txtMother);
+		animalPanel.add(txtMother);
 		txtMother.setColumns(10);
 		
 		txtIDNumber = new JTextField();
 		txtIDNumber.setBounds(484, 155, 137, 20);
-		getContentPane().add(txtIDNumber);
+		animalPanel.add(txtIDNumber);
 		txtIDNumber.setColumns(10);
 		
 		JLabel lblPhoto = new JLabel("Photo");
 		lblPhoto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPhoto.setBounds(427, 202, 46, 14);
-		getContentPane().add(lblPhoto);
+		animalPanel.add(lblPhoto);		
 		
-		NavigatorBar navPanel = new NavigatorBar(this);
-		navPanel.setBounds(0, 415, 784, 30);
-		getContentPane().add(navPanel);
 	}
 	
-	
 	public void refresh() {
+		
+	}
+	
+	public void save() {
 		
 	}
 	
@@ -259,8 +307,6 @@ public class AnimalPanel extends JFrame implements Navigable {
 		else {
 			this.rdbtnChipNo.setSelected(true);
 		}
-			
-			
 	}
 
 	public ArrayList<Animal> getAnimals() {
