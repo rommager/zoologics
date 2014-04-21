@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/edu/radford/itec370/mainmethod/zoologics/photos/mutosh.png</name>
-			<type>1</type>
-			<location>C:/Users/Sean/Documents/Radford/ITEC 370 Software Engineering I/mutosh.png</location>
-		</link>
-	</linkedResources>
 </projectDescription>

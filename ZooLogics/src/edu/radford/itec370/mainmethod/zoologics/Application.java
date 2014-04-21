@@ -20,7 +20,8 @@ public class Application implements Serializable {
 	private static final long serialVersionUID = -4947318641942709682L;
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
+			"MM/dd/yyyy");
 	private static StaffHive staffHive;
 	private ArrayList<Animal> animals;
 	private TaskList taskList;
@@ -28,9 +29,8 @@ public class Application implements Serializable {
 	private ArrayList<Vaccine> vaccines;
 	private ArrayList<Species> species;
 	private Staff currentUser;
-	
-	public Application(Staff user)
-	{
+
+	public Application(Staff user) {
 		super();
 		if (user.isUser()) {
 			animals = new ArrayList<Animal>();
@@ -38,63 +38,57 @@ public class Application implements Serializable {
 			vaccines = new ArrayList<Vaccine>();
 			species = new ArrayList<Species>();
 			this.currentUser = user;
-		}
-		else
+		} else
 			System.exit(0);
 	}
-	
-	public static void main(String[] args) 
-	{
+
+	public static void main(String[] args) {
 		MainScreen appFrame = new MainScreen(APPLICATION_NAME);
-		
-		appFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );  // Set behavior to close program when GUI closed
-		appFrame.setSize( 800, 600 );                               // set frame size
+
+		// Set behavior to close program when GUI closed
+		appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		appFrame.setSize(800, 600); // set frame size
 		appFrame.setIconImage(getAppIcon());
 		appFrame.setVisible(true);
 		displayLogon();
 	}
 
-	public static Application displayLogon() 
-	{
+	public static Application displayLogon() {
 		LogonDialog logon = new LogonDialog();
 		return null;
 	}
-	
-	
-	public static Staff getCurrentUser() 
-	{
+
+	public static Staff getCurrentUser() {
 		return null;
 	}
-	
-	public static Image getAppIcon()
-	{
+
+	public static Image getAppIcon() {
 		URL iconURL = Application.class.getResource(ICON_FILE);
 		Image icon = new ImageIcon(iconURL).getImage();
 		return icon;
 	}
-	
-	public static String getAppName()
-	{
+
+	public static String getAppName() {
 		return APPLICATION_NAME;
 	}
-	
-	public static Application generateTestData()
-	{
-		Application newApp = new Application(new Staff("master","master"));
-		
+
+	public static Application generateTestData() {
+		Application newApp = new Application(new Staff("master", "master"));
+
 		Species s1 = new Species("Tiger");
 		Species s2 = new Species("Monkey");
 		Species s3 = new Species("Zebra");
-		
-		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true, "A12343212", "", new Date(), "stripes", "Gentle, needs special attention"));
-		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba", "Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
-		
-		
-		
+
+		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true,
+				"A12343212", "", new Date(), "stripes",
+				"Gentle, needs special attention"));
+		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba",
+				"Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
+
 		return newApp;
-		
+
 	}
-	
+
 	public ArrayList<Animal> getAnimals() {
 		return animals;
 	}
@@ -142,5 +136,5 @@ public class Application implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }
