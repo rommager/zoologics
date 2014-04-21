@@ -154,6 +154,11 @@ public class MainScreen extends JFrame implements MainScreenNav {
 
 	}
 	
+	public MainScreen(String windowTitle) {
+		this();
+		this.setTitle(windowTitle);
+	}
+	
 	public static void main(String[] args) {
 		MainScreen tester = new MainScreen();
 		tester.setVisible(true);

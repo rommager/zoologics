@@ -1,7 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.Serializable;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,36 +11,46 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
+import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
-public class Application {
+public class Application implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4947318641942709682L;
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	private static StaffHive staffHive;
 	private ArrayList<Animal> animals;
 	private TaskList taskList;
+	private TaskList inactiveTasks;
 	private ArrayList<Vaccine> vaccines;
 	private ArrayList<Species> species;
 	private Staff currentUser;
 	
-	public Application()
+	public Application(Staff user)
 	{
 		super();
-		animals = new ArrayList<Animal>();
-		taskList = new TaskList();
-		vaccines = new ArrayList<Vaccine>();
-		species = new ArrayList<Species>();
-		//currentUser = new Staff();
+		if (user.isUser()) {
+			animals = new ArrayList<Animal>();
+			taskList = new TaskList();
+			vaccines = new ArrayList<Vaccine>();
+			species = new ArrayList<Species>();
+			this.currentUser = user;
+		}
+		else
+			System.exit(0);
 	}
 	
 	public static void main(String[] args) 
 	{
-		JFrame frame = new JFrame(APPLICATION_NAME);
+		MainScreen appFrame = new MainScreen(APPLICATION_NAME);
 		
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );  // Set behavior to close program when GUI closed
-		frame.setSize( 800, 600 );                               // set frame size
-		frame.setLayout(new GridLayout(1, 1));                   // Use GridLayout with 2 rows and 2 columns
-		frame.setIconImage(getAppIcon());
-		frame.setVisible(true);
+		appFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );  // Set behavior to close program when GUI closed
+		appFrame.setSize( 800, 600 );                               // set frame size
+		appFrame.setIconImage(getAppIcon());
+		appFrame.setVisible(true);
 		displayLogon();
 	}
 
@@ -70,7 +80,7 @@ public class Application {
 	
 	public static Application generateTestData()
 	{
-		Application newApp = new Application();
+		Application newApp = new Application(new Staff("master","master"));
 		
 		Species s1 = new Species("Tiger");
 		Species s2 = new Species("Monkey");
@@ -127,6 +137,10 @@ public class Application {
 
 	public static void setDateFormat(SimpleDateFormat inDateFormat) {
 		dateFormat = inDateFormat;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }
