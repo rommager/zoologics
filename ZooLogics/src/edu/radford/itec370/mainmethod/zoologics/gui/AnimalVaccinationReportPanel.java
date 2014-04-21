@@ -13,12 +13,15 @@ import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 import java.awt.GridLayout;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.JLabel;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.Button;
 
@@ -30,149 +33,107 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-public class AnimalVaccinationReportPanel extends JDialog{
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
+
+	private static final String[] HISTORY_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
+	private static final String[] UPCOMING_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
 	private ArrayList <Vaccination> vaccinations;
 	private Animal animal;
-	private JTextField textField;
-	private JTable table_2;
-	private JTable table;
-	private JTable table_1;
+	private JTextField txtAnimalName;
+	private JScrollPane historyScroll;
+	private JTable historyTable;
+	private DefaultTableModel historyModel;
+	
+	private JScrollPane upcomingScroll;
+	private JTable upcomingTable;
+	private DefaultTableModel upcomingModel;
+	
+	private JScrollPane pastDueScroll;
+	private JTable pastDueTable;
+	private DefaultTableModel pastDueModel;
 	
 	public AnimalVaccinationReportPanel() {
 		
-		setBounds(10, 10, 700, 475);
+		setBounds(10, 10, 700, 500);
 		setTitle("Animal Vaccination Reports");
 		
 		setIconImage(Application.getAppIcon());
-		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		getContentPane().setLayout(new BorderLayout());
+		
 		
 		JPanel panel = new JPanel();
-		getContentPane().add(panel);
 		panel.setLayout(null);
+		add(panel, BorderLayout.CENTER);
+		add(new NavigatorBar(this), BorderLayout.SOUTH);
 		
-		textField = new JTextField();
-		textField.setBounds(140, 33, 173, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtAnimalName = new JTextField();
+		txtAnimalName.setBounds(140, 33, 173, 20);
+		panel.add(txtAnimalName);
+		txtAnimalName.setColumns(10);
 		
-		JLabel lblAnimal = new JLabel("Animal Name:");
-		lblAnimal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAnimal.setBounds(21, 34, 97, 14);
-		panel.add(lblAnimal);
+		JLabel lblAnimalName = new JLabel("Animal Name:");
+		lblAnimalName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAnimalName.setBounds(21, 34, 97, 14);
+		panel.add(lblAnimalName);
 		
 		JLabel label = new JLabel("");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		label.setBounds(203, 48, 0, 0);
 		panel.add(label);
 		
-		JLabel lblAdministeredBy = new JLabel("Vaccination History:");
-		lblAdministeredBy.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAdministeredBy.setBounds(21, 79, 139, 20);
-		panel.add(lblAdministeredBy);
+		JLabel lblHistory = new JLabel("Vaccination History:");
+		lblHistory.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblHistory.setBounds(21, 79, 139, 20);
+		panel.add(lblHistory);
 		
-		JButton btnDismiss = new JButton("Search");
-		btnDismiss.setBounds(477, 404, 75, 23);
-		panel.add(btnDismiss);
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setBounds(477, 404, 75, 23);
+		panel.add(btnSearch);
 		
-		JButton btnCancel = new JButton("Close");
-		btnCancel.setBounds(605, 404, 68, 23);
-		panel.add(btnCancel);
+		JButton btnClose = new JButton("Close");
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		btnClose.setBounds(605, 404, 68, 23);
+		panel.add(btnClose);
 		
-		JLabel lblUpcomingVaccinations = new JLabel("Upcoming Vaccinations:");
-		lblUpcomingVaccinations.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUpcomingVaccinations.setBounds(33, 254, 157, 23);
-		panel.add(lblUpcomingVaccinations);
+		JLabel lblUpcoming = new JLabel("Upcoming Vaccinations:");
+		lblUpcoming.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUpcoming.setBounds(33, 254, 157, 23);
+		panel.add(lblUpcoming);
 		
 		JLabel lblPastDue = new JLabel("Past Due:");
 		lblPastDue.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblPastDue.setBounds(380, 255, 84, 20);
 		panel.add(lblPastDue);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 110, 649, 133);
-		panel.add(scrollPane);
+		// set up vaccination history table
+		historyModel = new DefaultTableModel(null, HISTORY_COLUMN_NAMES);
+		historyTable = new JTable(historyModel);
+		historyScroll = new JScrollPane(historyTable);
+		historyScroll.setBounds(21, 110, 649, 133);
+		panel.add(historyScroll);
 		
-		table_2 = new JTable();
+		// set up upcoming vaccinations table
+		upcomingModel = new DefaultTableModel(null,UPCOMING_COLUMN_NAMES);
+		upcomingTable = new JTable(upcomingModel);
+		upcomingScroll = new JScrollPane(upcomingTable);
+		upcomingScroll.setBounds(21, 286, 322, 107);
+		panel.add(upcomingScroll);
 		
-		Vaccination v1 = new Vaccination();
-		v1.setVaccineName("Vaccine 1");
-		v1.setAdministeredBy(new Staff("Crazy Nick"));
-		v1.setDateAdministered(new Date(2,2,2014));
-		
-		Vaccination v2 = new Vaccination();
-		v2.setVaccineName("Vaccine 2");
-		v2.setAdministeredBy(new Staff("Chase"));
-		v2.setDateAdministered(new Date(2,4,04));
-
-//		vaccinations.add(v1);
-//		vaccinations.add(v2);
-		
-		table_2.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Vaccination Name/Dose", "Administered Date", "Administered By"},
-				v1.getTableRow(),
-				v2.getTableRow(),
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"Vaccination Name/Dose", "New column", "New column"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				true, true, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		scrollPane.setColumnHeaderView(table_2);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(21, 286, 322, 107);
-		panel.add(scrollPane_1);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Vaccination Name/Dose", "Due Date"},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-			},
-			new String[] {
-				"", "Due Date"
-			}
-		));
-		scrollPane_1.setColumnHeaderView(table);
-		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(382, 286, 291, 107);
-		panel.add(scrollPane_2);
-		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Vaccination Name/Dose", "Due Date"},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
-			},
-			new String[] {
-				"Vaccination Name/Dose", "Due Date"
-			}
-		));
-		scrollPane_2.setRowHeaderView(table_1);
-		
+		// set up past due vaccinations table
+		pastDueModel = new DefaultTableModel(null,UPCOMING_COLUMN_NAMES);
+		pastDueTable = new JTable(pastDueModel);
+		pastDueScroll = new JScrollPane(pastDueTable);
+		pastDueScroll.setBounds(382, 286, 291, 107);
+		panel.add(pastDueScroll);
+//		pack();
+				
 	}
 	
 	public String[][] getAllTableRows() {
@@ -186,9 +147,22 @@ public class AnimalVaccinationReportPanel extends JDialog{
 	}
 	
 	public static void main(String[] args) {
-		AnimalVaccinationReportPanel anVacRepPanel = new AnimalVaccinationReportPanel();
-		anVacRepPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		anVacRepPanel.setVisible(true);
+		AnimalVaccinationReportPanel tester = new AnimalVaccinationReportPanel();
+		tester.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		Vaccination v1 = new Vaccination();
+		v1.setVaccineName("Vaccine 1");
+		v1.setAdministeredBy(new Staff("Crazy Nick"));
+		v1.setDateAdministered(new Date(2,2,2014));
+		
+		Vaccination v2 = new Vaccination();
+		v2.setVaccineName("Vaccine 2");
+		v2.setAdministeredBy(new Staff("Chase"));
+		v2.setDateAdministered(new Date(2,4,04));
+
+		
+		
+		tester.setVisible(true);
 	}
 	
 	public void refresh() {
@@ -209,5 +183,41 @@ public class AnimalVaccinationReportPanel extends JDialog{
 
 	public void setVaccinations(ArrayList <Vaccination> vaccinations) {
 		this.vaccinations = vaccinations;
+	}
+
+	@Override
+	public void firstRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void previousRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lastRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyFilter(String filter) {
+		// TODO Auto-generated method stub
+		
 	}
 }
