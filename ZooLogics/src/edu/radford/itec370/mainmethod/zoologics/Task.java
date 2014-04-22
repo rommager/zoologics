@@ -25,7 +25,7 @@ public class Task implements Serializable {
 	private static final long serialVersionUID = -8687090435553311509L;
 	private static final String TASK_TYPE = "Task";
 	protected String taskName;
-	protected StringBuffer notes;
+	protected String notes;
 	protected Calendar dueDate;
 	protected Calendar completedDate;
 	protected int status;
@@ -39,16 +39,16 @@ public class Task implements Serializable {
 		super();
 	}
 	
-	public Task(StringBuffer notes,
+	public Task(String notes,
 			int status,
 			TaskList parentTaskList) {
 		this();
-		this.notes = new StringBuffer(notes);
+		this.notes = notes;
 		this.status = status;
 		this.parentTaskList = parentTaskList;
 	}
 	
-	public Task(StringBuffer notes, 
+	public Task(String notes, 
 			int status,
 			TaskList parentTaskList,
 			Calendar dueDate) {
@@ -61,7 +61,7 @@ public class Task implements Serializable {
 			int status, 
 			TaskList parentTaskList,
 			String dueDate) throws ParseException {
-		this(new StringBuffer(notes), status, parentTaskList);
+		this(new String(notes), status, parentTaskList);
 		Calendar dueCalendar = Calendar.getInstance();
 		dueCalendar.setTime(Application.getDateFormat().parse(dueDate));
 		setDueDate(dueCalendar);
@@ -158,10 +158,10 @@ public class Task implements Serializable {
 		return "Task '" + taskName + "', " + " status=" + status + ", due=" + df.format(dueDate.getTime()) + "]";
 	}
 
-	public StringBuffer getNotes() {
+	public String getNotes() {
 		return notes;
 	}
-	public void setNotes(StringBuffer notes) {
+	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 	public Calendar getDueDate() {

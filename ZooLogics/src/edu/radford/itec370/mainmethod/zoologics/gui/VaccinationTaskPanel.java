@@ -26,7 +26,7 @@ public class VaccinationTaskPanel extends TaskPanel {
 		txtTaskName.setLocation(90, 43);
 		txtDueDate.setLocation(342, 43);
 		txtNotes.setLocation(10, 100);
-		txtCompletionDate.setLocation(342, 225);
+		txtCompletedDate.setLocation(342, 225);
 		txtCompletedBy.setLocation(90, 225);
 		btnDismiss.setLocation(245, 276);
 		btnCancel.setLocation(359, 276);
@@ -73,11 +73,11 @@ public class VaccinationTaskPanel extends TaskPanel {
 		this.animals = animals;
 	}
 	
-	private void load() {
+	public void load() {
 		
 	}
 	
-	private void save() {
+	public void save() {
 		
 	}
 }

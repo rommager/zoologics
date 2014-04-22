@@ -1,6 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -18,14 +19,15 @@ public class TaskPanel extends JDialog implements Navigable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1052426461587559703L;
-	protected ArrayList<Task> tasks;
+	protected TaskList tasks;
+	protected int currentIndex;
 	
 	protected JPanel taskPanel;
 	protected JTextField txtTaskName;
 	protected JTextField txtDueDate;
 	protected JTextField txtNotes;
 	protected JTextField txtCompletedBy;
-	protected JTextField txtCompletionDate;
+	protected JTextField txtCompletedDate;
 
 	protected JLabel lblTaskName;
 	protected JLabel lblDueDate;
@@ -38,12 +40,18 @@ public class TaskPanel extends JDialog implements Navigable {
 	protected JButton btnCompleteTask;
 	
 	public TaskPanel() {
+		this(new TaskList());
+	}
+	
+	public TaskPanel(TaskList tasks) {
+		super();
+		this.tasks = tasks;
+		currentIndex = 0;
+		
 		setIconImage(Application.getAppIcon());
 		setTitle("Task");
 		setBounds(100, 100, 481, 341);
 		
-				
-
 		taskPanel = new JPanel();
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(taskPanel, BorderLayout.CENTER);
@@ -105,16 +113,68 @@ public class TaskPanel extends JDialog implements Navigable {
 		lblCompletionDate.setBounds(236, 197, 96, 14);
 		taskPanel.add(lblCompletionDate);
 
-		txtCompletionDate = new JTextField();
-		txtCompletionDate.setColumns(10);
-		txtCompletionDate.setBounds(342, 194, 106, 20);
-		taskPanel.add(txtCompletionDate);
+		txtCompletedDate = new JTextField();
+		txtCompletedDate.setColumns(10);
+		txtCompletedDate.setBounds(342, 194, 106, 20);
+		taskPanel.add(txtCompletedDate);
 	}
 
 	public static void main(String[] args) {
 		TaskPanel taskPanel = new TaskPanel();
 		taskPanel.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		Task newTask;
+		try {
+			newTask = new Task("Reminder to clean toilets", Task.ACTIVE, null, "11/17/2011");
+			taskPanel.add(newTask);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		taskPanel.refresh();
 		taskPanel.setVisible(true);
+	}
+	
+	public void add(Task newTask) {
+		tasks.add(newTask);
+	}
+	
+	public Task getCurrentTask() {
+		Task task = null;
+		try {
+			task = tasks.get(currentIndex);
+		}
+		catch(IndexOutOfBoundsException e) {
+			// do nothing
+		}
+		return task;
+	}
+
+	
+	public void refresh() {
+		Task task = getCurrentTask();
+		if (task != null) {
+			this.txtTaskName.setText(task.getTaskName());
+			if (task.getCompletedBy() != null)
+				this.txtCompletedBy.setText(task.getCompletedBy().getName());
+			if (task.getDueDate() != null)
+				this.txtDueDate.setText(Application.formatDate(task.getDueDate()));
+			if (task.getCompletedDate() != null)
+				this.txtCompletedDate.setText(Application.formatDate(task.getCompletedDate()));
+			this.txtNotes.setText(task.getNotes());
+		}
+		
+	}
+	
+	public void save() {
+		Task task = getCurrentTask();
+		if (task != null) {
+			task.setTaskName(this.txtTaskName.getText());
+//			task.setStaff(this.txtCompletedBy.getText());
+			task.setDueDate(Application.parseCalendar(this.txtDueDate.getText()));
+			task.setCompletedDate(Application.parseCalendar(this.txtCompletedBy.getText()));
+			task.setNotes(this.txtNotes.getText());
+		}
 	}
 
 	@Override
@@ -151,6 +211,14 @@ public class TaskPanel extends JDialog implements Navigable {
 	public void applyFilter(String filter) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public TaskList getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(TaskList tasks) {
+		this.tasks = tasks;
 	}
 
 }

@@ -3,12 +3,15 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.awt.Image;
 import java.io.Serializable;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
@@ -87,6 +90,34 @@ public class Application implements Serializable {
 
 		return newApp;
 
+	}
+	
+	public static String formatDate(Date dateIn) {
+		return dateFormat.format(dateIn);
+	}
+	
+	public static String formatDate(Calendar dateIn) {
+		return formatDate(dateIn.getTime());
+	}
+	
+	public static Date parseDate(String stringIn) {
+		try {
+			return dateFormat.parse(stringIn);
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "'" + stringIn + "' is not a valid date.\n\nPlease try again", "Date Entry Error", JOptionPane.ERROR_MESSAGE);
+		}
+		return null;
+	}
+	
+	public static Calendar parseCalendar(String stringIn) {
+		Date date = parseDate(stringIn);
+		if (date != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			return calendar;
+		}
+		else
+			return null;
 	}
 
 	public ArrayList<Animal> getAnimals() {
