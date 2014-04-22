@@ -3,7 +3,12 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TaskRecurrences extends ArrayList<TaskRecurrenceInstance> {
+public class TaskRecurrences extends ArrayList<TaskRecurrenceInstance> implements Cloneable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -578725875891715725L;
 
 	public TaskRecurrences() {
 		super();		
@@ -24,6 +29,11 @@ public class TaskRecurrences extends ArrayList<TaskRecurrenceInstance> {
 			}
 		}
 		 return null;	
+	}
+	
+	@Override
+	public Object clone() {
+		return null;
 	}
 
 

@@ -40,6 +40,8 @@ public class MainScreen extends JFrame implements MainScreenNav {
 	private JMenu aboutMenu;
 	private JMenuItem exitItem;
 	private final Action action = new SwingAction();
+	JMenuItem mntmExit;
+	JMenuItem mntmVaccinePanel;
 
 	public MainScreen() {
 
@@ -127,17 +129,13 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		});
 		mnFile.add(mntmSpeciesPanel);
 
-		JMenuItem mntmVaccinePanel = new JMenuItem("Vaccine Panel");
-		mntmVaccinePanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		mntmVaccinePanel = new JMenuItem("Vaccine Panel");
+		mntmVaccinePanel.addActionListener(new MenuListener());
 		mnFile.add(mntmVaccinePanel);
 
-		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit = new JMenuItem("Exit");
 		mntmExit.setMnemonic(KeyEvent.VK_X);
-		mntmExit.addActionListener(new ExitListener());
+		mntmExit.addActionListener(new MenuListener());
 		mnFile.add(mntmExit);
 
 		JMenu mnAbout = new JMenu("About");
@@ -176,9 +174,15 @@ public class MainScreen extends JFrame implements MainScreenNav {
 
 	}
 
-	private class ExitListener implements ActionListener {
+	private class MenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
+			if (e.getSource() == mntmExit)
+				System.exit(0);
+			else if (e.getSource() == mntmVaccinePanel) {
+				VaccinePanel vaccinePanel = new VaccinePanel();
+				vaccinePanel.setVisible(true);
+			}
+				
 		}
 	}
 
