@@ -1,62 +1,40 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import java.util.Date;
+import java.util.Calendar;
 
-public class Vaccination {
+public class Vaccination extends Task {
 
-	private String vaccineName;
-	private String dosage;
-	private Date dateAdministered;
-	private Staff administeredBy;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3208824316987913037L;
+	private static final String TASK_TYPE = "Vaccination";
+	private Animal animal;
 	
 	public Vaccination() {
 		super();
 	}
 	
-	public Vaccination(String vaccineName, String dosage,
-			Date dateAdministered, Staff administeredBy) {
+	public Vaccination(Animal animal, String vaccineName,
+			Calendar dateAdministered, Staff administeredBy) {
 		this();
-		this.vaccineName = vaccineName;
-		this.dosage = dosage;
-		this.dateAdministered = dateAdministered;
-		this.administeredBy = administeredBy;
+		this.animal = animal;
+		this.taskName = vaccineName;
+		this.completedDate = dateAdministered;
+		this.completedBy = administeredBy;
 	}
 
-	public String[] getTableRow() {
-		String[] outArray = new String[]{vaccineName,Application.getDateFormat().format(dateAdministered),administeredBy.getName()};
-		return outArray;
+	@Override
+	public String getTaskType() {
+		return TASK_TYPE;
 	}
 	
-	public String getVaccineName() {
-		return vaccineName;
+
+	public Animal getAnimal() {
+		return animal;
 	}
 
-	public void setVaccineName(String vaccineName) {
-		this.vaccineName = vaccineName;
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
-
-	public String getDosage() {
-		return dosage;
-	}
-
-	public void setDosage(String dosage) {
-		this.dosage = dosage;
-	}
-
-	public Date getDateAdministered() {
-		return dateAdministered;
-	}
-
-	public void setDateAdministered(Date dateAdministered) {
-		this.dateAdministered = dateAdministered;
-	}
-
-	public Staff getAdministeredBy() {
-		return administeredBy;
-	}
-
-	public void setAdministeredBy(Staff administeredBy) {
-		this.administeredBy = administeredBy;
-	}
-	
 }

@@ -23,9 +23,13 @@ public class Task implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8687090435553311509L;
-	private StringBuffer description;
-	private Calendar dueDate;
-	private int status;
+	private static final String TASK_TYPE = "Task";
+	protected String taskName;
+	protected StringBuffer notes;
+	protected Calendar dueDate;
+	protected Calendar completedDate;
+	protected int status;
+	protected Staff completedBy;
 	
 	private TaskRecurrences recurrences;
 	
@@ -35,29 +39,29 @@ public class Task implements Serializable {
 		super();
 	}
 	
-	public Task(StringBuffer description,
+	public Task(StringBuffer notes,
 			int status,
 			TaskList parentTaskList) {
 		this();
-		this.description = new StringBuffer(description);
+		this.notes = new StringBuffer(notes);
 		this.status = status;
 		this.parentTaskList = parentTaskList;
 	}
 	
-	public Task(StringBuffer description, 
+	public Task(StringBuffer notes, 
 			int status,
 			TaskList parentTaskList,
 			Calendar dueDate) {
-		this(description, status, parentTaskList);
+		this(notes, status, parentTaskList);
 		this.dueDate = dueDate;
 	}
 	
 	// Constructor that accepts strings for description and due date, for IO
-	public Task(String description, 
+	public Task(String notes, 
 			int status, 
 			TaskList parentTaskList,
 			String dueDate) throws ParseException {
-		this(new StringBuffer(description), status, parentTaskList);
+		this(new StringBuffer(notes), status, parentTaskList);
 		Calendar dueCalendar = Calendar.getInstance();
 		dueCalendar.setTime(Application.getDateFormat().parse(dueDate));
 		setDueDate(dueCalendar);
@@ -95,7 +99,6 @@ public class Task implements Serializable {
 			System.out.println(list.toString());
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -120,7 +123,7 @@ public class Task implements Serializable {
 	
 	public Task spawnNextTaskRecurrence(){
 		if (isRecurring()) {
-			Task newTask = new Task(description, status, parentTaskList);
+			Task newTask = new Task(notes, status, parentTaskList);
 			
 			// move recurrences collection from this instance to the newly spawned instance
 			newTask.setRecurrences(this.getRecurrences());
@@ -133,6 +136,18 @@ public class Task implements Serializable {
 		return null;
 	}
 	
+	
+	public String[] getGridRow() {
+		if (status == Task.ACTIVE)
+			return new String[] {taskName, Application.getDateFormat().format(dueDate)};
+		else if (status == Task.COMPLETED)
+			return new String[] {taskName, Application.getDateFormat().format(completedDate), completedBy.getName()};
+		else
+			return null;
+				
+	}
+
+	
 	public boolean isRecurring() {
 		return (recurrences != null);
 	}
@@ -140,14 +155,14 @@ public class Task implements Serializable {
 	@Override
 	public String toString() {
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		return "Task '" + description + "', " + " status=" + status + ", due=" + df.format(dueDate.getTime()) + "]";
+		return "Task '" + taskName + "', " + " status=" + status + ", due=" + df.format(dueDate.getTime()) + "]";
 	}
 
-	public StringBuffer getDescription() {
-		return description;
+	public StringBuffer getNotes() {
+		return notes;
 	}
-	public void setDescription(StringBuffer description) {
-		this.description = description;
+	public void setNotes(StringBuffer notes) {
+		this.notes = notes;
 	}
 	public Calendar getDueDate() {
 		return dueDate;
@@ -176,5 +191,33 @@ public class Task implements Serializable {
 
 	public void setRecurrences(TaskRecurrences recurrences) {
 		this.recurrences = recurrences;
+	}
+
+	public String getTaskType() {
+		return TASK_TYPE;
+	}
+	
+	public Calendar getCompletedDate() {
+		return completedDate;
+	}
+
+	public void setCompletedDate(Calendar completedDate) {
+		this.completedDate = completedDate;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public Staff getCompletedBy() {
+		return completedBy;
+	}
+
+	public void setCompletedBy(Staff completedBy) {
+		this.completedBy = completedBy;
 	}
 }

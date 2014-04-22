@@ -1,6 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JPanel;
@@ -39,7 +40,7 @@ import java.awt.event.ActionEvent;
 public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 
 	private static final String[] HISTORY_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
-	private static final String[] UPCOMING_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
+	private static final String[] UPCOMING_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Due Date"};
 	private ArrayList <Vaccination> vaccinations;
 	private Animal animal;
 	private JTextField txtAnimalName;
@@ -151,16 +152,14 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		tester.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		Vaccination v1 = new Vaccination();
-		v1.setVaccineName("Vaccine 1");
-		v1.setAdministeredBy(new Staff("Crazy Nick"));
-		v1.setDateAdministered(new Date(2,2,2014));
+		v1.setTaskName("Vaccine 1");
+		v1.setCompletedBy(new Staff("Crazy Nick"));
+		v1.setCompletedDate(Calendar.getInstance());
 		
 		Vaccination v2 = new Vaccination();
-		v2.setVaccineName("Vaccine 2");
-		v2.setAdministeredBy(new Staff("Chase"));
-		v2.setDateAdministered(new Date(2,4,04));
-
-		
+		v2.setTaskName("Vaccine 2");
+		v2.setCompletedBy(new Staff("Chase"));
+		v2.setCompletedDate(Calendar.getInstance());
 		
 		tester.setVisible(true);
 	}
