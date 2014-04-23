@@ -48,7 +48,7 @@ public class MainScreen extends JFrame implements MainScreenNav {
 	JMenuItem mntmVaccinePanel;
 
 	public MainScreen() {
-
+		setTitle(Application.getAppName() + " Main Task Screen");
 		setIconImage(Application.getAppIcon());
 		this.setSize(new Dimension(650, 449));
 		getContentPane().setLayout(null);

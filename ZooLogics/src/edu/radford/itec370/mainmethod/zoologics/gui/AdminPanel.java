@@ -1,19 +1,29 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 
+
+
+
+
+
+
+
 import javax.swing.JCheckBox;
-
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
@@ -22,103 +32,78 @@ import java.awt.event.ItemListener;
 
 
 
+
+
+
+
+
+
+
+import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Staff;
+import edu.radford.itec370.mainmethod.zoologics.StaffHive;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AdminPanel extends JDialog {
-	Staff staff;
-	JTabbedPane tabbedPane;
-	JLabel label;
-	JTextField textfield;
-	JPasswordField txtpassword;
-	JPanel panel1;
-	JPanel panel2;
-	JButton button;
-	JTextField txtUserID;
-	JTextField txtUserName;
-	JButton Submit;
-	JCheckBox User;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3185446536402535910L;
+	private static final String[] COLUMN_NAMES = {"ID","Last Name","First Name","Position","Username"};
 	
+	private static int nextStaffID = 1001;
 	
+	private StaffHive staffHive;
+	
+	private DefaultTableModel model;
+	private JTable table;
+	private JScrollPane scrollPane;
 	
 	public static void main(String args[]) {
 		AdminPanel admin = new AdminPanel();
-		admin.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		admin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		admin.setSize(350, 200);
 		admin.setVisible(true);
+		
+		AdminPanel admin2 = new AdminPanel();
+		admin2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		admin2.setSize(350, 200);
+		admin2.setVisible(true);
 	}
 	
 	public AdminPanel() {
+		setTitle(Application.getAppName() + " Staff Maintenance");
+		setIconImage(Application.getAppIcon());		
+		getContentPane().setLayout(new BorderLayout());
+		
+		JPanel panel = new JPanel(new GridLayout(1,1));
+		model = new DefaultTableModel(null, COLUMN_NAMES);
+		table = new JTable(model);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(1,1,100,100);
+		
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JButton newButton = new JButton("Add New Staff");
+		newButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				model.addRow(new String[] {Integer.toString(nextStaffID), null, null, null, null});
+				nextStaffID++;
+			}
+		});
+		JButton saveButton = new JButton("Save");
+		JButton closeButton = new JButton("Close");
+		buttonPanel.add(newButton);
+		buttonPanel.add(saveButton);
+		buttonPanel.add(closeButton);
+		getContentPane().add(buttonPanel,BorderLayout.SOUTH);
+		
+		panel.add(scrollPane);
+		getContentPane().add(panel, BorderLayout.CENTER);
+//		pack();
 
-		tabbedPane = new JTabbedPane();
-		this.addUser();
-		getContentPane().add(tabbedPane);
 		
 	}
 
-	void addUser() {
-		
-		JLabel lblUserID = new JLabel("User ID", SwingConstants.CENTER);
-		txtUserID = new JTextField();
-
-		JLabel lblUserName = new JLabel("User Name", SwingConstants.CENTER);
-		txtUserName = new JTextField();
-
-		JLabel lblPassword = new JLabel("Password", SwingConstants.CENTER);
-		txtpassword = new JPasswordField();
-
-		JButton btnSubmit = new JButton("Submit");
-		
-		 boolean User = true;
-
-		/**
-		 Are you a user?
-		 */
-		final Checkbox User1;
-
-		/* ... */
-
-		User1 = new Checkbox("user");
-
-		User1.addItemListener ( new ItemListener()
-		   {
-
-		   public void itemStateChanged( ItemEvent e )
-		      {
-		       boolean User;
-			User = User1.getState(); 
-			 
-		      /* ... */
-		      }
-		   });
-		/* ... */
-		
-
-
-
-
-		panel1 = new JPanel();
-		panel1.setLayout(new GridLayout(4, 2, 2, 2));
-
-		panel1.add(lblUserID);
-		panel1.add(txtUserID);
-		panel1.add(lblUserName);
-		panel1.add(txtUserName);
-		panel1.add(lblPassword);
-		panel1.add(txtpassword);
-		panel1.add(btnSubmit);
-		panel1.add(User1);
-
-		tabbedPane.addTab("Add User", null, panel1, "First Panel");
-
-	}
-
-	public Staff getStaff() {
-		return staff;
-	}
-
-	public void setStaff(Staff staff) {
-		this.staff = staff;
-		this.txtpassword.setText("");
-	}
 
 }
