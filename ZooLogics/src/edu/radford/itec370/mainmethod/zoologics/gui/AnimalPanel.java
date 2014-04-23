@@ -40,9 +40,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 
-public class AnimalPanel extends JFrame implements Navigable {
+public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	
 	public static final String WINDOW_TITLE = "Animal Profile";
 	private Animal animal;
@@ -113,7 +114,8 @@ public class AnimalPanel extends JFrame implements Navigable {
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//this.save();
+				save();
+				
 			}
 		});
 		btnSave.setBounds(678, 349, 89, 23);
@@ -277,20 +279,16 @@ public class AnimalPanel extends JFrame implements Navigable {
 		
 	}
 	
-	public void refresh() {
-		
-	}
-	
-	public void save() {
-		
-	}
-	
 	public Animal getAnimal() {
 		return animal;
 	}
 
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
+		refresh();
+	}
+	
+	public void refresh() {
 		this.txtName.setText(animal.getName());
 		this.txtSpecies.setText(animal.getSpecies().getSpeciesName());
 		this.txtSex.setText(Character.toString(animal.getSex()));
@@ -307,6 +305,11 @@ public class AnimalPanel extends JFrame implements Navigable {
 		else {
 			this.rdbtnChipNo.setSelected(true);
 		}
+
+	}
+	
+	public void save() {
+		animal.setName(this.txtName.getText());
 	}
 
 	public ArrayList<Animal> getAnimals() {

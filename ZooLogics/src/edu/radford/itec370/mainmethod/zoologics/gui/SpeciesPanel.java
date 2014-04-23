@@ -17,6 +17,11 @@ import javax.swing.JTable;
 
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
+
+/**
+ * @author Sean
+ * The SpeciesPanel is meant as a GUI interface to manage Species instances
+ */
 public class SpeciesPanel extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
