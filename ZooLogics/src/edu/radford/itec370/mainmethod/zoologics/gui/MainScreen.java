@@ -45,6 +45,7 @@ public class MainScreen extends JFrame implements MainScreenNav {
 
 	public MainScreen() {
 
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(Application.getAppIcon());
 		this.setSize(new Dimension(650, 449));
 		getContentPane().setLayout(null);
@@ -54,12 +55,15 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		lblTasks.setBounds(21, 36, 65, 26);
 		getContentPane().add(lblTasks);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 73, 504, 195);
-		getContentPane().add(scrollPane);
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setBounds(21, 73, 504, 195);
+//		getContentPane().add(scrollPane);
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {
+//		DefaultTableModel model = new DefaultTableModel(null, new String[]{ "Task Type", "Animal", "Description", "Due" });
+//		table = new JTable(model);
+//		JScrollPane scrollPane2 = new JScrollPane(table);
+		
+		table = new JTable(new DefaultTableModel(new Object[][] {
 				{ "Task Type", "Animal", "Description", "Due" },
 				{ null, null, null, null }, { null, null, null, null },
 				{ null, null, null, null }, { null, null, null, null },
@@ -67,16 +71,17 @@ public class MainScreen extends JFrame implements MainScreenNav {
 				{ null, null, null, null }, { null, null, null, null },
 				{ null, null, null, null }, { null, null, null, null },
 				{ null, null, null, null }, },
-		// table.add
-				new String[] { "Task Tpye", "Animal", "Description", "Due" }) {
-			Class[] columnTypes = new Class[] { String.class, String.class,
-					String.class, String.class };
+				new String[] { "Task Type", "Animal", "Description", "Due" }));
+		
 
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		scrollPane.setColumnHeaderView(table);
+		JScrollPane scrollPane = new JScrollPane();
+		
+//		scrollPane.setColumnHeaderView(table);
+		scrollPane.setViewportView(table);
+		scrollPane.setBounds(21, 73, 504, 195);
+		getContentPane().add(scrollPane);
+		
+
 
 		JButton btnOpenItem = new JButton("Open Item");
 		btnOpenItem.setBounds(294, 279, 89, 23);
