@@ -28,7 +28,7 @@ public class MainScreenNavBar extends JPanel {
 	private JLabel lblNeedToAdd;
 	
 
-	private MainScreenNavBar() {
+	MainScreenNavBar() {
 		super();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {345, 160};

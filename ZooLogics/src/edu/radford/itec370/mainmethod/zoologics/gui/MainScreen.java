@@ -1,11 +1,14 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
@@ -28,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
@@ -45,7 +49,6 @@ public class MainScreen extends JFrame implements MainScreenNav {
 
 	public MainScreen() {
 
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(Application.getAppIcon());
 		this.setSize(new Dimension(650, 449));
 		getContentPane().setLayout(null);
@@ -55,33 +58,20 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		lblTasks.setBounds(21, 36, 65, 26);
 		getContentPane().add(lblTasks);
 
-//		JScrollPane scrollPane = new JScrollPane();
-//		scrollPane.setBounds(21, 73, 504, 195);
-//		getContentPane().add(scrollPane);
-
-//		DefaultTableModel model = new DefaultTableModel(null, new String[]{ "Task Type", "Animal", "Description", "Due" });
-//		table = new JTable(model);
-//		JScrollPane scrollPane2 = new JScrollPane(table);
+	//	JScrollPane scrollPane = new JScrollPane();
+	//	scrollPane.setBounds(21, 73, 504, 195);
+	//	getContentPane().add(scrollPane);
 		
-		table = new JTable(new DefaultTableModel(new Object[][] {
-				{ "Task Type", "Animal", "Description", "Due" },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, },
-				new String[] { "Task Type", "Animal", "Description", "Due" }));
+	//	DefaultTableModel model = new DefaultTableModel(null, new String[] { "Task Type", "Animal", "Description", "Due"});
+	//	table = new JTable(model);
+	//	JScrollPane scrollPane2 = new JScrollPane(table);
 		
-
-		JScrollPane scrollPane = new JScrollPane();
-		
-//		scrollPane.setColumnHeaderView(table);
-		scrollPane.setViewportView(table);
+		table = new JTable(new DefaultTableModel(new Object[][] { }, new String[] { "Task Tpye", "Animal", "Description", "Due" }) {
+		});
+		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(21, 73, 504, 195);
 		getContentPane().add(scrollPane);
-		
-
+	//	scrollPane.setColumnHeaderView(table);
 
 		JButton btnOpenItem = new JButton("Open Item");
 		btnOpenItem.setBounds(294, 279, 89, 23);
@@ -157,6 +147,11 @@ public class MainScreen extends JFrame implements MainScreenNav {
 
 	}
 	
+	private void add(MainScreenNav mainScreenNav, String south) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public MainScreen(String windowTitle) {
 		this();
 		this.setTitle(windowTitle);
