@@ -119,6 +119,7 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		historyScroll = new JScrollPane(historyTable);
 		historyScroll.setBounds(21, 110, 649, 133);
 		panel.add(historyScroll);
+		historyModel.addRow(new String[] {null,null,null});
 		
 		// set up upcoming vaccinations table
 		upcomingModel = new DefaultTableModel(null,UPCOMING_COLUMN_NAMES);
