@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Animal implements Printable, Serializable{
+public class Animal implements Printable, Serializable {
 
 	/**
 	 * 
@@ -109,8 +109,12 @@ public class Animal implements Printable, Serializable{
 		return sex;
 	}
 
-	public void setSex(char sex) {
-		this.sex = sex;
+	public void setSex(char sex) throws InvalidValueException {
+		sex = Character.toUpperCase(sex);
+		if (sex == 'M' || sex == 'F')
+			this.sex = sex;
+		else
+			throw new InvalidValueException();
 	}
 
 	public String getSire() {
