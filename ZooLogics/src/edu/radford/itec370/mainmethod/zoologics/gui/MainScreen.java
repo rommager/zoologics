@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
+import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
 import java.awt.GridBagLayout;
@@ -43,9 +44,12 @@ public class MainScreen extends JFrame implements MainScreenNav {
 	private JMenu fileMenu;
 	private JMenu aboutMenu;
 	private JMenuItem exitItem;
-	private final Action action = new SwingAction();
-	JMenuItem mntmExit;
-	JMenuItem mntmVaccinePanel;
+	private JMenuItem mntmExit;
+	private JMenuItem mntmVaccinePanel;
+	private JMenuItem mntmSpeciesPanel;
+	private JMenuItem mntmAnimalReport;
+	private JMenuItem mntmAnimalPanel;
+	private JMenuItem mntmAdminPanel;
 
 	public MainScreen() {
 		setTitle(Application.getAppName() + " Main Task Screen");
@@ -66,14 +70,14 @@ public class MainScreen extends JFrame implements MainScreenNav {
 	//	table = new JTable(model);
 	//	JScrollPane scrollPane2 = new JScrollPane(table);
 		
-		table = new JTable(new DefaultTableModel(new Object[][] { }, new String[] { "Task Tpye", "Animal", "Description", "Due" }) {
+		table = new JTable(new DefaultTableModel(new Object[][] { }, new String[] {"Task Tpye", "Animal", "Description", "Due"}) {
 		});
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(21, 73, 504, 195);
 		getContentPane().add(scrollPane);
 	//	scrollPane.setColumnHeaderView(table);
 
-		JButton btnOpenItem = new JButton("Open Item");
+		JButton btnOpenItem = new JButton("Open");
 		btnOpenItem.setBounds(294, 279, 89, 23);
 		getContentPane().add(btnOpenItem);
 
@@ -89,39 +93,20 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		menuBar_1.add(mnFile);
 
-		JMenuItem mntmAdminPanel = new JMenuItem("Admin Panel");
-		mntmAdminPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-		});
+		mntmAdminPanel = new JMenuItem("Admin Panel");
+		mntmAdminPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmAdminPanel);
 
-		JMenuItem mntmAnimalPanel = new JMenuItem("Animal Panel");
-		mntmAnimalPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-		});
+		mntmAnimalPanel = new JMenuItem("Animal Panel");
+		mntmAnimalPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmAnimalPanel);
 
-		JMenuItem mntmAnimalReport = new JMenuItem("Animal Report");
-		mntmAnimalReport.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				AnimalVaccinationReportPanel report = new AnimalVaccinationReportPanel();
-				report.setVisible(true);
-			}
-		});
+		mntmAnimalReport = new JMenuItem("Animal Report");
+		mntmAnimalReport.addActionListener(new MenuListener());
 		mnFile.add(mntmAnimalReport);
 
-		JMenuItem mntmSpeciesPanel = new JMenuItem("Species Panel");
-		mntmSpeciesPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		mntmSpeciesPanel = new JMenuItem("Species Panel");
+		mntmSpeciesPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmSpeciesPanel);
 
 		mntmVaccinePanel = new JMenuItem("Vaccine Panel");
@@ -138,11 +123,7 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		menuBar_1.add(mnAbout);
 
 		JMenuItem mntmAboutMain = new JMenuItem("About Main() Method");
-		mntmAboutMain.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		mntmAboutMain.addActionListener(new MenuListener()); 
 		mnAbout.add(mntmAboutMain);
 
 	}
@@ -181,18 +162,31 @@ public class MainScreen extends JFrame implements MainScreenNav {
 			else if (e.getSource() == mntmVaccinePanel) {
 				VaccinePanel vaccinePanel = new VaccinePanel();
 				vaccinePanel.setVisible(true);
+				}
+			else if (e.getSource() == mntmSpeciesPanel) {
+				SpeciesPanel speciesPanel = new SpeciesPanel();
+				speciesPanel.setVisible(true);	
 			}
-				
+			else if (e.getSource() == mntmAnimalReport) {
+				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel();
+				animalReport.setVisible(true);	
+			}
+			else if (e.getSource() == mntmAnimalPanel) {
+				AnimalPanel animalPanel = new AnimalPanel();
+				animalPanel.setVisible(true);	
+		}
+			else if (e.getSource() == mntmAdminPanel) {
+				AdminPanel adminPanel = new AdminPanel();
+				adminPanel.setVisible(true);	
+		}
 		}
 	}
 
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
+
 
 		public void actionPerformed(ActionEvent e) {
 		}
+
 	}
-}
+
+
