@@ -8,7 +8,6 @@ public class Vaccine {
 	private String vaccineID;
 	private String vaccineName;
 	private String dosage;
-	private boolean recurring;
 	private TaskRecurrences defaultRecurrency;
 	private Date dueAtAnimalAge;
 

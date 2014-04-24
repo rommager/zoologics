@@ -299,6 +299,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		this.txtIDNumber.setText(animal.getChipId());
 		this.txtMarkings.setText(animal.getMarkings().toString());
 		this.txtNotes.setText(animal.getNotes().toString());
+		// TODO Add Date of birth
 		if(animal.isIdenficationChip()){
 			this.rdbtnChipYes.setSelected(true);
 		}
