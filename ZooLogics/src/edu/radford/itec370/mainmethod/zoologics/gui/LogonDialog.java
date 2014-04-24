@@ -1,9 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,14 +10,17 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 import edu.radford.itec370.mainmethod.zoologics.*;
-import edu.radford.itec370.mainmethod.zoologics.gui.components.*;
 import javax.swing.JPasswordField;
 
 public class LogonDialog extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8997686514405988648L;
+
 	protected final static String WINDOW_TITLE = Application.getAppName() + " Logon";
 	
 	private final JPanel contentPanel = new JPanel();

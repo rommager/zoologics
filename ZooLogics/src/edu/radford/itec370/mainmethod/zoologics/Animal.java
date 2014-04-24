@@ -1,10 +1,16 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Animal implements Printable {
+public class Animal implements Printable, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5761796477851733790L;
+	private static int animalIDCounter = 2001;
 	private int id;
 	private String name;
 	private Species species;
@@ -69,12 +75,18 @@ public class Animal implements Printable {
 
 	}
 
+	public int getNewIDNumber() {
+		return animalIDCounter++;
+	}
+	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+		if (id >= animalIDCounter)
+			animalIDCounter = id + 1;
 	}
 
 	public String getName() {
