@@ -29,7 +29,7 @@ public class Task implements Serializable {
 	protected int status;
 	protected Staff completedBy;
 	
-	private TaskRecurrence recurrences;
+	private RecurrenceSchedule recurrences;
 	
 	private TaskList parentTaskList;
 	
@@ -69,11 +69,11 @@ public class Task implements Serializable {
 		TaskList list = new TaskList();
 		try {
 			Task newTask = new Task("Reminder to clean toilets", Task.ACTIVE, list, "11/17/2011");
-			TaskRecurrence newRecurrences = new TaskRecurrence();
+			RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
 			newTask.setRecurrences(newRecurrences);
-			newRecurrences.add(new TaskRecurrenceInstance(3,WEEK,2));
-			newRecurrences.add(new TaskRecurrenceInstance(2,MONTH,1));
-			newRecurrences.add(new TaskRecurrenceInstance(-1,YEAR,1));
+			newRecurrences.add(new RecurrenceInstance(3,WEEK,2));
+			newRecurrences.add(new RecurrenceInstance(2,MONTH,1));
+			newRecurrences.add(new RecurrenceInstance(-1,YEAR,1));
 			list.add(newTask);
 			list.add(new Task("Vet Visit for Puja", Task.ACTIVE, list, "05/17/2014"));
 			newTask =  newTask.spawnNextTaskRecurrence();
@@ -189,11 +189,11 @@ public class Task implements Serializable {
 		this.parentTaskList = parentTaskList;
 	}
 
-	public TaskRecurrence getRecurrences() {
+	public RecurrenceSchedule getRecurrences() {
 		return recurrences;
 	}
 
-	public void setRecurrences(TaskRecurrence recurrences) {
+	public void setRecurrences(RecurrenceSchedule recurrences) {
 		this.recurrences = recurrences;
 	}
 

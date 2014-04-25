@@ -3,49 +3,36 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * @author srid3
- *
- */
-/**
- * @author srid3
- *
- */
-/**
- * @author srid3
- *
- */
-public class TaskRecurrenceInstance implements Cloneable {
+public class RecurrenceInstance implements Cloneable {
 
 	private int numberOfRecurrences;
-	private int intervalType;
-	private int intervalAmount;
 	private int numberRemaining;
+	private int intervalType;
+	private int intervalCount;
 	
-	
-	private TaskRecurrenceInstance() {
+	private RecurrenceInstance() {
 		super();
 	}
 
-	public TaskRecurrenceInstance(int numberOfRecurrences, 
+	public RecurrenceInstance(int numberOfRecurrences, 
 			int intervalType,
-			int intervalAmount) {
+			int intervalCount) {
 		this();
 		this.numberOfRecurrences = numberOfRecurrences;
 		this.numberRemaining = numberOfRecurrences;
 		this.intervalType = intervalType;
-		this.intervalAmount = intervalAmount;
+		this.intervalCount = intervalCount;
 		validate();
 	}
 	
-	public TaskRecurrenceInstance(int recurrenceCount, 
+	public RecurrenceInstance(int recurrenceCount, 
 			int intervalType,
-			int intervalAmount,
+			int intervalCount,
 			int remainingCount) {
 		this();
 		this.numberOfRecurrences = recurrenceCount;
 		this.intervalType = intervalType;
-		this.intervalAmount = intervalAmount;
+		this.intervalCount = intervalCount;
 		this.numberRemaining = remainingCount;
 		validate();
 	}
@@ -75,8 +62,8 @@ public class TaskRecurrenceInstance implements Cloneable {
 	}
 	
 	@Override
-	public TaskRecurrenceInstance clone() {
-		TaskRecurrenceInstance newInstance = new TaskRecurrenceInstance(numberOfRecurrences, intervalType, intervalAmount);
+	public RecurrenceInstance clone() {
+		RecurrenceInstance newInstance = new RecurrenceInstance(numberOfRecurrences, intervalType, intervalCount);
 		return newInstance;
 	}
 	
@@ -87,7 +74,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 		output.append(" of ");
 		output.append(numberOfRecurrences);
 		output.append(", every ");
-		output.append(intervalAmount);
+		output.append(intervalCount);
 		switch (intervalType) {
 			case Task.DAY:
 				output.append(" day");
@@ -98,7 +85,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 			case Task.YEAR:
 				output.append(" year");
 			}
-		if (intervalAmount > 1)
+		if (intervalCount > 1)
 			output.append("s");
 		
 		return output.toString();
@@ -131,7 +118,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 	 * adds interval to the passed in Calendar object
 	 */
 	private void addInterval(Calendar calendar) {
-		calendar.add(intervalType, intervalAmount);
+		calendar.add(intervalType, intervalCount);
 	}
 	
 	public void decrement() {
@@ -146,12 +133,12 @@ public class TaskRecurrenceInstance implements Cloneable {
 		this.intervalType = intervalType;
 	}
 
-	public int getIntervalAmount() {
-		return intervalAmount;
+	public int getIntervalCount() {
+		return intervalCount;
 	}
 
-	public void setIntervalAmount(int intervalAmount) {
-		this.intervalAmount = intervalAmount;
+	public void setIntervalCount(int intervalAmount) {
+		this.intervalCount = intervalAmount;
 	}
 	
 	public int getRemainingCount() {
@@ -163,7 +150,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 	}
 
 	private void validate() {
-		if (numberOfRecurrences < -1 || numberOfRecurrences == 0 || numberOfRecurrences == 1 || numberRemaining < 0 || numberRemaining > numberOfRecurrences || intervalAmount <= 0)
+		if (numberOfRecurrences < -1 || numberOfRecurrences == 0 || numberOfRecurrences == 1 || numberRemaining < 0 || numberRemaining > numberOfRecurrences || intervalCount <= 0)
 			throw new IllegalArgumentException();
 		if (numberOfRecurrences == -1 && numberRemaining != 0)
 			throw new IllegalArgumentException();

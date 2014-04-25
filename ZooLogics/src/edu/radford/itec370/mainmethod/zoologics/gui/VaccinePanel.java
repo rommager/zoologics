@@ -19,9 +19,10 @@ import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 public class VaccinePanel extends JFrame {
 
+	private static final long serialVersionUID = -3966249468484312613L;
 
-	private static final long serialVersionUID = 1L;
 	private ArrayList<Vaccine> vaccines;
+	
 	
 	private JTextField txtVaccineID;
 	private JTextField txtName;
@@ -29,7 +30,6 @@ public class VaccinePanel extends JFrame {
 	private JTextField txtDueAt;
 	private JLabel lblDosage;
 	private JLabel lblFirstDoseAge;
-	private JLabel lblRecurring;
 
 	public static void main(String[] args) {
 		VaccinePanel panel = new VaccinePanel();
@@ -48,6 +48,7 @@ public class VaccinePanel extends JFrame {
 
 	public VaccinePanel() {
 		setIconImage(Application.getAppIcon());
+		setTitle(Application.getAppName() + " Vaccination and Regiments");
 		this.setSize(new Dimension(800, 480));
 		getContentPane().setLayout(null);
 
@@ -87,20 +88,6 @@ public class VaccinePanel extends JFrame {
 		lblFirstDoseAge.setBounds(32, 206, 67, 14);
 		getContentPane().add(lblFirstDoseAge);
 
-		lblRecurring = new JLabel("Recurring?");
-		lblRecurring.setBounds(32, 284, 67, 14);
-		getContentPane().add(lblRecurring);
-
-		JRadioButton rdbtnRecurringYes = new JRadioButton("Yes");
-		rdbtnRecurringYes.setMnemonic(KeyEvent.VK_Y);
-		rdbtnRecurringYes.setBounds(113, 275, 46, 23);
-		getContentPane().add(rdbtnRecurringYes);
-
-		JRadioButton rdbtnRecurringNo = new JRadioButton("No");
-		rdbtnRecurringNo.setMnemonic(KeyEvent.VK_N);
-		rdbtnRecurringNo.setBounds(161, 275, 46, 23);
-		getContentPane().add(rdbtnRecurringNo);
-
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.setBounds(678, 315, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -118,8 +105,6 @@ public class VaccinePanel extends JFrame {
 		getContentPane().add(btnClose);
 
 		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnRecurringYes);
-		group.add(rdbtnRecurringNo);
 		
 	}
 

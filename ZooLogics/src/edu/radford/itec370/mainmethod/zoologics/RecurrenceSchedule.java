@@ -3,13 +3,13 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TaskRecurrence extends ArrayList<TaskRecurrenceInstance> implements Cloneable {
+public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements Cloneable {
 
 	private static final long serialVersionUID = -578725875891715725L;
 	private boolean fromCompletedDate;    // determines if next due date will be calculated from the last due date, or last completion date
 	private boolean isTemplate;
 
-	public TaskRecurrence() {
+	public RecurrenceSchedule() {
 		super();		
 	}
 	
@@ -43,8 +43,8 @@ public class TaskRecurrence extends ArrayList<TaskRecurrenceInstance> implements
 	
 	@Override
 	public Object clone() {
-		TaskRecurrence newRecurrences = new TaskRecurrence();
-		for (TaskRecurrenceInstance ti : this) {
+		RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
+		for (RecurrenceInstance ti : this) {
 			newRecurrences.add(ti.clone());
 		}
 		return newRecurrences;

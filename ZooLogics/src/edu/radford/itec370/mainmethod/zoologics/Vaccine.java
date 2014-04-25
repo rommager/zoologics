@@ -1,28 +1,36 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-public class Vaccine {
+import java.io.Serializable;
 
-	private String vaccineID;
+public class Vaccine implements Serializable {
+
+	private static final long serialVersionUID = -4084693244451360926L;
+	public static int idGenerator = 3001;
+	private int vaccineID;
 	private String vaccineName;
-	private String dosage;
-
-	public String getVaccineID() {
-		return vaccineID;
-	}
 
 	public Vaccine() {
 		super();
 	}
 
-	public Vaccine(String vaccineID, String vaccineName, String dosage) {
-		super();
+	public Vaccine(int vaccineID, String vaccineName) {
+		this();
 		this.vaccineID = vaccineID;
 		this.vaccineName = vaccineName;
-		this.dosage = dosage;
+	}
+	
+	public String toString() {
+		return vaccineName;
 	}
 
-	public void setVaccineID(String vaccineID) {
+	public int getVaccineID() {
+		return vaccineID;
+	}
+
+	public void setVaccineID(int vaccineID) {
 		this.vaccineID = vaccineID;
+		if (vaccineID >= idGenerator)
+			idGenerator = vaccineID + 1;
 	}
 
 	public String getVaccineName() {
@@ -31,14 +39,6 @@ public class Vaccine {
 
 	public void setVaccineName(String vaccineName) {
 		this.vaccineName = vaccineName;
-	}
-
-	public String getDosage() {
-		return dosage;
-	}
-
-	public void setDosage(String dosage) {
-		this.dosage = dosage;
 	}
 
 }
