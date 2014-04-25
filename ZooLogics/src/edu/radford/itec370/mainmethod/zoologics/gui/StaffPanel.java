@@ -16,7 +16,7 @@ import edu.radford.itec370.mainmethod.zoologics.StaffHive;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AdminPanel extends JDialog {
+public class StaffPanel extends JDialog {
 
 	private static final long serialVersionUID = 3185446536402535910L;
 	private static final String[] COLUMN_NAMES = {"ID","Last Name","First Name","Position","Username"};
@@ -30,18 +30,18 @@ public class AdminPanel extends JDialog {
 	private JScrollPane scrollPane;
 	
 	public static void main(String args[]) {
-		AdminPanel admin = new AdminPanel();
+		StaffPanel admin = new StaffPanel();
 		admin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		admin.setSize(350, 200);
 		admin.setVisible(true);
 		
-		AdminPanel admin2 = new AdminPanel();
+		StaffPanel admin2 = new StaffPanel();
 		admin2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		admin2.setSize(350, 200);
 		admin2.setVisible(true);
 	}
 	
-	public AdminPanel() {
+	public StaffPanel() {
 		setTitle(Application.getAppName() + " Staff Maintenance");
 		setIconImage(Application.getAppIcon());		
 		getContentPane().setLayout(new BorderLayout());

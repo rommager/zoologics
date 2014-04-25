@@ -154,7 +154,7 @@ public class MainScreen extends JFrame implements MainScreenNav {
 				AnimalPanel animalPanel = new AnimalPanel();
 				animalPanel.setVisible(true);
 			} else if (e.getSource() == mntmAdminPanel) {
-				AdminPanel adminPanel = new AdminPanel();
+				StaffPanel adminPanel = new StaffPanel();
 				adminPanel.setVisible(true);
 			}
 		}
