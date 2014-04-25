@@ -1,29 +1,21 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JButton;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.SwingConstants;
 
 public class MainScreenNavBar extends JPanel {
+	private static final long serialVersionUID = -4182515365061614761L;
 	private Navigable parentGUI;
-	private boolean showRecordNavigator;
-	private boolean showSearchBox;
 	private JLabel lblDateTime;
 	private JLabel lblNeedToAdd;
 	

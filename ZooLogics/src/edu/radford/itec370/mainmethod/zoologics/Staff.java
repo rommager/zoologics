@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class Staff implements Serializable {
 
+	private static final long serialVersionUID = 4632391733615291271L;
 	private static final String SALT = Application.getAppName() + Application.getSerialversionuid();
     private String userName;
 	private String name;
@@ -92,5 +93,3 @@ public class Staff implements Serializable {
 		this.userName = userName;
 	}
 }
-
-

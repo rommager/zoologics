@@ -1,10 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
-
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
@@ -13,24 +10,16 @@ import edu.radford.itec370.mainmethod.zoologics.Species;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-
 import javax.swing.JTextField;
-
-import java.awt.GridBagConstraints;
-
 import javax.swing.JButton;
 
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -38,13 +27,12 @@ import javax.swing.JTextPane;
 
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 
 public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	
+	private static final long serialVersionUID = 6632886394131544115L;
 	public static final String WINDOW_TITLE = "Animal Profile";
 	private Animal animal;
 	private ArrayList <Animal> animals;
@@ -137,19 +125,12 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		animalPanel.add(pnlPhoto);
 		pnlPhoto.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		BufferedImage myPicture;
-		//try {
-			URL iconURL = Application.class.getClassLoader().getResource("edu/radford/itec370/mainmethod/zoologics/photos/mutosh.png");
-			Image icon = new ImageIcon(iconURL).getImage();
-			//myPicture = ImageIO.read(new File("../animal_photos/mutosh.png"));
-			JLabel picLabel = new JLabel(new ImageIcon(icon));
-			pnlPhoto.add(picLabel);
-			
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		
+		URL iconURL = Application.class.getClassLoader().getResource("edu/radford/itec370/mainmethod/zoologics/photos/mutosh.png");
+		Image icon = new ImageIcon(iconURL).getImage();
+		//myPicture = ImageIO.read(new File("../animal_photos/mutosh.png"));
+		JLabel picLabel = new JLabel(new ImageIcon(icon));
+		pnlPhoto.add(picLabel);
+				
 		txtSpecies = new JTextField();
 		txtSpecies.setBounds(121, 62, 102, 20);
 		animalPanel.add(txtSpecies);

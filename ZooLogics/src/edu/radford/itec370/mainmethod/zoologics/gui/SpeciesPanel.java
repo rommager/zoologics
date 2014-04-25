@@ -17,7 +17,6 @@ import javax.swing.JTable;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
-import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

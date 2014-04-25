@@ -17,11 +17,11 @@ import java.util.Date;
  */
 public class TaskRecurrenceInstance implements Cloneable {
 
-	private String recurrenceName;
 	private int numberOfRecurrences;
 	private int intervalType;
 	private int intervalAmount;
-	private int remainingCount;
+	private int numberRemaining;
+	
 	
 	private TaskRecurrenceInstance() {
 		super();
@@ -32,7 +32,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 			int intervalAmount) {
 		this();
 		this.numberOfRecurrences = numberOfRecurrences;
-		this.remainingCount = numberOfRecurrences;
+		this.numberRemaining = numberOfRecurrences;
 		this.intervalType = intervalType;
 		this.intervalAmount = intervalAmount;
 		validate();
@@ -46,7 +46,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 		this.numberOfRecurrences = recurrenceCount;
 		this.intervalType = intervalType;
 		this.intervalAmount = intervalAmount;
-		this.remainingCount = remainingCount;
+		this.numberRemaining = remainingCount;
 		validate();
 	}
 
@@ -54,7 +54,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 		if (numberOfRecurrences == -1) {     // if -1 then recurrences are indefinite
 			return true;
 		}
-		else if (remainingCount > 0) {  // if > 0 then more recurrences remain
+		else if (numberRemaining > 0) {  // if > 0 then more recurrences remain
 			return true;
 		}
 		return false;					 // return false because no more of this recurrence instance remains
@@ -82,7 +82,25 @@ public class TaskRecurrenceInstance implements Cloneable {
 	
 	public String getDescription() {
 		StringBuffer output = new StringBuffer();
-		//TODO finish this
+		output.append("Recurrence ");
+		output.append(numberRemaining);
+		output.append(" of ");
+		output.append(numberOfRecurrences);
+		output.append(", every ");
+		output.append(intervalAmount);
+		switch (intervalType) {
+			case Task.DAY:
+				output.append(" day");
+			case Task.WEEK:
+				output.append(" week");
+			case Task.MONTH:
+				output.append(" month");
+			case Task.YEAR:
+				output.append(" year");
+			}
+		if (intervalAmount > 1)
+			output.append("s");
+		
 		return output.toString();
 	}
 	
@@ -117,7 +135,7 @@ public class TaskRecurrenceInstance implements Cloneable {
 	}
 	
 	public void decrement() {
-		remainingCount--;
+		numberRemaining--;
 	}
 
 	public int getIntervalType() {
@@ -137,17 +155,17 @@ public class TaskRecurrenceInstance implements Cloneable {
 	}
 	
 	public int getRemainingCount() {
-		return remainingCount;
+		return numberRemaining;
 	}
 
 	public void setRemainingCount(int remainingCount) {
-		this.remainingCount = remainingCount;
+		this.numberRemaining = remainingCount;
 	}
 
 	private void validate() {
-		if (numberOfRecurrences < -1 || numberOfRecurrences == 0 || numberOfRecurrences == 1 || remainingCount < 0 || remainingCount > numberOfRecurrences || intervalAmount <= 0)
+		if (numberOfRecurrences < -1 || numberOfRecurrences == 0 || numberOfRecurrences == 1 || numberRemaining < 0 || numberRemaining > numberOfRecurrences || intervalAmount <= 0)
 			throw new IllegalArgumentException();
-		if (numberOfRecurrences == -1 && remainingCount != 0)
+		if (numberOfRecurrences == -1 && numberRemaining != 0)
 			throw new IllegalArgumentException();
 		if (intervalType != Task.DAY && intervalType != Task.WEEK && intervalType != Task.MONTH && intervalType != Task.YEAR)
 			throw new IllegalArgumentException();

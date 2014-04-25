@@ -14,13 +14,13 @@ import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.SwingConstants;
 
 public class NavigatorBar extends JPanel {
+	private static final long serialVersionUID = -7765321196155993760L;
 	private Navigable parentGUI;
 	private boolean showRecordNavigator;
 	private boolean showSearchBox;

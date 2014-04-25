@@ -109,12 +109,12 @@ public class Animal implements Printable, Serializable {
 		return sex;
 	}
 
-	public void setSex(char sex) throws InvalidValueException {
+	public void setSex(char sex) {
 		sex = Character.toUpperCase(sex);
 		if (sex == 'M' || sex == 'F')
 			this.sex = sex;
 		else
-			throw new InvalidValueException();
+			throw new IllegalArgumentException();
 	}
 
 	public String getSire() {

@@ -2,12 +2,10 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.text.ParseException;
-import java.util.ArrayList;
-
-import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.*;
 
+import javax.swing.JPanel;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;

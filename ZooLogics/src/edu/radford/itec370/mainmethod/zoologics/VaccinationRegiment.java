@@ -10,6 +10,6 @@ package edu.radford.itec370.mainmethod.zoologics;
 public class VaccinationRegiment {
 
 	private Vaccine vaccine;
-	private TaskRecurrences taskRecurrences;
+	private TaskRecurrence taskRecurrences;
 	
 }

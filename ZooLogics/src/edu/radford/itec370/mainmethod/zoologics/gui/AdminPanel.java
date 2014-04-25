@@ -4,51 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
-
-
-
-
-
-
-
-
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-
-
-
-
-
-
-
-
-
 import edu.radford.itec370.mainmethod.zoologics.Application;
-import edu.radford.itec370.mainmethod.zoologics.Staff;
 import edu.radford.itec370.mainmethod.zoologics.StaffHive;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AdminPanel extends JDialog {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3185446536402535910L;
 	private static final String[] COLUMN_NAMES = {"ID","Last Name","First Name","Position","Username"};
 	

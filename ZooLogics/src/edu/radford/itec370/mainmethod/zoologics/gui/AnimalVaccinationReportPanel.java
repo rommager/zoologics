@@ -2,7 +2,6 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.JPanel;
 
@@ -11,26 +10,15 @@ import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Staff;
 import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
-import java.awt.GridLayout;
-
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.JTree;
 import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Font;
-import java.awt.Button;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,6 +27,7 @@ import java.awt.event.ActionEvent;
 
 public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 
+	private static final long serialVersionUID = 511782685113323967L;
 	private static final String[] HISTORY_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
 	private static final String[] UPCOMING_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Due Date"};
 	private ArrayList <Vaccination> vaccinations;
@@ -139,7 +128,7 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 	}
 	
 	public String[][] getAllTableRows() {
-		
+		//TODO
 		String[][] outArray;
 		for (Vaccination vacc : vaccinations) {
 		

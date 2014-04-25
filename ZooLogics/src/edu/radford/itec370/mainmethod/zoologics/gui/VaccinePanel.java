@@ -1,26 +1,18 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Queue;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
@@ -29,13 +21,11 @@ public class VaccinePanel extends JFrame {
 
 
 	private static final long serialVersionUID = 1L;
-	private Vaccine vaccine;
 	private ArrayList<Vaccine> vaccines;
+	
 	private JTextField txtVaccineID;
 	private JTextField txtName;
 	private JTextField txtDosage;
-	private JRadioButton rdbtnRecurringYes;
-	private JRadioButton rdbtnRecurringNo;
 	private JTextField txtDueAt;
 	private JLabel lblDosage;
 	private JLabel lblFirstDoseAge;
@@ -53,7 +43,6 @@ public class VaccinePanel extends JFrame {
 				new Vaccine("1002", "Rabies", "50ML", true, new Date()));
 		panel.getVaccines().add(
 				new Vaccine("1003", "Dewormer", "100ML", true, new Date()));
-		panel.setVaccine(panel.getVaccines().get(0));
 		// System.exit(0);
 
 	}
@@ -140,23 +129,10 @@ public class VaccinePanel extends JFrame {
 		return null;
 	}
 
-	private void setVaccines(ArrayList<Vaccine> arrayList) {
+	private void setVaccines(ArrayList<Vaccine> vaccines) {
 		this.vaccines = vaccines;
 
 	}
 
-	public void setVaccine(Vaccine vaccine) {
-		this.vaccine = vaccine;
-		this.txtVaccineID.setText(vaccine.getVaccineID());
-		this.txtName.setText(vaccine.getVaccineName());
-		this.txtDosage.setText(vaccine.getDosage());
-		// this. Queue<TaskRecurrence> frequencyDays;
-		// this. txtDueAt.setText(vaccine.getDueAtAnimalAge());
-		if (vaccine.isRecurring()) {
-			this.rdbtnRecurringYes.setSelected(true);
-		} else {
-			this.rdbtnRecurringNo.setSelected(true);
-		}
 
-	}
 }

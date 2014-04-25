@@ -3,9 +3,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Queue;
 
 public class Task implements Serializable {
 
@@ -31,7 +29,7 @@ public class Task implements Serializable {
 	protected int status;
 	protected Staff completedBy;
 	
-	private TaskRecurrences recurrences;
+	private TaskRecurrence recurrences;
 	
 	private TaskList parentTaskList;
 	
@@ -71,7 +69,7 @@ public class Task implements Serializable {
 		TaskList list = new TaskList();
 		try {
 			Task newTask = new Task("Reminder to clean toilets", Task.ACTIVE, list, "11/17/2011");
-			TaskRecurrences newRecurrences = new TaskRecurrences();
+			TaskRecurrence newRecurrences = new TaskRecurrence();
 			newTask.setRecurrences(newRecurrences);
 			newRecurrences.add(new TaskRecurrenceInstance(3,WEEK,2));
 			newRecurrences.add(new TaskRecurrenceInstance(2,MONTH,1));
@@ -107,13 +105,13 @@ public class Task implements Serializable {
 		setStatus(DISMISSED);
 	}
 	
-	public void complete() throws InvalidTaskCompletionException{
+	public void complete() {
 		if (isValid()) {
 			setStatus(COMPLETED);
 			spawnNextTaskRecurrence();
 		}
 		else {
-			throw new InvalidTaskCompletionException();
+			throw new IllegalStateException();
 		}
 	}
 
@@ -137,7 +135,7 @@ public class Task implements Serializable {
 	}
 	
 	public void passRecurrenceSchedule(Task newTask) {
-		recurrences.decrement();
+//		recurrences.decrement();
 		newTask.setRecurrences(recurrences);
 		recurrences = null;
 	}
@@ -191,11 +189,11 @@ public class Task implements Serializable {
 		this.parentTaskList = parentTaskList;
 	}
 
-	public TaskRecurrences getRecurrences() {
+	public TaskRecurrence getRecurrences() {
 		return recurrences;
 	}
 
-	public void setRecurrences(TaskRecurrences recurrences) {
+	public void setRecurrences(TaskRecurrence recurrences) {
 		this.recurrences = recurrences;
 	}
 
