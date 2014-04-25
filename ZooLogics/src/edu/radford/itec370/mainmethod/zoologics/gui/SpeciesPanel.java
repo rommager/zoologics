@@ -65,7 +65,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		setTitle(Application.getAppName() + " Species");
 		
 		
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 540, 300);
 		getContentPane().setLayout(new BorderLayout());
 		
 		NavigatorBar naviBar = new NavigatorBar(this);
@@ -90,32 +90,53 @@ public class SpeciesPanel extends JDialog implements Navigable {
 			vaccineRegimentTable.setBounds(20, 36, 393, 182);
 			contentPanel.add(vaccineRegimentTable);
 		}
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JButton sourceButton = (JButton) arg0.getSource();
+				sourceButton.getParent().getParent().getParent().getParent().getParent().setVisible(false);
+			}
+		});
+		btnCancel.setBounds(423, 195, 89, 23);
+		contentPanel.add(btnCancel);
+		
+		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				save();
+				JButton sourceButton = (JButton) arg0.getSource();
+				sourceButton.getParent().getParent().getParent().getParent().getParent().setVisible(false);
+			}
+		});
+		btnOk.setBounds(423, 161, 89, 23);
+		contentPanel.add(btnOk);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			//getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
+				//JButton okButton = new JButton("OK");
+				//okButton.addActionListener(new ActionListener() {
+					//public void actionPerformed(ActionEvent arg0) {
 						// Put a call to a save method here
-						System.out.println("Click");
-						JButton sourceButton = (JButton) arg0.getSource();
-						sourceButton.getParent().getParent().getParent().getParent().getParent().setVisible(false);
+						//System.out.println("Click");
+						//JButton sourceButton = (JButton) arg0.getSource();
+						//sourceButton.getParent().getParent().getParent().getParent().getParent().setVisible(false);
 					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				}//);
+				//okButton.setActionCommand("OK");
+				//buttonPane.add(okButton);
+				//getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				//buttonPane.add(cancelButton);
 			}
-		}
+		//}
 			
-	}
+	//}
 	
 	public void save() {
 		Species x = species.get(index);
@@ -130,7 +151,6 @@ public class SpeciesPanel extends JDialog implements Navigable {
 
 	@Override
 	public void firstRecord() {
-		// TODO Auto-generated method stub
 		index = 0;
 		refresh();
 	}
@@ -138,7 +158,6 @@ public class SpeciesPanel extends JDialog implements Navigable {
 
 	@Override
 	public void previousRecord() {
-		// TODO fix this to make sure we dont go out of bounds
 		if (index > 0 && species.size() != 0) {
 			index--;
 			refresh();
@@ -148,23 +167,22 @@ public class SpeciesPanel extends JDialog implements Navigable {
 
 	@Override
 	public void nextRecord() {
-		// TODO Auto-generated method stub
-		index++;
-		refresh();
+		if (index < species.size() && species.size() != 0) {
+			index++;
+			refresh();
+		}
 	}
 
 
 	@Override
 	public void lastRecord() {
-		// TODO Auto-generated method stub
-		System.out.println("Saved");
-		save();
+		index = species.size();
+		refresh();
 	}
 
 
 	@Override
 	public void newRecord() {
-		// TODO Auto-generated method stub
 		Species newSpecies = new Species();
 		species.add(newSpecies);
 		index = species.indexOf(newSpecies);
