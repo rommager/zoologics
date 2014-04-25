@@ -37,13 +37,12 @@ public class VaccinePanel extends JFrame {
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panel.setVaccines(new ArrayList<Vaccine>());
-		panel.getVaccines().add(
-				new Vaccine("1001", "Ivomec", "50ML", true, new Date()));
-		panel.getVaccines().add(
-				new Vaccine("1002", "Rabies", "50ML", true, new Date()));
-		panel.getVaccines().add(
-				new Vaccine("1003", "Dewormer", "100ML", true, new Date()));
-		// System.exit(0);
+//		panel.getVaccines().add(
+//				new Vaccine("1001", "Ivomec", "50ML", true, new Date()));
+//		panel.getVaccines().add(
+//				new Vaccine("1002", "Rabies", "50ML", true, new Date()));
+//		panel.getVaccines().add(
+//				new Vaccine("1003", "Dewormer", "100ML", true, new Date()));
 
 	}
 
