@@ -31,6 +31,18 @@ public class TaskRecurrences extends ArrayList<TaskRecurrenceInstance> implement
 		 return null;	
 	}
 	
+	public void decrement() {
+		if (this.size() != 0) {
+			get(0).decrement();
+			if (get(0).getRemainingCount() == 0)
+				popElement();
+		}
+	}
+	
+	private void popElement() {
+		this.remove(0);
+	}
+	
 	@Override
 	public Object clone() {
 		return null;

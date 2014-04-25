@@ -136,6 +136,12 @@ public class Task implements Serializable {
 		return null;
 	}
 	
+	public void passRecurrenceSchedule(Task newTask) {
+		recurrences.decrement();
+		newTask.setRecurrences(recurrences);
+		recurrences = null;
+	}
+	
 	
 	public String[] getGridRow() {
 		if (status == Task.ACTIVE)
