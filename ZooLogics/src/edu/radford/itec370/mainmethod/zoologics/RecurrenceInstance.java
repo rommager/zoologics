@@ -139,6 +139,16 @@ public class RecurrenceInstance implements Cloneable {
 	public void decrement() {
 		numberRemaining--;
 	}
+	
+	public String[] getRow() {
+		
+		String[] outArray = new String[4];
+		outArray[0] = Integer.toString(intervalCount);
+		outArray[1] = Task.intervalToString(intervalType);
+		outArray[2] = Integer.toString(intervalCount);
+		outArray[3] = Integer.toString(intervalCount);
+		return outArray;
+	}
 
 	public int getIntervalType() {
 		return intervalType;

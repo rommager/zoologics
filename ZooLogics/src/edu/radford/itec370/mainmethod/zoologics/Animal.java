@@ -8,17 +8,14 @@ import java.awt.print.*;
 
 public class Animal implements Printable, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5761796477851733790L;
 	private static int animalIDCounter = 2001;
 	private int id;
 	private String name;
 	private Species species;
 	private char sex;
-	private String sire;
-	private String dam;
+	private String father;
+	private String mother;
 	private boolean identificationChip;
 	private String chipId;
 	private String breed;
@@ -33,16 +30,16 @@ public class Animal implements Printable, Serializable {
 		super();
 	}
 
-	public Animal(int id, String name, Species species, char sex, String sire,
-			String dam, boolean identificationChip, String chipId,
+	public Animal(int id, String name, Species species, char sex, String father,
+			String mother, boolean identificationChip, String chipId,
 			String breed, Date dateOfBirth, String markings, String notes) {
 		this();
 		this.id = id;
 		this.name = name;
 		this.species = species;
 		this.sex = sex;
-		this.sire = sire;
-		this.dam = dam;
+		this.father = father;
+		this.mother = mother;
 		this.identificationChip = identificationChip;
 		this.chipId = chipId;
 		this.breed = breed;
@@ -51,11 +48,11 @@ public class Animal implements Printable, Serializable {
 		this.notes = notes;
 	}
 
-	public Animal(int id, String name, Species species, char sex, String sire,
-			String dam, boolean identificationChip, String chipId,
+	public Animal(int id, String name, Species species, char sex, String father,
+			String mother, boolean identificationChip, String chipId,
 			String breed, Date dateOfBirth, String markings, String notes,
 			String thumbnail) {
-		this(id, name, species, sex, sire, dam, identificationChip, chipId,
+		this(id, name, species, sex, father, mother, identificationChip, chipId,
 				breed, dateOfBirth, markings, notes);
 
 		this.thumbnail = thumbnail;
@@ -70,9 +67,15 @@ public class Animal implements Printable, Serializable {
 
 	}
 
-	public void print() {
+	@Override
+	public int print(Graphics arg0, PageFormat arg1, int arg2)
+			throws PrinterException {
 		// TODO Auto-generated method stub
-
+		if (arg2 > 0)
+	    {
+	        return NO_SUCH_PAGE;
+	    }
+		return arg2;
 	}
 
 	public int getNewIDNumber() {
@@ -123,19 +126,19 @@ public class Animal implements Printable, Serializable {
 	}
 
 	public String getSire() {
-		return sire;
+		return father;
 	}
 
 	public void setSire(String sire) {
-		this.sire = sire;
+		this.father = sire;
 	}
 
 	public String getDam() {
-		return dam;
+		return mother;
 	}
 
 	public void setDam(String dam) {
-		this.dam = dam;
+		this.mother = dam;
 	}
 
 	public boolean isIdenficationChip() {
@@ -208,13 +211,6 @@ public class Animal implements Printable, Serializable {
 
 	public void setVaccination(ArrayList<Vaccination> vaccinations) {
 		this.vaccinations = vaccinations;
-	}
-
-	@Override
-	public int print(Graphics arg0, PageFormat arg1, int arg2)
-			throws PrinterException {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

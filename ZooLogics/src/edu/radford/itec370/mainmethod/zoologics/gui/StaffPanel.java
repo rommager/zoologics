@@ -22,8 +22,6 @@ public class StaffPanel extends JDialog implements Navigable{
 	private static final long serialVersionUID = 3185446536402535910L;
 	private static final String[] COLUMN_NAMES = {"ID","Last Name","First Name","Position","Username"};
 	
-	private static int nextStaffID = 1001;
-	
 	private StaffHive staffHive;
 	
 	private DefaultTableModel model;
@@ -34,12 +32,7 @@ public class StaffPanel extends JDialog implements Navigable{
 		StaffPanel admin = new StaffPanel();
 		admin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		admin.setSize(350, 200);
-		admin.setVisible(true);
-		
-		StaffPanel admin2 = new StaffPanel();
-		admin2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		admin2.setSize(350, 200);
-		admin2.setVisible(true);
+		admin.setVisible(true);		
 	}
 	
 	public StaffPanel() {
@@ -56,7 +49,7 @@ public class StaffPanel extends JDialog implements Navigable{
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton newButton = new JButton("Add New Staff");
 		newButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {				
 				model.addRow(new String[] {Integer.toString(nextStaffID), null, null, null, null});
 				nextStaffID++;
 			}
