@@ -167,7 +167,7 @@ public class RecurrenceInstance implements Cloneable {
 	public void validate() {
 		if (numberOfRecurrences < -1 || numberOfRecurrences == 0 || numberOfRecurrences == 1)
 			throw new IllegalArgumentException("Number of recurrences must be greater than 2, or forever.");
-		if (numberRemaining < 0 || numberRemaining > numberOfRecurrences)
+		if (numberRemaining < 0 || numberRemaining > numberOfRecurrences) 
 			throw new IllegalArgumentException("Number of remaining recurrences must be within the range of 0 to the number of total recurrences.");
 		if (intervalCount <= 0)
 			throw new IllegalArgumentException("Interval must be a positive value.");

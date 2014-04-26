@@ -155,8 +155,7 @@ public class MainScreen extends JFrame {
 				VaccinePanel vaccinePanel = new VaccinePanel();
 				vaccinePanel.setVisible(true);
 			} else if (e.getSource() == mntmSpeciesPanel) {
-				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix
-																	// this
+				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix this
 				speciesPanel.setVisible(true);
 			} else if (e.getSource() == mntmAnimalReport) {
 				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel();
