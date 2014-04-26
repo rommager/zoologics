@@ -21,8 +21,8 @@ public class Animal implements Printable, Serializable {
 	private String chipId;
 	private String breed;
 	private Date dateOfBirth;
-	private StringBuffer markings;
-	private StringBuffer notes;
+	private String markings;
+	private String notes;
 	private String thumbnail;
 	private Photos photos;
 	private ArrayList<Vaccination> vaccinations;
@@ -45,8 +45,8 @@ public class Animal implements Printable, Serializable {
 		this.chipId = chipId;
 		this.breed = breed;
 		this.dateOfBirth = dateOfBirth;
-		this.markings = new StringBuffer(markings);
-		this.notes = new StringBuffer(notes);
+		this.markings = markings;
+		this.notes = notes;
 	}
 
 	public Animal(int id, String name, Species species, char sex, String sire,
@@ -163,19 +163,19 @@ public class Animal implements Printable, Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public StringBuffer getMarkings() {
+	public String getMarkings() {
 		return markings;
 	}
 
-	public void setMarkings(StringBuffer markings) {
+	public void setMarkings(String markings) {
 		this.markings = markings;
 	}
 
-	public StringBuffer getNotes() {
+	public String getNotes() {
 		return notes;
 	}
 
-	public void setNotes(StringBuffer notes) {
+	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 

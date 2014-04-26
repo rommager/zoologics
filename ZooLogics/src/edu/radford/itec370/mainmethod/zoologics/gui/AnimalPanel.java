@@ -40,6 +40,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	private static final long serialVersionUID = 6632886394131544115L;
 	public static final String WINDOW_TITLE = Application.getAppName() + "Animal Profile";
 	public static final String PHOTO_FOLDER = "photos/"; 
+	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
 	private ArrayList <Animal> animals;
 	private int index;
 	private JTextField txtName;
@@ -69,6 +70,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		panel.getAnimals().add(new Animal(1002, "Rawr", new Species("Feline"), 'M', "Timbre", "Saber", false, "", "Leopard", new Date(), "orange with stripes", "Snappy","leopard.jpg"));
 		panel.getAnimals().add(new Animal(1003, "Fran", new Species("Feline"), 'F', "Goomba", "Mush", true, "A12343201", "Ocelot", new Date(), "not many stripes", "Will eat your hand if you let her","ocelot.jpg"));
 		panel.getAnimals().add(new Animal(1004, "George", new Species("Primate"), 'M', "unknown", "unknown", false, "", "golden-mantled tamarin", new Date(), "alpha male","watch for this one","tamarin.jpg"));
+		panel.getAnimals().add(new Animal(1005, "Spots", new Species("Deer"), 'F', "unknown", "unknown", false, "", "White Tailed Deer", new Date(), "just another deer",""));
 		panel.setAnimal(panel.getAnimals().get(0));
 	}
 	
@@ -114,7 +116,6 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save();
-				
 			}
 		});
 		btnSave.setBounds(678, 349, 89, 23);
@@ -281,9 +282,15 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	}
 	
 	public void setThumbnail(String fileName) {
-		URL iconURL = Application.class.getClassLoader().getResource(PHOTO_FOLDER + fileName);
-		Image icon = new ImageIcon(iconURL).getImage();
-		thumbnail.setIcon(new ImageIcon(icon.getScaledInstance(265,180, Image.SCALE_SMOOTH)));
+		
+		URL imageURL = Application.class.getClassLoader().getResource(PHOTO_FOLDER + fileName);
+		
+		if (imageURL == null)
+			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
+			
+		Image image = new ImageIcon(imageURL).getImage();
+		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
+		
 	}
 	
 	public void refresh() {
@@ -295,8 +302,8 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		this.txtZooID.setText(Integer.toString(getAnimal().getId()));
 		this.txtBreed.setText(getAnimal().getBreed());
 		this.txtIDNumber.setText(getAnimal().getChipId());
-		this.txtMarkings.setText(getAnimal().getMarkings().toString());
-		this.txtNotes.setText(getAnimal().getNotes().toString());
+		this.txtMarkings.setText(getAnimal().getMarkings());
+		this.txtNotes.setText(getAnimal().getNotes());
 		// TODO Add Date of birth
 		if(getAnimal().isIdenficationChip()){
 			this.rdbtnChipYes.setSelected(true);
@@ -309,7 +316,22 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	}
 	
 	public void save() {
-		getAnimal().setName(this.txtName.getText());
+		Animal a = getAnimal();
+		a.setName(txtName.getText());
+		a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
+		a.setSex(txtSex.getText().toCharArray()[0]);  //TODO set txtSex to a max length of 1, and allow only m or f entries
+		a.setSire(txtFather.getText());
+		a.setDam(txtMother.getText());
+		a.setId(Integer.parseInt(txtZooID.getText()));
+		a.setBreed(txtBreed.getText());
+		a.setChipId(txtIDNumber.getText());
+		a.setMarkings(txtMarkings.getText());
+		a.setNotes(txtNotes.getText());
+		if(this.rdbtnChipYes.isSelected())
+			a.setIdenficationChip(true);
+		else
+			a.setIdenficationChip(false);
+		refresh();
 	}
 
 	public ArrayList<Animal> getAnimals() {

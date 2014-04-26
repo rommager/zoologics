@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: edu.radford.itec370.mainmethod.zoologics.Application
+Main-Class: edu.radford.itec370.mainmethod.zoologics.gui.AnimalPanel
