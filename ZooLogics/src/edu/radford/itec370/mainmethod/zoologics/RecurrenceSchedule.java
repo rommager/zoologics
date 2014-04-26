@@ -13,7 +13,8 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 	private boolean isTemplate;
 
 	public RecurrenceSchedule() {
-		super();		
+		super();
+		this.scheduleID = idCounter++;
 	}
 	
 	public Calendar getNextRecurrenceDate(Calendar inDate) {
@@ -44,6 +45,14 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 		this.remove(0);
 	}
 	
+	public void validate() {
+		for (int index = 0; index < size(); index++) {
+			if (get(index).getRemainingCount() == -1 && index == size() - 1)
+				throw new IllegalStateException("Only the last instance in the task schedule can be forever.");
+			get(index).validate();
+		}
+	}
+	
 	@Override
 	public Object clone() {
 		RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
@@ -51,6 +60,30 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 			newRecurrences.add(ti.clone());
 		}
 		return newRecurrences;
+	}
+
+	public int getScheduleID() {
+		return scheduleID;
+	}
+
+	public void setScheduleID(int scheduleID) {
+		this.scheduleID = scheduleID;
+	}
+
+	public boolean isFromCompletedDate() {
+		return fromCompletedDate;
+	}
+
+	public void setFromCompletedDate(boolean fromCompletedDate) {
+		this.fromCompletedDate = fromCompletedDate;
+	}
+
+	public boolean isTemplate() {
+		return isTemplate;
+	}
+
+	public void setTemplate(boolean isTemplate) {
+		this.isTemplate = isTemplate;
 	}
 
 
