@@ -32,14 +32,19 @@ import javax.swing.border.Border;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.File;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 
 public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	
 	private static final long serialVersionUID = 6632886394131544115L;
 	public static final String WINDOW_TITLE = Application.getAppName() + "Animal Profile";
-	public static final String PHOTO_FOLDER = "photos/"; 
+	public static final String PHOTO_FOLDER = "./photos/"; 
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
 	private ArrayList <Animal> animals;
 	private int index;
@@ -281,13 +286,23 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		refresh();
 	}
 	
-	public void setThumbnail(String fileName) {
+	public void setThumbnail(String fileName)  {
+		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
+		URL imageURL = null;
+		try {
+			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		System.out.println(imageURL);
 		
-		URL imageURL = Application.class.getClassLoader().getResource(PHOTO_FOLDER + fileName);
-		
-		if (imageURL == null)
+		File newFile = new File(imageURL.getPath());
+		if (!newFile.exists())
 			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
-			
+		
+		txtNotes.setText(imageURL.getFile());
+		
 		Image image = new ImageIcon(imageURL).getImage();
 		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
 		
