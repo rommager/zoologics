@@ -20,19 +20,18 @@ import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 public class VaccinePanel extends JFrame implements Navigable{
 
-	private static final long serialVersionUID = -3966249468484312613L;
-
+	private static final long serialVersionUID = -3966249468484312613L; 
 	private ArrayList<Vaccine> vaccines;
-	
+	private int index = 0;
 	
 	private JTextField txtVaccineID;
 	private JTextField txtName;
 	private JTextField txtDosage;
 	private JTextField txtDueAt;
-	private JLabel lblDosage;
-	private JLabel lblFirstDoseAge;
-
+	
+    
 	public static void main(String[] args) {
+		
 		VaccinePanel panel = new VaccinePanel();
 
 		panel.setVisible(true);
@@ -59,10 +58,6 @@ public class VaccinePanel extends JFrame implements Navigable{
 		navPanel.setBounds(0, 415, 784, 30);
 		getContentPane().add(navPanel, BorderLayout.SOUTH);
 
-		JLabel lblIdNumber = new JLabel("ID Number");
-		lblIdNumber.setBounds(32, 32, 67, 14);
-		getContentPane().add(lblIdNumber);
-
 		JLabel lblNewLabel = new JLabel("Name");
 		lblNewLabel.setBounds(32, 85, 46, 14);
 		getContentPane().add(lblNewLabel);
@@ -87,14 +82,6 @@ public class VaccinePanel extends JFrame implements Navigable{
 		getContentPane().add(txtDueAt);
 		txtDueAt.setColumns(10);
 
-		lblDosage = new JLabel("Dosage");
-		lblDosage.setBounds(32, 141, 46, 14);
-		getContentPane().add(lblDosage);
-
-		lblFirstDoseAge = new JLabel("First dose");
-		lblFirstDoseAge.setBounds(32, 206, 67, 14);
-		getContentPane().add(lblFirstDoseAge);
-
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.setBounds(678, 315, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -114,26 +101,28 @@ public class VaccinePanel extends JFrame implements Navigable{
 		ButtonGroup group = new ButtonGroup();
 		
 	}
-
-	private ArrayList<Vaccine> getVaccines() {
-		// TODO Auto-generated method stub
-		return null;
+	public Vaccine getVaccine() {
+		return vaccines.get(index);
+	}
+	
+	public ArrayList<Vaccine> getVaccines() {
+		return vaccines;
 	}
 
-	private void setVaccines(ArrayList<Vaccine> vaccines) {
+	public void setVaccines(ArrayList<Vaccine> vaccines) {
 		this.vaccines = vaccines;
 
 	}
 
 	@Override
 	public void firstRecord() {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void previousRecord() {
-		// TODO Auto-generated method stub
+
 		
 	}
 

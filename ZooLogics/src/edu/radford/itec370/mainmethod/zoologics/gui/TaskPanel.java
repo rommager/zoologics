@@ -129,7 +129,7 @@ public class TaskPanel extends JDialog implements Navigable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		taskPanel.refresh();
+		taskPanel.updateGUI();
 		taskPanel.setVisible(true);
 	}
 	
@@ -149,7 +149,7 @@ public class TaskPanel extends JDialog implements Navigable {
 	}
 
 	
-	public void refresh() {
+	public void updateGUI() {
 		Task task = getCurrentTask();
 		if (task != null) {
 			this.txtTaskName.setText(task.getTaskName());
