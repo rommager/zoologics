@@ -94,15 +94,11 @@ public class MainScreen extends JFrame {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		menuBar_1.add(mnFile);
 
-		mntmAdminPanel = new JMenuItem("Admin Panel");
-		mntmAdminPanel.addActionListener(new MenuListener());
-		mnFile.add(mntmAdminPanel);
-
-		mntmAnimalPanel = new JMenuItem("Animal Panel");
+		mntmAnimalPanel = new JMenuItem("Animal Profiles");
 		mntmAnimalPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmAnimalPanel);
 
-		mntmAnimalReport = new JMenuItem("Animal Report");
+		mntmAnimalReport = new JMenuItem("Animal Vaccination Report");
 		mntmAnimalReport.addActionListener(new MenuListener());
 		mnFile.add(mntmAnimalReport);
 
@@ -113,6 +109,10 @@ public class MainScreen extends JFrame {
 		mntmVaccinePanel = new JMenuItem("Vaccine Panel");
 		mntmVaccinePanel.addActionListener(new MenuListener());
 		mnFile.add(mntmVaccinePanel);
+		
+		mntmAdminPanel = new JMenuItem("Admin Panel");
+		mntmAdminPanel.addActionListener(new MenuListener());
+		mnFile.add(mntmAdminPanel);
 
 		mntmExit = new JMenuItem("Exit");
 		mntmExit.setMnemonic(KeyEvent.VK_X);
