@@ -29,10 +29,6 @@ public class MainScreen extends JFrame {
 	private static final long serialVersionUID = -6514056067808688533L;
 	private static final String[] COLUMN_HEADER = new String[] {"Task Tpye", "Animal", "Description", "Due"};
 	private JTable table;
-	private JMenuBar menuBar;
-	private JMenu fileMenu;
-	private JMenu aboutMenu;
-	private JMenuItem exitItem;
 	private JMenuItem mntmExit;
 	private JMenuItem mntmVaccinePanel;
 	private JMenuItem mntmSpeciesPanel;
