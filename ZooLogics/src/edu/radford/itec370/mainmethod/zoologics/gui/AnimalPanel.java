@@ -43,7 +43,7 @@ import java.net.URLDecoder;
 public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	
 	private static final long serialVersionUID = 6632886394131544115L;
-	public static final String WINDOW_TITLE = Application.getAppName() + "Animal Profile";
+	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
 	public static final String PHOTO_FOLDER = "./photos/"; 
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
 	private ArrayList <Animal> animals;
