@@ -9,42 +9,49 @@ public class Staff implements Serializable {
 
 	private static final long serialVersionUID = 4632391733615291271L;
 	private static final String SALT = Application.getAppName() + Application.getSerialversionuid();
-    private String userName;
-	private String name;
-    private boolean isUser;
+	private static int nextStaffID = 1001;
+	private int id;
+	private String lastName;
+	private String firstName;
+	private String position;
+	private String userName;
     private byte[] passwordHash;
 	
     private Staff() {
 		super();
 	}
-    public Staff(String name) {
+    public Staff(String lastName, String firstName, String position) {
 		this();
-		this.name = name;
-		this.isUser = false;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.position = position;
 	}
 	
-    public Staff(String name, String userName) {
+    public Staff(String lastName, String firstName, String position, String userName) {
 		this();
-		this.name = name;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.position = position;
 		this.userName = userName;
-		this.isUser = true;
 	}
 	
-	public Staff(String name, String userName, byte[] passwordHash) {
+	public Staff(int id, String lastName, String firstName, String position, String userName, byte[] passwordHash) {
 		this();
-		this.name = name;
+		this.id = id;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.position = position;
 		this.userName = userName;
-		this.isUser = true;
 		this.passwordHash = passwordHash;
 	}
 	
 	public void setPassword(String password) {
-		if (isUser)
+		if (isUser())
 		passwordHash = generateHash(password);
 	}
 	
 	public boolean validatePassword(String password) {
-		if (isUser) {
+		if (isUser()) {
 			byte[] compareHash = generateHash(password);		
 			if (Arrays.equals(compareHash, passwordHash)) {
 				return true;
@@ -74,22 +81,42 @@ public class Staff implements Serializable {
 		return newString.getBytes();
 	}
 	
-	public String getName() {
-		return name;
+	public String[] getRow() {
+		String[] output = new String[5];
+		output[0] = Integer.toString(id);
+		output[1] = null;
+		output[2] = null;
+		output[3] = null;
+		output[4] = null;
+		return output;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public boolean isUser() {
-		return isUser;
+		return (userName != null);
 	}
-	public void setUser(boolean isUser) {
-		this.isUser = isUser;
+
+	public String getLastName() {
+		return lastName;
 	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
+	
 	public void setUserName(String userName) {
-		this.userName = userName;
+		if (userName.equals(""))
+			this.userName = null;
+		else
+			this.userName = userName;
 	}
 }
