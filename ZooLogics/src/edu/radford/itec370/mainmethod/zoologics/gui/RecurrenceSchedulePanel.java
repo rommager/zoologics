@@ -21,9 +21,10 @@ import java.awt.event.ActionEvent;
 public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = -8360408723630767538L;
-	private final String[] HEADER_ROW = {"Every", "Interval", "How many times"};
+	private static final String[] HEADER_ROW = {"Every", "Interval", "How many times"};
+	
 	private RecurrenceSchedule schedule;
-
+	
 	private DefaultTableModel model;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -68,7 +69,11 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 	
 	public void save() {
 		schedule = new RecurrenceSchedule();
-		for (String[] row : model.add)
+		
+		int nRow = model.getRowCount();
+		int nCol = model.getColumnCount();
+		for (int i = 0; i < nRow; i++)
+			
 	}
 
 	public static void main(String[] args) {

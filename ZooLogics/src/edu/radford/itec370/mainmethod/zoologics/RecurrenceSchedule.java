@@ -6,6 +6,9 @@ import java.util.Calendar;
 public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements Cloneable {
 
 	private static final long serialVersionUID = -578725875891715725L;
+	
+	private static int idCounter = 9001;
+	private int scheduleID;
 	private boolean fromCompletedDate;    // determines if next due date will be calculated from the last due date, or last completion date
 	private boolean isTemplate;
 
