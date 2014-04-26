@@ -113,6 +113,12 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			// add navigator bar in south window area
+			NavigatorBar navPanel = new NavigatorBar(this);
+//			navPanel.setNewRecordVisible(false);
+//			navPanel.setSearchBoxVisible(false);
+			navPanel.setBounds(0, 415, 784, 30);
+			getContentPane().add(navPanel, BorderLayout.SOUTH);
 			//getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				//JButton okButton = new JButton("OK");

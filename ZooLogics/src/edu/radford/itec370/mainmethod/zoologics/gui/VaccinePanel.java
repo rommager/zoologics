@@ -1,5 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ import javax.swing.JButton;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
-public class VaccinePanel extends JFrame {
+public class VaccinePanel extends JFrame implements Navigable{
 
 	private static final long serialVersionUID = -3966249468484312613L;
 
@@ -51,6 +52,12 @@ public class VaccinePanel extends JFrame {
 		setTitle(Application.getAppName() + " Vaccination and Regiments");
 		this.setSize(new Dimension(800, 480));
 		getContentPane().setLayout(null);
+		// add navigator bar in south window area
+		NavigatorBar navPanel = new NavigatorBar(this);
+//		navPanel.setNewRecordVisible(false);
+//		navPanel.setSearchBoxVisible(false);
+		navPanel.setBounds(0, 415, 784, 30);
+		getContentPane().add(navPanel, BorderLayout.SOUTH);
 
 		JLabel lblIdNumber = new JLabel("ID Number");
 		lblIdNumber.setBounds(32, 32, 67, 14);
@@ -116,6 +123,42 @@ public class VaccinePanel extends JFrame {
 	private void setVaccines(ArrayList<Vaccine> vaccines) {
 		this.vaccines = vaccines;
 
+	}
+
+	@Override
+	public void firstRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void previousRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lastRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyFilter(String filter) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
