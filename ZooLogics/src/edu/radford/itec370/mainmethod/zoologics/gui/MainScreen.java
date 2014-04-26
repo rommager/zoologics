@@ -39,6 +39,7 @@ public class MainScreen extends JFrame {
 	private JMenuItem mntmAnimalReport;
 	private JMenuItem mntmAnimalPanel;
 	private JMenuItem mntmAdminPanel;
+	private JMenuItem mntmAboutMainMethod;
 	private StatusBar statusBar;
 
 	public MainScreen() {
@@ -122,9 +123,9 @@ public class MainScreen extends JFrame {
 		mnAbout.setMnemonic(KeyEvent.VK_B);
 		menuBar_1.add(mnAbout);
 
-		JMenuItem mntmAboutMain = new JMenuItem("About Main() Method");
-		mntmAboutMain.addActionListener(new MenuListener());
-		mnAbout.add(mntmAboutMain);
+		mntmAboutMainMethod = new JMenuItem("About Main() Method");
+		mntmAboutMainMethod.addActionListener(new MenuListener());
+		mnAbout.add(mntmAboutMainMethod);
 
 	}
 
@@ -170,7 +171,11 @@ public class MainScreen extends JFrame {
 			} else if (e.getSource() == mntmAdminPanel) {
 				StaffPanel adminPanel = new StaffPanel();
 				adminPanel.setVisible(true);
+			} else if (e.getSource() == mntmAboutMainMethod) {
+				AboutMainMethod aboutmainmethod = new AboutMainMethod();
+				aboutmainmethod.setVisible(true);
 			}
+			 
 		}
 	}
 
