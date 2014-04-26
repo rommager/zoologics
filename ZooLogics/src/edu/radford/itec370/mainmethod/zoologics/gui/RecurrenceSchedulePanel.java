@@ -1,7 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.DefaultCellEditor;
@@ -14,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 
 public class RecurrenceSchedulePanel extends JPanel {
 	

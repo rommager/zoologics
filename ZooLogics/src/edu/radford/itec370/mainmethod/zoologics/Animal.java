@@ -52,13 +52,11 @@ public class Animal implements Printable, Serializable {
 	public Animal(int id, String name, Species species, char sex, String sire,
 			String dam, boolean identificationChip, String chipId,
 			String breed, Date dateOfBirth, String markings, String notes,
-			String thumbnail, Photos photos, ArrayList<Vaccination> vaccinations) {
+			String thumbnail) {
 		this(id, name, species, sex, sire, dam, identificationChip, chipId,
 				breed, dateOfBirth, markings, notes);
 
 		this.thumbnail = thumbnail;
-		this.photos = photos;
-		this.vaccinations = vaccinations;
 	}
 
 	public Animal(String name) {

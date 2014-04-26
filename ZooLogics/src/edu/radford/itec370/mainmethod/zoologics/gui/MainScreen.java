@@ -1,10 +1,13 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -20,9 +23,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class MainScreen extends JFrame implements MainScreenNav {
+public class MainScreen extends JFrame {
 	// TODO Auto-generated method stub
 
+	private static final long serialVersionUID = -6514056067808688533L;
+	private static final String[] COLUMN_HEADER = new String[] {"Task Tpye", "Animal", "Description", "Due"};
 	private JTable table;
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
@@ -34,17 +39,20 @@ public class MainScreen extends JFrame implements MainScreenNav {
 	private JMenuItem mntmAnimalReport;
 	private JMenuItem mntmAnimalPanel;
 	private JMenuItem mntmAdminPanel;
+	private StatusBar statusBar;
 
 	public MainScreen() {
 		setTitle(Application.getAppName() + " Main Task Screen");
 		setIconImage(Application.getAppIcon());
-		this.setSize(new Dimension(650, 449));
-		getContentPane().setLayout(null);
+		setSize(new Dimension(650, 449));
+		getContentPane().setLayout(new BorderLayout());
 
+		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblTasks = new JLabel("Tasks:");
 		lblTasks.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTasks.setBounds(21, 36, 65, 26);
-		getContentPane().add(lblTasks);
+		//lblTasks.setBounds(21, 36, 65, 26);
+		northPanel.add(lblTasks);
+		getContentPane().add(northPanel,BorderLayout.NORTH);
 
 		// JScrollPane scrollPane = new JScrollPane();
 		// scrollPane.setBounds(21, 73, 504, 195);
@@ -55,22 +63,28 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		// table = new JTable(model);
 		// JScrollPane scrollPane2 = new JScrollPane(table);
 
-		table = new JTable(new DefaultTableModel(new Object[][] {},
-				new String[] { "Task Tpye", "Animal", "Description", "Due" }) {
-		});
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		table = new JTable(new DefaultTableModel(null,COLUMN_HEADER));
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(21, 73, 504, 195);
-		getContentPane().add(scrollPane);
+		//scrollPane.setBounds(21, 73, 504, 195);
+		centerPanel.add(scrollPane, BorderLayout.CENTER);
+		getContentPane().add(centerPanel);
 		// scrollPane.setColumnHeaderView(table);
 
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
 		JButton btnOpenItem = new JButton("Open");
-		btnOpenItem.setBounds(294, 279, 89, 23);
-		getContentPane().add(btnOpenItem);
+//		btnOpenItem.setBounds(294, 279, 89, 23);
+		buttonPanel.add(btnOpenItem);
 
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(419, 279, 89, 23);
-		getContentPane().add(btnSearch);
+//		btnSearch.setBounds(419, 279, 89, 23);
+		buttonPanel.add(btnSearch);
+		centerPanel.add(buttonPanel,BorderLayout.SOUTH);
 
+		statusBar = new StatusBar();
+		getContentPane().add(statusBar,BorderLayout.SOUTH);
+		
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar_1.setToolTipText("");
 		setJMenuBar(menuBar_1);
@@ -124,13 +138,13 @@ public class MainScreen extends JFrame implements MainScreenNav {
 		tester.setVisible(true);
 	}
 
-	@Override
+	
 	public void tasks() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
+	
 	public void applyFilter(String filter) {
 		// TODO Auto-generated method stub
 

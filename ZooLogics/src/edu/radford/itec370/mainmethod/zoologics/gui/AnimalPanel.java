@@ -2,6 +2,7 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
@@ -11,6 +12,7 @@ import edu.radford.itec370.mainmethod.zoologics.Species;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -19,11 +21,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.border.Border;
 
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -33,10 +38,10 @@ import java.net.URL;
 public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	
 	private static final long serialVersionUID = 6632886394131544115L;
-	public static final String WINDOW_TITLE = "Animal Profile";
-	private Animal animal;
+	public static final String WINDOW_TITLE = Application.getAppName() + "Animal Profile";
+	public static final String PHOTO_FOLDER = "photos/"; 
 	private ArrayList <Animal> animals;
-	private int animalIndex;
+	private int index;
 	private JTextField txtName;
 	private JTextField txtSpecies;
 	private JTextField txtSex;
@@ -51,21 +56,25 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	private JTextPane txtMarkings;
 	private JTextPane txtNotes;
 	
+	private JPanel pnlPhoto;
+	private JLabel thumbnail;
+	
 	public static void main(String[] args) {
 		AnimalPanel panel = new AnimalPanel();
 		
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panel.setAnimals(new ArrayList<Animal>());
-		panel.getAnimals().add(new Animal(1001, "Puja", new Species("Tiger"), 'M', "Simba", "", true, "A12343212", "white", new Date(), "white with stripes", "Gentle, needs special attention"));
-		panel.getAnimals().add(new Animal(1002, "Rawr", new Species("Tiger"), 'M', "Timbre", "Saber", false, "", "orange", new Date(), "orange with stripes", "Snappy"));
-		panel.getAnimals().add(new Animal(1003, "Fran", new Species("Tiger"), 'F', "Goomba", "Mush", true, "A12343201", "orange", new Date(), "not many stripes", "Will eat your hand if you let her"));
+		panel.getAnimals().add(new Animal(1001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "white with stripes", "Gentle, needs special attention","tiger.jpg"));
+		panel.getAnimals().add(new Animal(1002, "Rawr", new Species("Feline"), 'M', "Timbre", "Saber", false, "", "Leopard", new Date(), "orange with stripes", "Snappy","leopard.jpg"));
+		panel.getAnimals().add(new Animal(1003, "Fran", new Species("Feline"), 'F', "Goomba", "Mush", true, "A12343201", "Ocelot", new Date(), "not many stripes", "Will eat your hand if you let her","ocelot.jpg"));
+		panel.getAnimals().add(new Animal(1004, "George", new Species("Primate"), 'M', "unknown", "unknown", false, "", "golden-mantled tamarin", new Date(), "alpha male","watch for this one","tamarin.jpg"));
 		panel.setAnimal(panel.getAnimals().get(0));
 	}
 	
 	public AnimalPanel() {
 		// initialize class variables;
-		animalIndex = 0;
+		index = 0;
 		
 		// set up window
 		setTitle(WINDOW_TITLE);
@@ -74,7 +83,9 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		getContentPane().setLayout(new BorderLayout());
 		
 		// add navigator bar in south window area
-		NavigatorBar navPanel = new NavigatorBar(this);		
+		NavigatorBar navPanel = new NavigatorBar(this);
+//		navPanel.setNewRecordVisible(false);
+//		navPanel.setSearchBoxVisible(false);
 		navPanel.setBounds(0, 415, 784, 30);
 		getContentPane().add(navPanel, BorderLayout.SOUTH);
 		
@@ -120,16 +131,14 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		btnClose.setBounds(678, 383, 89, 23);
 		animalPanel.add(btnClose);
 		
-		JPanel pnlPhoto = new JPanel();
-		pnlPhoto.setBounds(447, 227, 204, 179);
+		pnlPhoto = new JPanel();
+		pnlPhoto.setBounds(389, 227, 265, 179);
+		thumbnail = new JLabel();
+		thumbnail.setBounds(389, 227, 262, 179);
+		thumbnail.setSize(new Dimension(265,180));
 		animalPanel.add(pnlPhoto);
-		pnlPhoto.setLayout(new GridLayout(0, 1, 0, 0));
+		pnlPhoto.add(thumbnail);
 		
-		URL iconURL = Application.class.getClassLoader().getResource("edu/radford/itec370/mainmethod/zoologics/photos/mutosh.png");
-		Image icon = new ImageIcon(iconURL).getImage();
-		//myPicture = ImageIO.read(new File("../animal_photos/mutosh.png"));
-		JLabel picLabel = new JLabel(new ImageIcon(icon));
-		pnlPhoto.add(picLabel);
 				
 		txtSpecies = new JTextField();
 		txtSpecies.setBounds(121, 62, 102, 20);
@@ -167,12 +176,14 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		animalPanel.add(lblNewLabel);
 		
 		txtMarkings = new JTextPane();
-		txtMarkings.setBounds(28, 202, 303, 63);
-		animalPanel.add(txtMarkings);
+		JScrollPane scrollPane1 = new JScrollPane(txtMarkings);
+		scrollPane1.setBounds(28, 202, 303, 63);
+		animalPanel.add(scrollPane1);
 		
 		txtNotes = new JTextPane();
-		txtNotes.setBounds(28, 283, 303, 123);
-		animalPanel.add(txtNotes);
+		JScrollPane scrollPane2 = new JScrollPane(txtNotes);
+		scrollPane2.setBounds(28, 283, 303, 123);
+		animalPanel.add(scrollPane2);
 		
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
 		lblDescriptiveMarkings.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -255,43 +266,50 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		
 		JLabel lblPhoto = new JLabel("Photo");
 		lblPhoto.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPhoto.setBounds(427, 202, 46, 14);
+		lblPhoto.setBounds(389, 202, 46, 14);
 		animalPanel.add(lblPhoto);		
-		
+				
 	}
 	
 	public Animal getAnimal() {
-		return animal;
+		return animals.get(index);
 	}
 
 	public void setAnimal(Animal animal) {
-		this.animal = animal;
+		index = animals.indexOf(animal);
 		refresh();
 	}
 	
+	public void setThumbnail(String fileName) {
+		URL iconURL = Application.class.getClassLoader().getResource(PHOTO_FOLDER + fileName);
+		Image icon = new ImageIcon(iconURL).getImage();
+		thumbnail.setIcon(new ImageIcon(icon.getScaledInstance(265,180, Image.SCALE_SMOOTH)));
+	}
+	
 	public void refresh() {
-		this.txtName.setText(animal.getName());
-		this.txtSpecies.setText(animal.getSpecies().getSpeciesName());
-		this.txtSex.setText(Character.toString(animal.getSex()));
-		this.txtFather.setText(animal.getSire());
-		this.txtMother.setText(animal.getDam());
-		this.txtZooID.setText(Integer.toString(animal.getId()));
-		this.txtBreed.setText(animal.getBreed());
-		this.txtIDNumber.setText(animal.getChipId());
-		this.txtMarkings.setText(animal.getMarkings().toString());
-		this.txtNotes.setText(animal.getNotes().toString());
+		this.txtName.setText(getAnimal().getName());
+		this.txtSpecies.setText(getAnimal().getSpecies().getSpeciesName());
+		this.txtSex.setText(Character.toString(getAnimal().getSex()));
+		this.txtFather.setText(getAnimal().getSire());
+		this.txtMother.setText(getAnimal().getDam());
+		this.txtZooID.setText(Integer.toString(getAnimal().getId()));
+		this.txtBreed.setText(getAnimal().getBreed());
+		this.txtIDNumber.setText(getAnimal().getChipId());
+		this.txtMarkings.setText(getAnimal().getMarkings().toString());
+		this.txtNotes.setText(getAnimal().getNotes().toString());
 		// TODO Add Date of birth
-		if(animal.isIdenficationChip()){
+		if(getAnimal().isIdenficationChip()){
 			this.rdbtnChipYes.setSelected(true);
 		}
 		else {
 			this.rdbtnChipNo.setSelected(true);
 		}
+		this.setThumbnail(getAnimal().getThumbnail());
 
 	}
 	
 	public void save() {
-		animal.setName(this.txtName.getText());
+		getAnimal().setName(this.txtName.getText());
 	}
 
 	public ArrayList<Animal> getAnimals() {
@@ -302,45 +320,49 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		this.animals = animals;
 	}
 	
-		public int getAnimalIndex() {
-		return animalIndex;
+		public int getIndex() {
+		return index;
 	}
 
-	public void setAnimalIndex(int animalIndex) {
-		this.animalIndex = animalIndex;
-		setAnimal(animals.get(animalIndex));
+	public void setIndex(int index) {
+		this.index = index;
+		refresh();
 	}
 
 	@Override
 	public void firstRecord() {
-		//txtDOB.setText("FIRST");
-		setAnimalIndex(0);
+		index = 0;
+		refresh();
 	}
 
 	@Override
 	public void previousRecord() {
-		//txtDOB.setText("PREVIOUS");
-		if (animalIndex > 0)
-			setAnimalIndex(--animalIndex);
+		if (index > 0) {
+			index--;
+			refresh();
+		}
 	}
 
 	@Override
 	public void nextRecord() {
-		//txtDOB.setText("NEXT");
-		if (animalIndex < animals.size()-1)
-		setAnimalIndex(++animalIndex);
+		if (index < animals.size()-1) {
+			index++;
+			refresh();
+	}
 	}
 
 	@Override
 	public void lastRecord() {
-		//txtDOB.setText("LAST");
-		setAnimalIndex(animals.size()-1);
+		index = animals.size()-1;
+		refresh();
 	}
 
 	@Override
 	public void newRecord() {
-		txtDOB.setText("NEW");
-		
+		Animal newAnimal = new Animal();
+		animals.add(newAnimal);
+		index = animals.indexOf(newAnimal);
+		refresh();
 	}
 
 	@Override
