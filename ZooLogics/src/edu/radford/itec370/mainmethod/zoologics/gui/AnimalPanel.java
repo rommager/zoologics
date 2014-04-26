@@ -292,16 +292,12 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		try {
 			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// do nothing
 		}
-//		System.out.println(imageURL);
 		
 		File newFile = new File(imageURL.getPath());
 		if (!newFile.exists())
 			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
-		
-		txtNotes.setText(imageURL.getFile());
 		
 		Image image = new ImageIcon(imageURL).getImage();
 		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
