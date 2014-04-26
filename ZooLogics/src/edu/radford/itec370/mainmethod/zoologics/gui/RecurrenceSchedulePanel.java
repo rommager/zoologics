@@ -72,8 +72,9 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		
 		int nRow = model.getRowCount();
 		int nCol = model.getColumnCount();
-		for (int i = 0; i < nRow; i++);
+		for (int i = 0; i < nRow; i++) {
 			
+		}
 	}
 
 	public static void main(String[] args) {
@@ -85,7 +86,7 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		String command = e.getActionCommand();
 		System.out.println(command);
 		if (command.equalsIgnoreCase("Add New")) {
-			model.addRow(new String[] {null,null,"forever"});
+			model.addRow(new String[] {null,null,"forever","8001"});
 		}
 		if (command.equalsIgnoreCase("Save")) {
 			save();

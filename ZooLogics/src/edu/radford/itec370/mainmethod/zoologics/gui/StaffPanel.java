@@ -13,10 +13,11 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.StaffHive;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class StaffPanel extends JDialog {
+public class StaffPanel extends JDialog implements Navigable{
 
 	private static final long serialVersionUID = 3185446536402535910L;
 	private static final String[] COLUMN_NAMES = {"ID","Last Name","First Name","Position","Username"};
@@ -71,6 +72,42 @@ public class StaffPanel extends JDialog {
 		getContentPane().add(panel, BorderLayout.CENTER);
 //		pack();
 
+		
+	}
+
+	@Override
+	public void firstRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void previousRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lastRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyFilter(String filter) {
+		// TODO Auto-generated method stub
 		
 	}
 

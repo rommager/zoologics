@@ -13,9 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import edu.radford.itec370.mainmethod.zoologics.*;
+
 import javax.swing.JPasswordField;
 
-public class LogonDialog extends JDialog {
+public class LogonDialog extends JDialog implements Navigable {
 	/**
 	 * 
 	 */
@@ -43,6 +44,12 @@ public class LogonDialog extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		// add navigator bar in south window area
+		NavigatorBar navPanel = new NavigatorBar(this);
+//		navPanel.setNewRecordVisible(false);
+//		navPanel.setSearchBoxVisible(false);
+		navPanel.setBounds(0, 415, 784, 30);
+		getContentPane().add(navPanel, BorderLayout.SOUTH);
 		{
 			lblUsername = new JLabel("User name: ");
 			lblUsername.setBounds(10, 24, 84, 14);
@@ -91,5 +98,41 @@ public class LogonDialog extends JDialog {
 			}
 		}
 		setVisible(true);
+	}
+
+	@Override
+	public void firstRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void previousRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void lastRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newRecord() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void applyFilter(String filter) {
+		// TODO Auto-generated method stub
+		
 	}
 }

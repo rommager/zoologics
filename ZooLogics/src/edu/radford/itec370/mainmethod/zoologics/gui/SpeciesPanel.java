@@ -113,6 +113,12 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			// add navigator bar in south window area
+			NavigatorBar navPanel = new NavigatorBar(this);
+//			navPanel.setNewRecordVisible(false);
+//			navPanel.setSearchBoxVisible(false);
+			navPanel.setBounds(0, 415, 784, 30);
+			getContentPane().add(navPanel, BorderLayout.SOUTH);
 			//getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				//JButton okButton = new JButton("OK");
@@ -136,13 +142,14 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		//}
 			
 	//}
+			
 	
 	public void save() {
 		Species x = species.get(index);
 		x.setSpeciesName(this.txtSpecies.getText());
 	}
 	
-	public void refresh() {
+	public void updateGUI() {
 		Species x = species.get(index);
 		this.txtSpecies.setText(x.getSpeciesName());
 	}
@@ -151,7 +158,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 	@Override
 	public void firstRecord() {
 		index = 0;
-		refresh();
+		updateGUI();
 	}
 
 
@@ -159,7 +166,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 	public void previousRecord() {
 		if (index > 0 && species.size() != 0) {
 			index--;
-			refresh();
+			updateGUI();
 		}
 	}
 
@@ -168,7 +175,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 	public void nextRecord() {
 		if (index < species.size() && species.size() != 0) {
 			index++;
-			refresh();
+			updateGUI();
 		}
 	}
 
@@ -176,7 +183,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 	@Override
 	public void lastRecord() {
 		index = species.size();
-		refresh();
+		updateGUI();
 	}
 
 
@@ -185,7 +192,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		Species newSpecies = new Species();
 		species.add(newSpecies);
 		index = species.indexOf(newSpecies);
-		refresh();
+		updateGUI();
 	}
 
 

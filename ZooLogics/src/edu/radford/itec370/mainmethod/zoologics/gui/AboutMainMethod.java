@@ -2,12 +2,11 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.JButton;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -15,67 +14,27 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
-public class MainScreen extends JFrame {
-	// TODO Auto-generated method stub
 
-	private static final long serialVersionUID = -6514056067808688533L;
-	private static final String[] COLUMN_HEADER = new String[] {"Task Tpye", "Animal", "Description", "Due"};
-	private JTable table;
+public class AboutMainMethod extends JFrame {
+	private JMenuBar menuBar;
+	private JMenu fileMenu;
+	private JMenu aboutMenu;
+	private JMenuItem exitItem;
 	private JMenuItem mntmExit;
 	private JMenuItem mntmVaccinePanel;
 	private JMenuItem mntmSpeciesPanel;
 	private JMenuItem mntmAnimalReport;
 	private JMenuItem mntmAnimalPanel;
 	private JMenuItem mntmAdminPanel;
-	private JMenuItem mntmAboutMainMethod;
 	private StatusBar statusBar;
-
-	public MainScreen() {
-		setTitle(Application.getAppName() + " Main Task Screen");
+	public AboutMainMethod() {
+		setTitle(Application.getAppName() + " About Main() Method");
 		setIconImage(Application.getAppIcon());
 		setSize(new Dimension(650, 449));
 		getContentPane().setLayout(new BorderLayout());
-
-		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel lblTasks = new JLabel("Tasks:");
-		lblTasks.setFont(new Font("Tahoma", Font.BOLD, 14));
-		//lblTasks.setBounds(21, 36, 65, 26);
-		northPanel.add(lblTasks);
-		getContentPane().add(northPanel,BorderLayout.NORTH);
-
-		// JScrollPane scrollPane = new JScrollPane();
-		// scrollPane.setBounds(21, 73, 504, 195);
-		// getContentPane().add(scrollPane);
-
-		// DefaultTableModel model = new DefaultTableModel(null, new String[] {
-		// "Task Type", "Animal", "Description", "Due"});
-		// table = new JTable(model);
-		// JScrollPane scrollPane2 = new JScrollPane(table);
-
-		JPanel centerPanel = new JPanel(new BorderLayout());
-		table = new JTable(new DefaultTableModel(null,COLUMN_HEADER));
-		JScrollPane scrollPane = new JScrollPane(table);
-		//scrollPane.setBounds(21, 73, 504, 195);
-		centerPanel.add(scrollPane, BorderLayout.CENTER);
-		getContentPane().add(centerPanel);
-		// scrollPane.setColumnHeaderView(table);
-
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		
-		JButton btnOpenItem = new JButton("Open");
-//		btnOpenItem.setBounds(294, 279, 89, 23);
-		buttonPanel.add(btnOpenItem);
-
-		JButton btnSearch = new JButton("Search");
-//		btnSearch.setBounds(419, 279, 89, 23);
-		buttonPanel.add(btnSearch);
-		centerPanel.add(buttonPanel,BorderLayout.SOUTH);
-
 		statusBar = new StatusBar();
 		getContentPane().add(statusBar,BorderLayout.SOUTH);
 		
@@ -87,11 +46,15 @@ public class MainScreen extends JFrame {
 		mnFile.setMnemonic(KeyEvent.VK_F);
 		menuBar_1.add(mnFile);
 
-		mntmAnimalPanel = new JMenuItem("Animal Profiles");
+		mntmAdminPanel = new JMenuItem("Admin Panel");
+		mntmAdminPanel.addActionListener(new MenuListener());
+		mnFile.add(mntmAdminPanel);
+
+		mntmAnimalPanel = new JMenuItem("Animal Panel");
 		mntmAnimalPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmAnimalPanel);
 
-		mntmAnimalReport = new JMenuItem("Animal Vaccination Report");
+		mntmAnimalReport = new JMenuItem("Animal Report");
 		mntmAnimalReport.addActionListener(new MenuListener());
 		mnFile.add(mntmAnimalReport);
 
@@ -102,10 +65,6 @@ public class MainScreen extends JFrame {
 		mntmVaccinePanel = new JMenuItem("Vaccine Panel");
 		mntmVaccinePanel.addActionListener(new MenuListener());
 		mnFile.add(mntmVaccinePanel);
-		
-		mntmAdminPanel = new JMenuItem("Admin Panel");
-		mntmAdminPanel.addActionListener(new MenuListener());
-		mnFile.add(mntmAdminPanel);
 
 		mntmExit = new JMenuItem("Exit");
 		mntmExit.setMnemonic(KeyEvent.VK_X);
@@ -116,34 +75,11 @@ public class MainScreen extends JFrame {
 		mnAbout.setMnemonic(KeyEvent.VK_B);
 		menuBar_1.add(mnAbout);
 
-		mntmAboutMainMethod = new JMenuItem("About Main() Method");
-		mntmAboutMainMethod.addActionListener(new MenuListener());
-		mnAbout.add(mntmAboutMainMethod);
+		JMenuItem mntmAboutMain = new JMenuItem("About Main() Method");
+		mntmAboutMain.addActionListener(new MenuListener());
+		mnAbout.add(mntmAboutMain);
 
 	}
-
-	public MainScreen(String windowTitle) {
-		this();
-		this.setTitle(windowTitle);
-	}
-
-	public static void main(String[] args) {
-		MainScreen tester = new MainScreen();
-		tester.setVisible(true);
-	}
-
-	
-	public void tasks() {
-		// TODO Auto-generated method stub
-
-	}
-
-	
-	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
-
-	}
-
 	private class MenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == mntmExit)
@@ -164,11 +100,7 @@ public class MainScreen extends JFrame {
 			} else if (e.getSource() == mntmAdminPanel) {
 				StaffPanel adminPanel = new StaffPanel();
 				adminPanel.setVisible(true);
-			} else if (e.getSource() == mntmAboutMainMethod) {
-				AboutMainMethod aboutmainmethod = new AboutMainMethod();
-				aboutmainmethod.setVisible(true);
 			}
-			 
 		}
 	}
 

@@ -3,6 +3,8 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.awt.Graphics;
+import java.awt.print.*;
 
 public class Animal implements Printable, Serializable {
 
@@ -59,6 +61,7 @@ public class Animal implements Printable, Serializable {
 		this.thumbnail = thumbnail;
 	}
 
+
 	public Animal(String name) {
 
 	}
@@ -67,7 +70,6 @@ public class Animal implements Printable, Serializable {
 
 	}
 
-	@Override
 	public void print() {
 		// TODO Auto-generated method stub
 
@@ -105,6 +107,11 @@ public class Animal implements Printable, Serializable {
 
 	public char getSex() {
 		return sex;
+	}
+	
+	public void Printable() {
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setPrintable (this);
 	}
 
 	public void setSex(char sex) {
@@ -201,6 +208,13 @@ public class Animal implements Printable, Serializable {
 
 	public void setVaccination(ArrayList<Vaccination> vaccinations) {
 		this.vaccinations = vaccinations;
+	}
+
+	@Override
+	public int print(Graphics arg0, PageFormat arg1, int arg2)
+			throws PrinterException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -43,7 +43,7 @@ import java.net.URLDecoder;
 public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	
 	private static final long serialVersionUID = 6632886394131544115L;
-	public static final String WINDOW_TITLE = Application.getAppName() + "Animal Profile";
+	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
 	public static final String PHOTO_FOLDER = "./photos/"; 
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
 	private ArrayList <Animal> animals;
@@ -283,7 +283,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 
 	public void setAnimal(Animal animal) {
 		index = animals.indexOf(animal);
-		refresh();
+		updateGUI();
 	}
 	
 	public void setThumbnail(String fileName)  {
@@ -304,7 +304,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		
 	}
 	
-	public void refresh() {
+	public void updateGUI() {
 		this.txtName.setText(getAnimal().getName());
 		this.txtSpecies.setText(getAnimal().getSpecies().getSpeciesName());
 		this.txtSex.setText(Character.toString(getAnimal().getSex()));
@@ -342,7 +342,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 			a.setIdenficationChip(true);
 		else
 			a.setIdenficationChip(false);
-		refresh();
+		updateGUI();
 	}
 
 	public ArrayList<Animal> getAnimals() {
@@ -359,20 +359,20 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 
 	public void setIndex(int index) {
 		this.index = index;
-		refresh();
+		updateGUI();
 	}
 
 	@Override
 	public void firstRecord() {
 		index = 0;
-		refresh();
+		updateGUI();
 	}
 
 	@Override
 	public void previousRecord() {
 		if (index > 0) {
 			index--;
-			refresh();
+			updateGUI();
 		}
 	}
 
@@ -380,14 +380,14 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	public void nextRecord() {
 		if (index < animals.size()-1) {
 			index++;
-			refresh();
+			updateGUI();
 	}
 	}
 
 	@Override
 	public void lastRecord() {
 		index = animals.size()-1;
-		refresh();
+		updateGUI();
 	}
 
 	@Override
@@ -395,7 +395,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		Animal newAnimal = new Animal();
 		animals.add(newAnimal);
 		index = animals.indexOf(newAnimal);
-		refresh();
+		updateGUI();
 	}
 
 	@Override
