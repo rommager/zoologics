@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import edu.radford.itec370.mainmethod.zoologics.Species;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JScrollPane;
+
 
 /**
  * @author Sean
@@ -28,14 +31,16 @@ import java.awt.event.ActionEvent;
  */
 public class SpeciesPanel extends JDialog implements Navigable {
 
-	//ArrayList<Vaccine> vaccineList = new ArrayList<Vaccine>();
 	ArrayList<Species> species;
 	int index = 0;
 	
 	private static final long serialVersionUID = 4119451221171558539L;
+	private static final String[] SPECIES_COLUMN_NAMES = new String[] {"Vaccine Name", "Schedule Box"}; //TODO add dropdown to Schedule Box
 	private JPanel contentPanel;
 	private JTextField txtSpecies;
-	private JTable vaccineRegimentTable;
+	private JScrollPane speciesScroll;
+	private JTable speciesTable;
+	private DefaultTableModel speciesModel;
 
 	/**
 	 * Launch the application.
@@ -84,11 +89,6 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		txtSpecies.setBounds(65, 8, 133, 20);
 		contentPanel.add(txtSpecies);
 		txtSpecies.setColumns(10);
-		{
-			vaccineRegimentTable = new JTable();
-			vaccineRegimentTable.setBounds(20, 36, 393, 182);
-			contentPanel.add(vaccineRegimentTable);
-		}
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
@@ -110,6 +110,14 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		});
 		btnOk.setBounds(423, 161, 89, 23);
 		contentPanel.add(btnOk);
+		
+		speciesModel = new DefaultTableModel(null, SPECIES_COLUMN_NAMES);
+		speciesTable = new JTable(speciesModel);
+		speciesScroll = new JScrollPane(speciesTable);
+		speciesScroll.setBounds(20, 36, 393, 195);
+		contentPanel.add(speciesScroll);
+		speciesModel.addRow(new String[] {null,null,null});
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
