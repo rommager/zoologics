@@ -72,7 +72,7 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		
 		int nRow = model.getRowCount();
 		int nCol = model.getColumnCount();
-		for (int i = 0; i < nRow; i++)
+		for (int i = 0; i < nRow; i++);
 			
 	}
 
