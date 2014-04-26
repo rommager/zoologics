@@ -101,6 +101,29 @@ public class Task implements Serializable {
 		}
 	}
 
+	public static String intervalToString(int interval) {
+		String output = "";
+		switch (interval) {
+			case Task.DAY: output = "Day";
+			case Task.WEEK: output = "Week";
+			case Task.MONTH: output = "Month";
+			case Task.YEAR: output = "Year";
+			default: output = "Invalid";
+		}
+		return output;
+	}
+	
+	public static int stringToInterval(String interval) {
+		int output = 0;
+		switch (interval) {
+		case "Day": output = Task.DAY;
+		case "Week": output = Task.WEEK;
+		case "Month": output = Task.MONTH;
+		case "Year": output = Task.YEAR;
+		}
+		return output;
+	}
+
 	public void dismiss(){
 		setStatus(DISMISSED);
 	}
