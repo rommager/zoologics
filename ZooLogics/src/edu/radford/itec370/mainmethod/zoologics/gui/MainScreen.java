@@ -3,25 +3,22 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
-
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JMenuBar;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 public class MainScreen extends JFrame {
 	// TODO Auto-generated method stub
@@ -155,7 +152,8 @@ public class MainScreen extends JFrame {
 				VaccinePanel vaccinePanel = new VaccinePanel();
 				vaccinePanel.setVisible(true);
 			} else if (e.getSource() == mntmSpeciesPanel) {
-				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix this
+				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix
+																	// this
 				speciesPanel.setVisible(true);
 			} else if (e.getSource() == mntmAnimalReport) {
 				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel();
