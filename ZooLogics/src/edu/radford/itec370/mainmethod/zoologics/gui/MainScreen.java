@@ -169,23 +169,24 @@ public class MainScreen extends JFrame {
 			if (e.getSource() == mntmExit)
 				System.exit(0);
 			else if (e.getSource() == mntmVaccinePanel) {
-//				VaccinePanel vaccinePanel = new VaccinePanel(application.getVaccines());
-//				vaccinePanel.setVisible(true);
+				VaccinePanel vaccinePanel = new VaccinePanel(application.getVaccines());
+				vaccinePanel.setVisible(true);
 			} else if (e.getSource() == mntmSpeciesPanel) {
 				SpeciesPanel speciesPanel = new SpeciesPanel(application.getSpecies());
 				speciesPanel.setVisible(true);
 			} else if (e.getSource() == mntmAnimalReport) {
-//				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel(application.getAnimals(), application.getAllActiveTasks(), application.getInactiveTasks());
-//				animalReport.setVisible(true);
+				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel(application.getAnimals(), application.getAllActiveTasks(), application.getInactiveTasks());
+				animalReport.setVisible(true);
 			} else if (e.getSource() == mntmAnimalPanel) {
-//				AnimalPanel animalPanel = new AnimalPanel(application.getAnimals());
-//				animalPanel.setVisible(true);
+				AnimalPanel animalPanel = new AnimalPanel(application.getAnimals());
+				animalPanel.setVisible(true);
 			} else if (e.getSource() == mntmAdminPanel) {
-//				StaffPanel adminPanel = new StaffPanel(application.getStaffHive());
-//				adminPanel.setVisible(true);
+				StaffPanel adminPanel = new StaffPanel(application.getStaffHive());
+				adminPanel.setVisible(true);
 			} else if (e.getSource() == mntmAboutMainMethod) {
 				JOptionPane.showMessageDialog(null, 
-						Application.getAppName() + " version " + Application.getVersion() + "\n created by team main() Method", 
+						Application.getAppName() + " version " + Application.getVersion() + 
+						"\n created by team main() Method", 
 						Application.getAppName(), 
 						JOptionPane.INFORMATION_MESSAGE,
 						Application.getAppIcon());
