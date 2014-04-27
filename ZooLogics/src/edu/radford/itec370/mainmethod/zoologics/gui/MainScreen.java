@@ -26,12 +26,17 @@ import java.awt.print.*;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
 public class MainScreen extends JFrame {
-	// TODO Auto-generated method stub
 
+	// constants
 	private static final long serialVersionUID = -6514056067808688533L;
 	private static final String[] COLUMN_HEADER = new String[] {"Task Tpye", "Animal", "Description", "Due"};
 	private static final int PAGE_EXISTS = 0;
 	private static final int NO_SUCH_PAGE = 0;
+	
+	// class variables
+	private Application application;
+
+	// class GUI elements
 	private JTable table;
 	private JMenuItem mntmExit;
 	private JMenuItem mntmVaccinePanel;
@@ -43,50 +48,47 @@ public class MainScreen extends JFrame {
 	private JMenuItem mntmAboutMainMethod;
 	private StatusBar statusBar;
 
-	public MainScreen() {
+	public MainScreen(Application application) {
+		super();
+	}
+	
+	public void buildGUI() {
+		// set up JFrame properties
 		setTitle(Application.getAppName() + " Main Task Screen");
 		setIconImage(Application.getAppIcon());
 		setSize(new Dimension(650, 449));
 		getContentPane().setLayout(new BorderLayout());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
+		// build north panel
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblTasks = new JLabel("Tasks:");
 		lblTasks.setFont(new Font("Tahoma", Font.BOLD, 14));
-		//lblTasks.setBounds(21, 36, 65, 26);
 		northPanel.add(lblTasks);
 		getContentPane().add(northPanel,BorderLayout.NORTH);
 
-		// JScrollPane scrollPane = new JScrollPane();
-		// scrollPane.setBounds(21, 73, 504, 195);
-		// getContentPane().add(scrollPane);
-
-		// DefaultTableModel model = new DefaultTableModel(null, new String[] {
-		// "Task Type", "Animal", "Description", "Due"});
-		// table = new JTable(model);
-		// JScrollPane scrollPane2 = new JScrollPane(table);
-
+		// build center panel
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		table = new JTable(new DefaultTableModel(null,COLUMN_HEADER));
 		JScrollPane scrollPane = new JScrollPane(table);
-		//scrollPane.setBounds(21, 73, 504, 195);
 		centerPanel.add(scrollPane, BorderLayout.CENTER);
 		getContentPane().add(centerPanel);
-		// scrollPane.setColumnHeaderView(table);
 
+		// build button panel for center panel - this is an embedded south panel for the center panel
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
 		JButton btnOpenItem = new JButton("Open");
-//		btnOpenItem.setBounds(294, 279, 89, 23);
 		buttonPanel.add(btnOpenItem);
 
 		JButton btnSearch = new JButton("Search");
-//		btnSearch.setBounds(419, 279, 89, 23);
 		buttonPanel.add(btnSearch);
 		centerPanel.add(buttonPanel,BorderLayout.SOUTH);
 
+		// build status bar as south panel
 		statusBar = new StatusBar();
 		getContentPane().add(statusBar,BorderLayout.SOUTH);
 		
+		// build menu bar
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar_1.setToolTipText("");
 		setJMenuBar(menuBar_1);
@@ -132,29 +134,32 @@ public class MainScreen extends JFrame {
 		mntmAboutMainMethod = new JMenuItem("About Main() Method");
 		mntmAboutMainMethod.addActionListener(new MenuListener());
 		mnAbout.add(mntmAboutMainMethod);
-
 	}
-
-	public MainScreen(String windowTitle) {
-		this();
-		this.setTitle(windowTitle);
-	}
-
-	public static void main(String[] args) {
-		MainScreen tester = new MainScreen();
-		tester.setVisible(true);
-	}
-
 	
-	public void tasks() {
-		// TODO Auto-generated method stub
+	 public int print(Graphics g, PageFormat pf, int page)
+		      throws PrinterException {
 
-	}
+		    // We have only one page, and 'page'
+		    // is zero-based
+		    if (page > 0) {
+		         return NO_SUCH_PAGE;
+		    }
 
-	
-	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
+		    Graphics2D g2d = (Graphics2D)g;
+		    g2d.translate(pf.getImageableX(), pf.getImageableY());
 
+		    // Now we perform our rendering
+		    g.drawString(getName(), 100, 100);
+//		    g.drawString(getMainSceen(), 200, 100);
+		    
+
+		    // tell the caller that this page is part
+		    // of the printed document
+		    return PAGE_EXISTS;
+		  }
+		
+	public Application getApplication() {
+		return application;
 	}
 
 	private class MenuListener implements ActionListener {
@@ -165,8 +170,7 @@ public class MainScreen extends JFrame {
 				VaccinePanel vaccinePanel = new VaccinePanel();
 				vaccinePanel.setVisible(true);
 			} else if (e.getSource() == mntmSpeciesPanel) {
-				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix
-																	// this
+				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix this
 				speciesPanel.setVisible(true);
 			} else if (e.getSource() == mntmAnimalReport) {
 				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel();
@@ -184,41 +188,4 @@ public class MainScreen extends JFrame {
 			 
 		}
 	}
-
-	public void actionPerformed(ActionEvent e) {
-	}
-	
-	 public int print(Graphics g, PageFormat pf, int page)
-		      throws PrinterException {
-
-		    // We have only one page, and 'page'
-		    // is zero-based
-		    if (page > 0) {
-		         return NO_SUCH_PAGE;
-		    }
-
-		    Graphics2D g2d = (Graphics2D)g;
-		    g2d.translate(pf.getImageableX(), pf.getImageableY());
-
-		    // Now we perform our rendering
-		    g.drawString(getName(), 100, 100);
-		    g.drawString(getMainSceen(), 200, 100);
-		    
-
-		    // tell the caller that this page is part
-		    // of the printed document
-		    return PAGE_EXISTS;
-		  }
-		
-
-	private String getMainSceen() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private String getAnimal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

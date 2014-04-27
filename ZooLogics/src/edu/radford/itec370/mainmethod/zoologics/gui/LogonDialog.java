@@ -16,21 +16,18 @@ import edu.radford.itec370.mainmethod.zoologics.*;
 
 import javax.swing.JPasswordField;
 
-public class LogonDialog extends JDialog implements Navigable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8997686514405988648L;
+@SuppressWarnings("serial")
+public class LogonDialog extends JDialog implements ActionListener {
 
 	protected final static String WINDOW_TITLE = Application.getAppName() + " Logon";
-	
+
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUserName;
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JPasswordField passwordField;
 	//private Staff staff;
-	
+
 	public LogonDialog() 
 	{
 		super();
@@ -44,95 +41,57 @@ public class LogonDialog extends JDialog implements Navigable {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		// add navigator bar in south window area
-		NavigatorBar navPanel = new NavigatorBar(this);
-//		navPanel.setNewRecordVisible(false);
-//		navPanel.setSearchBoxVisible(false);
-		navPanel.setBounds(0, 415, 784, 30);
-		getContentPane().add(navPanel, BorderLayout.SOUTH);
-		{
-			lblUsername = new JLabel("User name: ");
-			lblUsername.setBounds(10, 24, 84, 14);
-			contentPanel.add(lblUsername);
-		}
-		{
-			txtUserName = new JTextField();
-			txtUserName.setBounds(115, 21, 100, 20);
-			contentPanel.add(txtUserName);
-			txtUserName.setColumns(10);
-		}
-		{
-			lblPassword = new JLabel("Password:");
-			lblPassword.setBounds(10, 65, 84, 14);
-			contentPanel.add(lblPassword);
-		}
-		{
-			passwordField = new JPasswordField();
-			passwordField.setBounds(115, 62, 100, 20);
-			contentPanel.add(passwordField);
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						System.exit(0);
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+
+		lblUsername = new JLabel("User name: ");
+		lblUsername.setBounds(10, 24, 84, 14);
+		contentPanel.add(lblUsername);
+
+		txtUserName = new JTextField();
+		txtUserName.setBounds(115, 21, 100, 20);
+		contentPanel.add(txtUserName);
+		txtUserName.setColumns(10);
+
+		lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(10, 65, 84, 14);
+		contentPanel.add(lblPassword);
+
+		passwordField = new JPasswordField();
+		passwordField.setBounds(115, 62, 100, 20);
+		contentPanel.add(passwordField);
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+
+		JButton okButton = new JButton("OK");
+		okButton.addActionListener(this);
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(this);
+		buttonPane.add(cancelButton);
 		setVisible(true);
 	}
-
+	
 	@Override
-	public void firstRecord() {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		String command = e.getActionCommand();
+		if (command.equals("Ok")) {
+			Staff user = getAuthenticatedUser(txtUserName.getText(),passwordField.getPassword());
+			Application newAppInstance = new Application(user);
+			newAppInstance.run();
+		}
+		else if (command.equals("Cancel"))
+			System.exit(0);
 	}
-
-	@Override
-	public void previousRecord() {
-		// TODO Auto-generated method stub
-		
+	
+	private Staff getAuthenticatedUser(String username, char[] password) {
+		Staff staff = Application.getStaffHive().findUser(username);
+		staff.validatePassword(password);
+		return staff;
 	}
-
-	@Override
-	public void nextRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void lastRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void newRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
+

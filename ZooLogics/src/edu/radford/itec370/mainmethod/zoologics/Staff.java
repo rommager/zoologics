@@ -61,12 +61,12 @@ public class Staff implements Serializable {
 		this.passwordHash = passwordHash;
 	}
 	
-	public void setPassword(String password) {
+	public void setPassword(char[] password) {
 		if (isUser())
 		passwordHash = generateHash(password);
 	}
 	
-	public boolean validatePassword(String password) {
+	public boolean validatePassword(char[] password) {
 		if (isUser()) {
 			byte[] compareHash = generateHash(password);		
 			if (Arrays.equals(compareHash, passwordHash)) {
@@ -76,7 +76,7 @@ public class Staff implements Serializable {
 		return false;
 	}
 	
-	private byte[] generateHash(String password) {
+	private byte[] generateHash(char[] password) {
 		byte[] returnHash;
 		try {
 			MessageDigest md;
@@ -89,10 +89,12 @@ public class Staff implements Serializable {
 		return returnHash;
 	}
 	
-	private byte[] addSalt(String password) {
-		
-		String newString = SALT + userName + password;
-		return newString.getBytes();
+	private byte[] addSalt(char[] password) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(SALT);
+		sb.append(userName);
+		sb.append(password);
+		return sb.toString().getBytes();
 	}
 	
 	public Object[] getRow() {

@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
-public class Application implements Serializable {
+public class Application implements Runnable {
 
 	private static final long serialVersionUID = -4947318641942709682L;
 	private final static String APPLICATION_NAME = "ZooLogics";
@@ -23,56 +23,57 @@ public class Application implements Serializable {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
 	
+	// operating Application variables
+	private Staff currentUser;
+	
 	// set up app data variables
 	private ArrayList<Animal> animals;
-	private ArrayList<Task> allActiveTasks;
-	private ArrayList<Task> inactiveTasks;
-	private ArrayList<Task> outstandingTasks;
+	private ArrayList<Task> allActiveTasks;    // used to store all active tasks
+	private ArrayList<Task> inactiveTasks;     // used to store all inactive tasks (completed or dismissed tasks)
+	private ArrayList<Task> outstandingTasks;  // used to store all outstanding tasks (all active tasks with an upcoming due date) 
 	
 	// reference data variables
 	private static StaffHive staffHive;
 	private ArrayList<Vaccine> vaccines;
-	private ArrayList<RecurrenceSchedule> schedules;
 	private ArrayList<Species> species;
-	private ArrayList<VaccinationSchedule> vaccinationSchedule;
-	
-	private Staff currentUser;
+	private ArrayList<RecurrenceSchedule> recurrenceScheduleTemplates;
+	private ArrayList<VaccinationSchedule> vaccinationScheduleTemplates;
 
-	public Application(Staff user) {
+	public Application(Staff authenticatedUser) {
 		super();
-		if (user.isUser()) {
+		if (authenticatedUser.isUser()) {
+			this.currentUser = authenticatedUser;
 			animals = new ArrayList<Animal>();
 			allActiveTasks = new ArrayList<Task>();
 			inactiveTasks = new ArrayList<Task>();
 			outstandingTasks = new ArrayList<Task>();
 			
 			vaccines = new ArrayList<Vaccine>();
-			schedules = new ArrayList<RecurrenceSchedule>();
 			species = new ArrayList<Species>();
-			
-			this.currentUser = user;
-		} else
+			recurrenceScheduleTemplates = new ArrayList<RecurrenceSchedule>();
+			vaccinationScheduleTemplates = new ArrayList<VaccinationSchedule>();
+		} 
+		else
 			System.exit(0);
 	}
 
 	public static void main(String[] args) {
-		MainScreen appFrame = new MainScreen(APPLICATION_NAME);
-
-		// Set behavior to close program when GUI closed
-		appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		appFrame.setSize(800, 600); // set frame size
-		appFrame.setIconImage(getAppIcon());
-		appFrame.setVisible(true);
-		displayLogon();
-	}
-
-	public static Application displayLogon() {
 		LogonDialog logon = new LogonDialog();
-		return null;
+	}
+	
+	@Override
+	public void run() {
+		loadDataFromIO();
+		MainScreen gui = new MainScreen(this);
+		gui.setVisible(true);
+	}
+	
+	public void loadDataFromIO() {
+		//TODO implement use of DataIO class
 	}
 
-	public static Staff getCurrentUser() {
-		return null;
+	public Staff getCurrentUser() {
+		return currentUser;
 	}
 
 	public static Image getAppIcon() {
@@ -157,4 +158,49 @@ public class Application implements Serializable {
 		return serialVersionUID;
 	}
 
+	public ArrayList<Task> getAllActiveTasks() {
+		return allActiveTasks;
+	}
+
+	public void setAllActiveTasks(ArrayList<Task> allActiveTasks) {
+		this.allActiveTasks = allActiveTasks;
+	}
+
+	public ArrayList<Task> getInactiveTasks() {
+		return inactiveTasks;
+	}
+
+	public void setInactiveTasks(ArrayList<Task> inactiveTasks) {
+		this.inactiveTasks = inactiveTasks;
+	}
+
+	public ArrayList<Task> getOutstandingTasks() {
+		return outstandingTasks;
+	}
+
+	public void setOutstandingTasks(ArrayList<Task> outstandingTasks) {
+		this.outstandingTasks = outstandingTasks;
+	}
+
+	public ArrayList<RecurrenceSchedule> getRecurrenceScheduleTemplates() {
+		return recurrenceScheduleTemplates;
+	}
+
+	public void setRecurrenceScheduleTemplates(
+			ArrayList<RecurrenceSchedule> recurrenceScheduleTemplates) {
+		this.recurrenceScheduleTemplates = recurrenceScheduleTemplates;
+	}
+
+	public ArrayList<VaccinationSchedule> getVaccinationScheduleTemplates() {
+		return vaccinationScheduleTemplates;
+	}
+
+	public void setVaccinationScheduleTemplates(
+			ArrayList<VaccinationSchedule> vaccinationScheduleTemplates) {
+		this.vaccinationScheduleTemplates = vaccinationScheduleTemplates;
+	}
+
+	public static StaffHive getStaffHive() {
+		return staffHive;
+	}
 }
