@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -25,12 +27,15 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.print.*;
 
 public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 
 	private static final long serialVersionUID = 511782685113323967L;
 	private static final Object[] HISTORY_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
 	private static final Object[] UPCOMING_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Due Date"};
+	private static final int NO_SUCH_PAGE = 0;
+	private static final int PAGE_EXISTS = 0;
 	private ArrayList <Vaccination> vaccinations;
 	private Animal animal;
 	private JTextField txtAnimalName;
@@ -226,5 +231,34 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 			return false;
 		}
 	}
+	 public int print(Graphics g, PageFormat pf, int page)
+		      throws PrinterException {
 
-}
+		    // We have only one page, and 'page'
+		    // is zero-based
+		    if (page > 0) {
+		         return NO_SUCH_PAGE;
+		    }
+
+		    Graphics2D g2d = (Graphics2D)g;
+		    g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+		    // Now we perform our rendering
+		    g.drawString(getName(), 100, 100);
+		    g.drawString(getVaccine(), 200, 100);
+		    
+
+		    // tell the caller that this page is part
+		    // of the printed document
+		    return PAGE_EXISTS;
+		  }
+		
+
+	private String getVaccine() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	}
+
