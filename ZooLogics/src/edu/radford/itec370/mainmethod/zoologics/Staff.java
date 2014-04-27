@@ -10,34 +10,50 @@ public class Staff implements Serializable {
 	private static final long serialVersionUID = 4632391733615291271L;
 	private static final String SALT = Application.getAppName() + Application.getSerialversionuid();
 	private static int nextStaffID = 1001;
-	private int id;
+	private int staffID;
 	private String lastName;
 	private String firstName;
 	private String position;
 	private String userName;
     private byte[] passwordHash;
 	
-    private Staff() {
+    public Staff() {
 		super();
+		staffID = nextStaffID++;
 	}
+    
     public Staff(String lastName, String firstName, String position) {
-		this();
+		super();
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.position = position;
+		staffID = nextStaffID++;
 	}
 	
     public Staff(String lastName, String firstName, String position, String userName) {
-		this();
+		super();
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.position = position;
 		this.userName = userName;
+		staffID = nextStaffID++;
 	}
-	
-	public Staff(int id, String lastName, String firstName, String position, String userName, byte[] passwordHash) {
-		this();
-		this.id = id;
+
+    // constructor for IO
+	public Staff(int staffID, String lastName, String firstName, String position) {
+		super();
+		setStaffID(staffID);
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.position = position;
+		this.userName = null;
+		this.passwordHash = null;
+	}
+    
+    // full constructor for IO
+	public Staff(int staffID, String lastName, String firstName, String position, String userName, byte[] passwordHash) {
+		super();
+		setStaffID(staffID);
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.position = position;
@@ -81,18 +97,23 @@ public class Staff implements Serializable {
 		return newString.getBytes();
 	}
 	
-	public String[] getRow() {
-		String[] output = new String[5];
-		output[0] = Integer.toString(id);
-		output[1] = null;
-		output[2] = null;
-		output[3] = null;
-		output[4] = null;
+	public Object[] getRow() {
+		Object[] output = new Object[6];
+		output[0] = staffID;
+		output[1] = lastName;  // last name
+		output[2] = firstName;  // first name
+		output[3] = position;  // position
+		output[4] = userName;  // user name
+		output[5] = this;
 		return output;
 	}
 
 	public boolean isUser() {
 		return (userName != null);
+	}
+	
+	public String getDisplayName() {
+		return firstName + " " + lastName;
 	}
 
 	public String getLastName() {
@@ -118,5 +139,25 @@ public class Staff implements Serializable {
 			this.userName = null;
 		else
 			this.userName = userName;
+		
+		// if this staff is not a program user, then also clear out the passwordHash
+		if (this.userName == null)
+			passwordHash = null;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public int getStaffID() {
+		return staffID;
+	}
+
+	public void setStaffID(int staffID) {
+		this.staffID = staffID;
+		if (nextStaffID <= staffID)
+			nextStaffID = staffID + 1;
 	}
 }

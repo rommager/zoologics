@@ -71,8 +71,6 @@ public class Animal implements Printable, Serializable {
 	@Override
 	public int print(Graphics g, PageFormat pf, int page)
 			throws PrinterException {
-	 public int print(Graphics g, PageFormat pf, int page)
-		      throws PrinterException {
 
 		    // We have only one page, and 'page'
 		    // is zero-based
@@ -85,7 +83,7 @@ public class Animal implements Printable, Serializable {
 
 		    // Now we perform our rendering
 		    g.drawString(getName(), 100, 100);
-		    g.drawString(getAnimal(), 200, 100);
+		    g.drawString(getSpecies().getSpeciesName(), 200, 100);
 		    
 
 		    // tell the caller that this page is part
@@ -93,41 +91,6 @@ public class Animal implements Printable, Serializable {
 		    return PAGE_EXISTS;
 		  }
 		
-
-	private String getAnimal() {
-	 public int print(Graphics g, PageFormat pf, int page)
-		      throws PrinterException {
-
-		    // We have only one page, and 'page'
-		    // is zero-based
-		    if (page > 0) {
-		         return NO_SUCH_PAGE;
-		    }
-
-		    Graphics2D g2d = (Graphics2D)g;
-		    g2d.translate(pf.getImageableX(), pf.getImageableY());
-
-		    // Now we perform our rendering
-		    g.drawString(getName(), 100, 100);
-		    g.drawString(getAnimal(), 200, 100);
-		    
-
-		    // tell the caller that this page is part
-		    // of the printed document
-		    return PAGE_EXISTS;
-		  }
-		
-
-	private String getAnimal() {
-		 // We have only one page, and 'page'
-	    // is zero-based
-	    if (page > 0) {
-	         return NO_SUCH_PAGE;
-	    }
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public int getNewIDNumber() {
 		return animalIDCounter++;
 	}

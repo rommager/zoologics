@@ -12,12 +12,13 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
+import edu.radford.itec370.mainmethod.zoologics.Staff;
 import edu.radford.itec370.mainmethod.zoologics.StaffHive;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class StaffPanel extends JDialog implements Navigable{
+public class StaffPanel extends JDialog {
 
 	private static final long serialVersionUID = 3185446536402535910L;
 	private static final String[] COLUMN_NAMES = {"ID","Last Name","First Name","Position","Username"};
@@ -31,7 +32,7 @@ public class StaffPanel extends JDialog implements Navigable{
 	public static void main(String args[]) {
 		StaffPanel admin = new StaffPanel();
 		admin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		admin.setSize(350, 200);
+		admin.setSize(500, 200);
 		admin.setVisible(true);		
 	}
 	
@@ -43,15 +44,16 @@ public class StaffPanel extends JDialog implements Navigable{
 		JPanel panel = new JPanel(new GridLayout(1,1));
 		model = new DefaultTableModel(null, COLUMN_NAMES);
 		table = new JTable(model);
+		table.setRowSelectionAllowed(false);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(1,1,100,100);
 		
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton newButton = new JButton("Add New Staff");
 		newButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
-				model.addRow(new String[] {Integer.toString(nextStaffID), null, null, null, null});
-				nextStaffID++;
+			public void actionPerformed(ActionEvent arg0) {
+				Staff newStaff = new Staff();
+				model.addRow(newStaff.getRow());
 			}
 		});
 		JButton saveButton = new JButton("Save");
@@ -67,42 +69,5 @@ public class StaffPanel extends JDialog implements Navigable{
 
 		
 	}
-
-	@Override
-	public void firstRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void previousRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void nextRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void lastRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void newRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

@@ -168,7 +168,7 @@ public class Task implements Serializable {
 		if (status == Task.ACTIVE)
 			return new String[] {taskName, Application.getDateFormat().format(dueDate)};
 		else if (status == Task.COMPLETED)
-			return new String[] {taskName, Application.getDateFormat().format(completedDate), completedBy.getName()};
+			return new String[] {taskName, Application.getDateFormat().format(completedDate), completedBy.getDisplayName()};
 		else
 			return null;
 				

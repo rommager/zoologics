@@ -154,7 +154,7 @@ public class TaskPanel extends JDialog implements Navigable {
 		if (task != null) {
 			this.txtTaskName.setText(task.getTaskName());
 			if (task.getCompletedBy() != null)
-				this.txtCompletedBy.setText(task.getCompletedBy().getName());
+				this.txtCompletedBy.setText(task.getCompletedBy().getDisplayName());
 			if (task.getDueDate() != null)
 				this.txtDueDate.setText(Application.formatDate(task.getDueDate()));
 			if (task.getCompletedDate() != null)

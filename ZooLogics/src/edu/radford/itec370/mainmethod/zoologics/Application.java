@@ -76,7 +76,8 @@ public class Application implements Serializable {
 	}
 
 	public static Application generateTestData() {
-		Application newApp = new Application(new Staff("master", "master"));
+		// Generate an Application class with user "master" as the app user
+		Application newApp = new Application(new Staff(0, "master", "master", "master"));
 
 		Species s1 = new Species("Tiger");
 		Species s2 = new Species("Monkey");
