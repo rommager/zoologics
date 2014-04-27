@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -63,7 +64,7 @@ public class LogonDialog extends JDialog implements ActionListener {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		JButton okButton = new JButton("OK");
+		JButton okButton = new JButton("Ok");
 		okButton.addActionListener(this);
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
@@ -80,8 +81,11 @@ public class LogonDialog extends JDialog implements ActionListener {
 		String command = e.getActionCommand();
 		if (command.equals("Ok")) {
 			Staff user = getAuthenticatedUser(txtUserName.getText(),passwordField.getPassword());
-			Application newAppInstance = new Application(user);
-			newAppInstance.run();
+			if (user != null) {
+				Application newAppInstance = new Application(user);
+				newAppInstance.run();
+				this.setVisible(false);
+			}
 		}
 		else if (command.equals("Cancel"))
 			System.exit(0);
@@ -89,8 +93,21 @@ public class LogonDialog extends JDialog implements ActionListener {
 	
 	private Staff getAuthenticatedUser(String username, char[] password) {
 		Staff staff = Application.getStaffHive().findUser(username);
-		staff.validatePassword(password);
+		if (staff != null)
+			staff.validatePassword(password);
+		else
+			showPasswordAuthenticationError();
 		return staff;
+	}
+	
+	private void showPasswordAuthenticationError() {
+		txtUserName.setText("");
+		passwordField.setText("");
+		
+		JOptionPane.showMessageDialog(this,
+			    "User name or password is invalid",
+			    "Authentication Error",
+			    JOptionPane.ERROR_MESSAGE);
 	}
 	
 }

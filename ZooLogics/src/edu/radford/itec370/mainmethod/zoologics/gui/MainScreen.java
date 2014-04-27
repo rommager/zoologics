@@ -50,6 +50,7 @@ public class MainScreen extends JFrame {
 
 	public MainScreen(Application application) {
 		super();
+		buildGUI();
 	}
 	
 	public void buildGUI() {

@@ -58,7 +58,7 @@ public class Application implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		LogonDialog logon = new LogonDialog();
+		new LogonDialog();
 	}
 	
 	@Override
@@ -201,6 +201,17 @@ public class Application implements Runnable {
 	}
 
 	public static StaffHive getStaffHive() {
+		cacheStaffHive();
+		if (staffHive.size() == 0) {
+			Staff defaultStaff = new Staff("ZooLogics","ZooLogics","ZooLogics","master");
+			defaultStaff.setPassword("master".toCharArray());
+			staffHive.add(defaultStaff);
+		}
 		return staffHive;
+	}
+	
+	private static void cacheStaffHive() {
+		staffHive = new StaffHive();
+		//TODO Read StaffHive from disk and populate into staffHive 
 	}
 }
