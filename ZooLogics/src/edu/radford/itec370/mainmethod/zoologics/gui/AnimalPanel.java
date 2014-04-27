@@ -25,6 +25,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -319,7 +320,10 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 				this.txtSpecies.setText(getAnimal().getSpecies().getSpeciesName());
 			else
 				this.txtSpecies.setText("");
-			this.txtSex.setText(Character.toString(getAnimal().getSex()));			
+			if (Character.getNumericValue(getAnimal().getSex()) != -1)
+				this.txtSex.setText(Character.toString(getAnimal().getSex()));
+			else
+				this.txtSex.setText("");
 			this.txtFather.setText(getAnimal().getFather());
 			this.txtMother.setText(getAnimal().getMother());
 			this.txtZooID.setText(Integer.toString(getAnimal().getAnimalID()));
@@ -339,10 +343,14 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	}
 
 	public void save() {
+		try {
 		Animal a = getAnimal();
 		a.setName(txtName.getText());
 		a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
-		a.setSex(txtSex.getText().toCharArray()[0]);  //TODO set txtSex to a max length of 1, and allow only m or f entries
+		if (!txtSex.getText().isEmpty())
+			a.setSex(txtSex.getText().toCharArray()[0]);  //TODO set txtSex to a max length of 1, and allow only m or f entries
+		else
+			a.setSex(' ');
 		a.setFather(txtFather.getText());
 		a.setMother(txtMother.getText());
 		a.setAnimalID(Integer.parseInt(txtZooID.getText()));
@@ -355,6 +363,10 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		else
 			a.setIdenficationChip(false);
 		updateGUI();
+		}
+		catch (IllegalArgumentException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public ArrayList<Animal> getAnimals() {

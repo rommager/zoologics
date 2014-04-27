@@ -138,7 +138,7 @@ public class Animal implements Printable, Serializable {
 		if (sex == 'M' || sex == 'F')
 			this.sex = sex;
 		else
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Animal sex must be either M or F.");
 	}
 
 	public String getFather() {
