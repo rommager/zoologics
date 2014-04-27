@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.print.*;
 
 public class Animal implements Printable, Serializable {
@@ -68,14 +69,32 @@ public class Animal implements Printable, Serializable {
 	}
 
 	@Override
-	public int print(Graphics arg0, PageFormat arg1, int arg2)
-			throws PrinterException {
+	 public int print(Graphics g, PageFormat pf, int page)
+		      throws PrinterException {
+
+		    // We have only one page, and 'page'
+		    // is zero-based
+		    if (page > 0) {
+		         return NO_SUCH_PAGE;
+		    }
+
+		    Graphics2D g2d = (Graphics2D)g;
+		    g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+		    // Now we perform our rendering
+		    g.drawString(getName(), 100, 100);
+		    g.drawString(getAnimal(), 200, 100);
+		    
+
+		    // tell the caller that this page is part
+		    // of the printed document
+		    return PAGE_EXISTS;
+		  }
+		
+
+	private String getAnimal() {
 		// TODO Auto-generated method stub
-		if (arg2 > 0)
-	    {
-	        return NO_SUCH_PAGE;
-	    }
-		return arg2;
+		return null;
 	}
 
 	public int getNewIDNumber() {

@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.print.*;
+
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
 public class MainScreen extends JFrame {
@@ -25,6 +30,8 @@ public class MainScreen extends JFrame {
 
 	private static final long serialVersionUID = -6514056067808688533L;
 	private static final String[] COLUMN_HEADER = new String[] {"Task Tpye", "Animal", "Description", "Due"};
+	private static final int PAGE_EXISTS = 0;
+	private static final int NO_SUCH_PAGE = 0;
 	private JTable table;
 	private JMenuItem mntmExit;
 	private JMenuItem mntmVaccinePanel;
@@ -32,6 +39,7 @@ public class MainScreen extends JFrame {
 	private JMenuItem mntmAnimalReport;
 	private JMenuItem mntmAnimalPanel;
 	private JMenuItem mntmAdminPanel;
+	private JMenuItem mntmPrint;
 	private JMenuItem mntmAboutMainMethod;
 	private StatusBar statusBar;
 
@@ -111,6 +119,11 @@ public class MainScreen extends JFrame {
 		mntmExit.setMnemonic(KeyEvent.VK_X);
 		mntmExit.addActionListener(new MenuListener());
 		mnFile.add(mntmExit);
+		
+		mntmPrint = new JMenuItem("Print");
+		mntmPrint.setMnemonic(KeyEvent.VK_X);
+		mntmPrint.addActionListener(new MenuListener());
+		mnFile.add(mntmPrint); 
 
 		JMenu mnAbout = new JMenu("About");
 		mnAbout.setMnemonic(KeyEvent.VK_B);
@@ -173,6 +186,39 @@ public class MainScreen extends JFrame {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+	}
+	
+	 public int print(Graphics g, PageFormat pf, int page)
+		      throws PrinterException {
+
+		    // We have only one page, and 'page'
+		    // is zero-based
+		    if (page > 0) {
+		         return NO_SUCH_PAGE;
+		    }
+
+		    Graphics2D g2d = (Graphics2D)g;
+		    g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+		    // Now we perform our rendering
+		    g.drawString(getName(), 100, 100);
+		    g.drawString(getMainSceen(), 200, 100);
+		    
+
+		    // tell the caller that this page is part
+		    // of the printed document
+		    return PAGE_EXISTS;
+		  }
+		
+
+	private String getMainSceen() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String getAnimal() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
