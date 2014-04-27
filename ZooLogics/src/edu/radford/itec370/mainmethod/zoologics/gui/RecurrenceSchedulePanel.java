@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.RecurrenceSchedule;
@@ -28,6 +30,10 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 	private DefaultTableModel model;
 	private JTable table;
 	private JScrollPane scrollPane;
+	private JButton btnMoveUp;
+	private JButton btnMoveDown;
+	private JButton btnAdd;
+	private JButton btnSave;
 
 	private JComboBox<String> cboInterval;
 
@@ -42,21 +48,27 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		table.setRowSelectionAllowed(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cboInterval));
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println("valueChanged" + e.getValueIsAdjusting() + e.getFirstIndex()+ e.getLastIndex());
+			}
+		});
+		table.setCellSelectionEnabled(true);
 		scrollPane = new JScrollPane(table);
 		centerPanel.add(scrollPane);
 		add(centerPanel,BorderLayout.CENTER);
 
 		JPanel southPanel = new JPanel(new FlowLayout());
-		JButton btnMoveUp = new JButton("Move Up");
+		btnMoveUp = new JButton("Move Up");
 		btnMoveUp.addActionListener(this);
 		southPanel.add(btnMoveUp);
-		JButton btnMoveDown = new JButton("Move Down");
+		btnMoveDown = new JButton("Move Down");
 		btnMoveDown.addActionListener(this);
 		southPanel.add(btnMoveDown);
-		JButton btnAdd = new JButton("Add New");
+		btnAdd = new JButton("Add New");
 		btnAdd.addActionListener(this);
 		southPanel.add(btnAdd);
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		btnSave.addActionListener(this);
 		southPanel.add(btnSave);
 		add(southPanel,BorderLayout.SOUTH);
@@ -71,7 +83,7 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		schedule = new RecurrenceSchedule();
 		
 		int nRow = model.getRowCount();
-		int nCol = model.getColumnCount();
+//		int nCol = model.getColumnCount();
 		for (int i = 0; i < nRow; i++) {
 			
 		}
@@ -107,6 +119,14 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		}
 
 
+	}
+
+	public RecurrenceSchedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(RecurrenceSchedule schedule) {
+		this.schedule = schedule;
 	}
 
 }

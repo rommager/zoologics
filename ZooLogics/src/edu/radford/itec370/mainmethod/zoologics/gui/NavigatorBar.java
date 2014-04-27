@@ -4,8 +4,10 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -16,13 +18,17 @@ import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.SwingConstants;
 
-public class NavigatorBar extends JPanel {
+public class NavigatorBar extends JPanel implements FocusListener {
 	private static final long serialVersionUID = -7765321196155993760L;
+	private static final String SEARCH_TEXT = "Type to Search";
+	private boolean newButtonVisible; 
 	private Navigable parentGUI;
 	private JTextField txtSearch;
 	private JButton btnFirst;
@@ -31,6 +37,7 @@ public class NavigatorBar extends JPanel {
 	private JButton btnLast;
 	private JButton btnNew;
 	private JLabel lblDateTime;
+	
 
 	private NavigatorBar() {
 		super();
@@ -61,6 +68,10 @@ public class NavigatorBar extends JPanel {
 		leftPanel.add(btnPrevious);
 		
 		txtSearch = new JTextField();
+		txtSearch.addFocusListener(this);
+		txtSearch.setText(SEARCH_TEXT);
+		txtSearch.setForeground(Color.GRAY);
+		txtSearch.setFont(setFontFace(txtSearch.getFont(),Font.ITALIC));
 		leftPanel.add(txtSearch);
 		//txtSearch.setColumns(10);
 		txtSearch.setPreferredSize(new Dimension(100,20));
@@ -95,6 +106,7 @@ public class NavigatorBar extends JPanel {
 				parentGUI.newRecord();
 			}
 		});
+		newButtonVisible = true;
 		leftPanel.add(btnNew);
 		
 		JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -128,12 +140,13 @@ public class NavigatorBar extends JPanel {
 		this.parentGUI = parentGUI;
 	}
 
-	public boolean isNewRecordVisible() {
+	public boolean isNewButtonVisible() {
 		return btnNew.isVisible();
 	}
 
-	public void setNewRecordVisible(boolean newRecordVisible) {
-		btnNew.setVisible(newRecordVisible);
+	public void setNewButtonVisible(boolean newButtonVisible) {
+		btnNew.setVisible(newButtonVisible);
+		this.newButtonVisible = newButtonVisible;
 	}
 
 	public boolean isSearchBoxVisible() {
@@ -152,4 +165,35 @@ public class NavigatorBar extends JPanel {
 		this.txtSearch = textField;
 	}
 
+	@Override
+	public void focusGained(FocusEvent e) {
+		JTextField field = (JTextField) e.getSource();
+		if (field.getText().equals(SEARCH_TEXT)) {
+			field.setForeground(Color.BLACK);
+			field.setFont(setFontFace(field.getFont(),Font.PLAIN));
+			field.setText(null);
+			
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		JTextField field = (JTextField) e.getSource();
+		if (field.getText().isEmpty() || field.getText().equals(SEARCH_TEXT) || field.getText() == null) {
+			field.setForeground(Color.GRAY);
+			field.setFont(setFontFace(field.getFont(),Font.ITALIC));
+			field.setText(SEARCH_TEXT);
+			btnNew.setVisible(newButtonVisible);
+			parentGUI.applyFilter(null);
+		}
+		else {
+			btnNew.setVisible(false);
+			parentGUI.applyFilter(field.getText().toUpperCase());
+		}
+	}
+	
+	private Font setFontFace(Font font, int type) {
+		return new Font(font.getName(),type,font.getSize());
+	}
+	
 }

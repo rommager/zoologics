@@ -11,7 +11,7 @@ public class Animal implements Printable, Serializable {
 
 	private static final long serialVersionUID = 5761796477851733790L;
 	private static int animalIDCounter = 2001;
-	private int id;
+	private int animalID;
 	private String name;
 	private Species species;
 	private char sex;
@@ -29,13 +29,14 @@ public class Animal implements Printable, Serializable {
 
 	public Animal() {
 		super();
+		this.animalID = animalIDCounter++;
 	}
 
-	public Animal(int id, String name, Species species, char sex, String father,
+	public Animal(int animalID, String name, Species species, char sex, String father,
 			String mother, boolean identificationChip, String chipId,
 			String breed, Date dateOfBirth, String markings, String notes) {
-		this();
-		this.id = id;
+		super();
+		setAnimalID(animalID);
 		this.name = name;
 		this.species = species;
 		this.sex = sex;
@@ -49,24 +50,16 @@ public class Animal implements Printable, Serializable {
 		this.notes = notes;
 	}
 
-	public Animal(int id, String name, Species species, char sex, String father,
+	public Animal(int animalID, String name, Species species, char sex, String father,
 			String mother, boolean identificationChip, String chipId,
 			String breed, Date dateOfBirth, String markings, String notes,
 			String thumbnail) {
-		this(id, name, species, sex, father, mother, identificationChip, chipId,
+		this(animalID, name, species, sex, father, mother, identificationChip, chipId,
 				breed, dateOfBirth, markings, notes);
 
 		this.thumbnail = thumbnail;
 	}
 
-
-	public Animal(String name) {
-
-	}
-
-	public void add(Vaccine vaccine) {
-
-	}
 
 	@Override
 	public int print(Graphics g, PageFormat pf, int page)
@@ -91,18 +84,28 @@ public class Animal implements Printable, Serializable {
 		    return PAGE_EXISTS;
 		  }
 		
+	public boolean isVisibleWithFilter(String filter) {
+		if (filter.isEmpty() || filter == null)
+			return true;		
+		if (name.toUpperCase().indexOf(filter) >= 0)
+			return true;
+		if (species.getSpeciesName().toUpperCase().indexOf(filter) >= 0)
+			return true;
+		return false;
+	}
+	
 	public int getNewIDNumber() {
 		return animalIDCounter++;
 	}
 	
-	public int getId() {
-		return id;
+	public int getAnimalID() {
+		return animalID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-		if (id >= animalIDCounter)
-			animalIDCounter = id + 1;
+	public void setAnimalID(int animalID) {
+		this.animalID = animalID;
+		if (animalID >= animalIDCounter)
+			animalIDCounter = animalID + 1;
 	}
 
 	public String getName() {
@@ -138,19 +141,19 @@ public class Animal implements Printable, Serializable {
 			throw new IllegalArgumentException();
 	}
 
-	public String getSire() {
+	public String getFather() {
 		return father;
 	}
 
-	public void setSire(String sire) {
+	public void setFather(String sire) {
 		this.father = sire;
 	}
 
-	public String getDam() {
+	public String getMother() {
 		return mother;
 	}
 
-	public void setDam(String dam) {
+	public void setMother(String dam) {
 		this.mother = dam;
 	}
 
