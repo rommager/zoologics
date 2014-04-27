@@ -17,29 +17,40 @@ import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
 public class Application implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4947318641942709682L;
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
-	private static StaffHive staffHive;
+	
+	// set up app data variables
 	private ArrayList<Animal> animals;
-	private TaskList taskList;
-	private TaskList inactiveTasks;
+	private ArrayList<Task> allActiveTasks;
+	private ArrayList<Task> inactiveTasks;
+	private ArrayList<Task> outstandingTasks;
+	
+	// reference data variables
+	private static StaffHive staffHive;
 	private ArrayList<Vaccine> vaccines;
+	private ArrayList<RecurrenceSchedule> schedules;
 	private ArrayList<Species> species;
+	private ArrayList<VaccinationSchedule> vaccinationSchedule;
+	
 	private Staff currentUser;
 
 	public Application(Staff user) {
 		super();
 		if (user.isUser()) {
 			animals = new ArrayList<Animal>();
-			taskList = new TaskList();
+			allActiveTasks = new ArrayList<Task>();
+			inactiveTasks = new ArrayList<Task>();
+			outstandingTasks = new ArrayList<Task>();
+			
 			vaccines = new ArrayList<Vaccine>();
+			schedules = new ArrayList<RecurrenceSchedule>();
 			species = new ArrayList<Species>();
+			
 			this.currentUser = user;
 		} else
 			System.exit(0);
@@ -127,14 +138,6 @@ public class Application implements Serializable {
 
 	public void setAnimals(ArrayList<Animal> animals) {
 		this.animals = animals;
-	}
-
-	public TaskList getTaskList() {
-		return taskList;
-	}
-
-	public void setTaskList(TaskList taskList) {
-		this.taskList = taskList;
 	}
 
 	public ArrayList<Vaccine> getVaccines() {

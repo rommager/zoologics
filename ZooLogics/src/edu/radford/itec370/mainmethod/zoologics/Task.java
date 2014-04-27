@@ -3,10 +3,12 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Task implements Serializable {
 
+	// public constants
 	public static final int ACTIVE = 1;
 	public static final int COMPLETED = 2;
 	public static final int DISMISSED = 3;
@@ -17,9 +19,6 @@ public class Task implements Serializable {
 	public static final int MONTH = Calendar.MONTH;
 	public static final int YEAR = Calendar.YEAR;
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8687090435553311509L;
 	private static final String TASK_TYPE = "Task";
 	protected String taskName;
@@ -31,7 +30,7 @@ public class Task implements Serializable {
 	
 	private RecurrenceSchedule recurrences;
 	
-	private TaskList parentTaskList;
+	private ArrayList<Task> parentTaskList;
 	
 	public Task() {
 		super();
@@ -39,7 +38,7 @@ public class Task implements Serializable {
 	
 	public Task(String notes,
 			int status,
-			TaskList parentTaskList) {
+			ArrayList<Task> parentTaskList) {
 		this();
 		this.notes = notes;
 		this.status = status;
@@ -48,7 +47,7 @@ public class Task implements Serializable {
 	
 	public Task(String notes, 
 			int status,
-			TaskList parentTaskList,
+			ArrayList<Task> parentTaskList,
 			Calendar dueDate) {
 		this(notes, status, parentTaskList);
 		this.dueDate = dueDate;
@@ -57,7 +56,7 @@ public class Task implements Serializable {
 	// Constructor that accepts strings for description and due date, for IO
 	public Task(String notes, 
 			int status, 
-			TaskList parentTaskList,
+			ArrayList<Task> parentTaskList,
 			String dueDate) throws ParseException {
 		this(new String(notes), status, parentTaskList);
 		Calendar dueCalendar = Calendar.getInstance();
@@ -66,7 +65,7 @@ public class Task implements Serializable {
 	}
 
 	public static void main(String[] args) {
-		TaskList list = new TaskList();
+		ArrayList<Task> list = new ArrayList<Task>();
 		try {
 			Task newTask = new Task("Reminder to clean toilets", Task.ACTIVE, list, "11/17/2011");
 			RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
@@ -204,11 +203,11 @@ public class Task implements Serializable {
 		this.status = status;
 	}
 
-	public TaskList getParentTaskList() {
+	public ArrayList<Task> getParentTaskList() {
 		return parentTaskList;
 	}
 
-	public void setParentTaskList(TaskList parentTaskList) {
+	public void setParentTaskList(ArrayList<Task> parentTaskList) {
 		this.parentTaskList = parentTaskList;
 	}
 

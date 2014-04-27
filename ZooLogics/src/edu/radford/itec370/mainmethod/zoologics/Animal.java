@@ -25,7 +25,8 @@ public class Animal implements Printable, Serializable {
 	private String notes;
 	private String thumbnail;
 	private Photos photos;
-	private ArrayList<Vaccination> vaccinations;
+	private ArrayList<Task> activeTasks;
+	private ArrayList<Task> completedTasks;
 
 	public Animal() {
 		super();
@@ -221,12 +222,12 @@ public class Animal implements Printable, Serializable {
 		this.photos = photos;
 	}
 
-	public ArrayList<Vaccination> getVaccination() {
-		return vaccinations;
+	public ArrayList<Task> getActiveTasks() {
+		return activeTasks;
 	}
 
-	public void setVaccination(ArrayList<Vaccination> vaccinations) {
-		this.vaccinations = vaccinations;
+	public void setActiveTasks(ArrayList<Task> tasks) {
+		this.activeTasks = tasks;
 	}
 
 }

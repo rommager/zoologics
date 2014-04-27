@@ -2,6 +2,7 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import edu.radford.itec370.mainmethod.zoologics.*;
 
@@ -17,7 +18,7 @@ public class TaskPanel extends JDialog implements Navigable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1052426461587559703L;
-	protected TaskList tasks;
+	protected ArrayList<Task> tasks;
 	protected int currentIndex;
 	
 	protected JPanel taskPanel;
@@ -38,10 +39,10 @@ public class TaskPanel extends JDialog implements Navigable {
 	protected JButton btnCompleteTask;
 	
 	public TaskPanel() {
-		this(new TaskList());
+		this(new ArrayList<Task>());
 	}
 	
-	public TaskPanel(TaskList tasks) {
+	public TaskPanel(ArrayList<Task> tasks) {
 		super();
 		this.tasks = tasks;
 		currentIndex = 0;
@@ -211,11 +212,11 @@ public class TaskPanel extends JDialog implements Navigable {
 		
 	}
 
-	public TaskList getTasks() {
+	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(TaskList tasks) {
+	public void setTasks(ArrayList<Task> tasks) {
 		this.tasks = tasks;
 	}
 
