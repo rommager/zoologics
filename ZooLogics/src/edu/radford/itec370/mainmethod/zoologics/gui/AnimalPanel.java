@@ -89,7 +89,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 
 		// set up window
 		setTitle(WINDOW_TITLE);
-		setIconImage(Application.getAppIcon());
+		setIconImage(Application.getAppImage());
 		this.setSize(new Dimension(800, 480));
 		getContentPane().setLayout(new BorderLayout());
 

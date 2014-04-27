@@ -47,7 +47,7 @@ public class VaccinePanel extends JFrame implements Navigable{
 	}
 
 	public VaccinePanel() {
-		setIconImage(Application.getAppIcon());
+		setIconImage(Application.getAppImage());
 		setTitle(Application.getAppName() + " Vaccination and Regiments");
 		this.setSize(new Dimension(800, 480));
 		getContentPane().setLayout(null);

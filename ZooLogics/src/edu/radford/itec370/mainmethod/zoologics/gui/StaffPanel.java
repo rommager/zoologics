@@ -38,7 +38,7 @@ public class StaffPanel extends JDialog {
 	
 	public StaffPanel() {
 		setTitle(Application.getAppName() + " Staff Maintenance");
-		setIconImage(Application.getAppIcon());		
+		setIconImage(Application.getAppImage());		
 		getContentPane().setLayout(new BorderLayout());
 		
 		JPanel panel = new JPanel(new GridLayout(1,1));

@@ -34,7 +34,7 @@ public class LogonDialog extends JDialog implements ActionListener {
 		super();
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle(WINDOW_TITLE);
-		setIconImage(Application.getAppIcon());
+		setIconImage(Application.getAppImage());
 		setResizable(false);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 246, 168);

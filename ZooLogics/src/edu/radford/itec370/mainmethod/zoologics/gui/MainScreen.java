@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -56,7 +57,7 @@ public class MainScreen extends JFrame {
 	public void buildGUI() {
 		// set up JFrame properties
 		setTitle(Application.getAppName() + " Main Task Screen");
-		setIconImage(Application.getAppIcon());
+		setIconImage(Application.getAppImage());
 		setSize(new Dimension(650, 449));
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -168,23 +169,26 @@ public class MainScreen extends JFrame {
 			if (e.getSource() == mntmExit)
 				System.exit(0);
 			else if (e.getSource() == mntmVaccinePanel) {
-				VaccinePanel vaccinePanel = new VaccinePanel();
-				vaccinePanel.setVisible(true);
+//				VaccinePanel vaccinePanel = new VaccinePanel(application.getVaccines());
+//				vaccinePanel.setVisible(true);
 			} else if (e.getSource() == mntmSpeciesPanel) {
-				SpeciesPanel speciesPanel = new SpeciesPanel(null); // TODO Fix this
+				SpeciesPanel speciesPanel = new SpeciesPanel(application.getSpecies());
 				speciesPanel.setVisible(true);
 			} else if (e.getSource() == mntmAnimalReport) {
-				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel();
-				animalReport.setVisible(true);
+//				AnimalVaccinationReportPanel animalReport = new AnimalVaccinationReportPanel(application.getAnimals(), application.getAllActiveTasks(), application.getInactiveTasks());
+//				animalReport.setVisible(true);
 			} else if (e.getSource() == mntmAnimalPanel) {
-				AnimalPanel animalPanel = new AnimalPanel();
-				animalPanel.setVisible(true);
+//				AnimalPanel animalPanel = new AnimalPanel(application.getAnimals());
+//				animalPanel.setVisible(true);
 			} else if (e.getSource() == mntmAdminPanel) {
-				StaffPanel adminPanel = new StaffPanel();
-				adminPanel.setVisible(true);
+//				StaffPanel adminPanel = new StaffPanel(application.getStaffHive());
+//				adminPanel.setVisible(true);
 			} else if (e.getSource() == mntmAboutMainMethod) {
-				AboutMainMethod aboutmainmethod = new AboutMainMethod();
-				aboutmainmethod.setVisible(true);
+				JOptionPane.showMessageDialog(null, 
+						Application.getAppName() + " version " + Application.getVersion() + "\n created by team main() Method", 
+						Application.getAppName(), 
+						JOptionPane.INFORMATION_MESSAGE,
+						Application.getAppIcon());
 			}
 			 
 		}

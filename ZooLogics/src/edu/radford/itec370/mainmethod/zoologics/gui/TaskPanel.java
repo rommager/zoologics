@@ -47,7 +47,7 @@ public class TaskPanel extends JDialog implements Navigable {
 		this.tasks = tasks;
 		currentIndex = 0;
 		
-		setIconImage(Application.getAppIcon());
+		setIconImage(Application.getAppImage());
 		setTitle("Task");
 		setBounds(100, 100, 481, 341);
 		

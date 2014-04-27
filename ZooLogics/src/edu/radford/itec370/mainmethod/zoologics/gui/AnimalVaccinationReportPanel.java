@@ -58,7 +58,7 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		setBounds(10, 10, 700, 500);
 		setTitle("Animal Vaccination Reports");
 
-		setIconImage(Application.getAppIcon());
+		setIconImage(Application.getAppImage());
 		getContentPane().setLayout(new BorderLayout());
 
 

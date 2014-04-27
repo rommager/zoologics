@@ -20,6 +20,7 @@ public class Application implements Runnable {
 	private static final long serialVersionUID = -4947318641942709682L;
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
+	private final static String VERSION = "0.4 alpha";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"MM/dd/yyyy");
 	
@@ -76,9 +77,13 @@ public class Application implements Runnable {
 		return currentUser;
 	}
 
-	public static Image getAppIcon() {
+	public static Image getAppImage() {
+		return getAppIcon().getImage();
+	}
+	
+	public static ImageIcon getAppIcon() {
 		URL iconURL = Application.class.getResource(ICON_FILE);
-		Image icon = new ImageIcon(iconURL).getImage();
+		ImageIcon icon = new ImageIcon(iconURL);
 		return icon;
 	}
 
@@ -214,4 +219,9 @@ public class Application implements Runnable {
 		staffHive = new StaffHive();
 		//TODO Read StaffHive from disk and populate into staffHive 
 	}
+	
+	public static String getVersion() {
+		return VERSION;
+	}
+	
 }
