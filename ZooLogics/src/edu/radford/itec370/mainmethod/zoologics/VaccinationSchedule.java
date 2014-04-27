@@ -11,15 +11,17 @@ import java.io.Serializable;
 public class VaccinationSchedule implements Serializable {
 
 	private static final long serialVersionUID = -3195843828057553503L;
-	private static int idCounter = 4001;
-	private int id;
+	private static int vaccinationScheduleIDCounter = 93001;
+	private int vaccinationScheduleID;
 	private String scheduleName;
 	private Vaccine vaccine;
 	private String dosage;
 	private RecurrenceSchedule taskRecurrences;
 
+	// constructors
 	public VaccinationSchedule() {
 		super();
+		vaccinationScheduleID = vaccinationScheduleIDCounter++;
 	}
 	
 	public VaccinationSchedule(
@@ -27,8 +29,8 @@ public class VaccinationSchedule implements Serializable {
 			String scheduleName, 
 			Vaccine vaccine,
 			String dosage) {
-		this();
-		this.setId(id);
+		super();
+		this.setVaccinationScheduleID(id);
 		this.scheduleName = scheduleName;
 		this.vaccine = vaccine;
 		this.dosage = dosage;
@@ -44,6 +46,7 @@ public class VaccinationSchedule implements Serializable {
 		this.taskRecurrences = taskRecurrences;
 	}
 
+	// setters and getters
 	public String getScheduleName() {
 		return scheduleName;
 	}
@@ -63,14 +66,14 @@ public class VaccinationSchedule implements Serializable {
 		this.taskRecurrences = taskRecurrences;
 	}
 
-	public int getId() {
-		return id;
+	public int getVaccinationScheduleID() {
+		return vaccinationScheduleID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-		if (id >= idCounter)
-			idCounter = id + 1;
+	public void setVaccinationScheduleID(int vaccinationScheduleID) {
+		this.vaccinationScheduleID = vaccinationScheduleID;
+		if (vaccinationScheduleID >= vaccinationScheduleIDCounter)
+			vaccinationScheduleIDCounter = vaccinationScheduleID + 1;
 	}
 
 	public String getDosage() {

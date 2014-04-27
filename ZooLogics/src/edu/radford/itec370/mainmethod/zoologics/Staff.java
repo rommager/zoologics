@@ -9,7 +9,7 @@ public class Staff implements Serializable {
 
 	private static final long serialVersionUID = 4632391733615291271L;
 	private static final String SALT = Application.getAppName() + Application.getSerialversionuid();
-	private static int nextStaffID = 1001;
+	private static int staffIDCounter = 10001;
 	private int staffID;
 	private String lastName;
 	private String firstName;
@@ -19,7 +19,7 @@ public class Staff implements Serializable {
 	
     public Staff() {
 		super();
-		staffID = nextStaffID++;
+		staffID = staffIDCounter++;
 	}
     
     public Staff(String lastName, String firstName, String position) {
@@ -27,7 +27,7 @@ public class Staff implements Serializable {
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.position = position;
-		staffID = nextStaffID++;
+		staffID = staffIDCounter++;
 	}
 	
     public Staff(String lastName, String firstName, String position, String userName) {
@@ -36,7 +36,7 @@ public class Staff implements Serializable {
 		this.firstName = firstName;
 		this.position = position;
 		this.userName = userName;
-		staffID = nextStaffID++;
+		staffID = staffIDCounter++;
 	}
 
     // constructor for IO
@@ -155,7 +155,7 @@ public class Staff implements Serializable {
 
 	public void setStaffID(int staffID) {
 		this.staffID = staffID;
-		if (nextStaffID <= staffID)
-			nextStaffID = staffID + 1;
+		if (staffID >= staffIDCounter)
+			staffIDCounter = staffID + 1;
 	}
 }

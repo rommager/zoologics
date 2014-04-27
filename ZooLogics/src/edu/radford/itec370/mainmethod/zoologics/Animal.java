@@ -10,7 +10,8 @@ import java.awt.print.*;
 public class Animal implements Printable, Serializable {
 
 	private static final long serialVersionUID = 5761796477851733790L;
-	private static int animalIDCounter = 2001;
+	private static int animalIDCounter = 20001;
+	
 	private int animalID;
 	private String name;
 	private Species species;
@@ -24,9 +25,9 @@ public class Animal implements Printable, Serializable {
 	private String markings;
 	private String notes;
 	private String thumbnail;
-	private Photos photos;
 	private ArrayList<Task> activeTasks;
 	private ArrayList<Task> completedTasks;
+	private ArrayList<Photo> photos;
 
 	public Animal() {
 		super();
@@ -93,10 +94,6 @@ public class Animal implements Printable, Serializable {
 		if (species.getSpeciesName().toUpperCase().indexOf(filter) >= 0)
 			return true;
 		return false;
-	}
-	
-	public int getNewIDNumber() {
-		return animalIDCounter++;
 	}
 	
 	public int getAnimalID() {
@@ -214,11 +211,11 @@ public class Animal implements Printable, Serializable {
 		this.thumbnail = thumbnail;
 	}
 
-	public Photos getPhotos() {
+	public ArrayList<Photo> getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(Photos photos) {
+	public void setPhotos(ArrayList<Photo> photos) {
 		this.photos = photos;
 	}
 

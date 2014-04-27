@@ -8,38 +8,65 @@ import java.util.ArrayList;
  * It consists of a collection of Vaccines, and 
  */
 public class Species {
+	private static int speciesIDCounter = 91001;
+	private int speciesID;
 	private String speciesName;
-	private ArrayList<Vaccine> vaccineIdCollection = new ArrayList<Vaccine>();
-	private ArrayList<VaccinationSchedule> vaccineRegiment = new ArrayList<VaccinationSchedule>();
+	private ArrayList<VaccinationSchedule> vaccinationSchedule = new ArrayList<VaccinationSchedule>();
+	private ArrayList<Species> parentList;
 
-	public ArrayList<VaccinationSchedule> getVaccineRegiment() {
-		return vaccineRegiment;
-	}
-
-	public void setVaccineRegiment(ArrayList<VaccinationSchedule> vaccineRegiment) {
-		this.vaccineRegiment = vaccineRegiment;
-	}
-
+	// constructors
 	public Species() {
 		super();
+		speciesID = speciesIDCounter++;
 	}
-	
+
 	public Species(String speciesName) {
 		this();
 		this.speciesName = speciesName;
 	}
+	
+	public Species(int speciesID, String speciesName) {
+		super();
+		setSpeciesID(speciesID);
+		this.speciesName = speciesName;
+	}
+	
+	// methods
+	
+		
+	// setters and getters
 	public String getSpeciesName() {
 		return speciesName;
 	}
+	
 	public void setSpeciesName(String speciesName) {
 		this.speciesName = speciesName;
 	}
-	public ArrayList<Vaccine> getVaccineIdCollection() {
-		return vaccineIdCollection;
-	}
-	public void setVaccineIdCollection(ArrayList<Vaccine> vaccineIdCollection) {
-		this.vaccineIdCollection = vaccineIdCollection;
-	}
 	
+	public ArrayList<VaccinationSchedule> getVaccinationSchedule() {
+		return vaccinationSchedule;
+	}
+
+	public void setVaccinationSchedule(ArrayList<VaccinationSchedule> vaccinationSchedule) {
+		this.vaccinationSchedule = vaccinationSchedule;
+	}
+
+	public int getSpeciesID() {
+		return speciesID;
+	}
+
+	public void setSpeciesID(int speciesID) {
+		this.speciesID = speciesID;
+		if (speciesID >= speciesIDCounter)
+			speciesIDCounter = speciesID + 1;
+	}
+
+	public ArrayList<Species> getParentList() {
+		return parentList;
+	}
+
+	public void setParentList(ArrayList<Species> parentList) {
+		this.parentList = parentList;
+	}
 	
 }

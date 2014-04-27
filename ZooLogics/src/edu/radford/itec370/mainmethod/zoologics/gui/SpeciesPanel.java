@@ -37,8 +37,7 @@ import javax.swing.JScrollPane;
 public class SpeciesPanel extends JDialog implements Navigable {
 
 	ArrayList<Species> species;
-	ArrayList<Vaccine> vaccines;
-	ArrayList<VaccinationSchedule> regiment;
+	ArrayList<VaccinationSchedule> vaccinationSchedules;
 	int index = 0;
 	
 	private static final long serialVersionUID = 4119451221171558539L;
@@ -72,8 +71,7 @@ public class SpeciesPanel extends JDialog implements Navigable {
 	private SpeciesPanel() {
 		super();
 		this.species = new ArrayList<Species>();
-		this.vaccines = new ArrayList<Vaccine>();
-		this.regiment = new ArrayList<VaccinationSchedule>();
+		this.vaccinationSchedules = new ArrayList<VaccinationSchedule>();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SpeciesPanel.class.getResource("/edu/radford/itec370/mainmethod/zoologics/z_icon.png")));
 		setTitle(Application.getAppName() + " Species");
@@ -179,13 +177,13 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		spe.setSpeciesName(this.txtSpecies.getText());
 		
 		for (int row = 0; row > speciesModel.getRowCount(); row++) {
-			vaccines.add((Vaccine)speciesModel.getValueAt(row, 0));
+//			vaccines.add((Vaccine)speciesModel.getValueAt(row, 0));
 		}
 		for (int col = 0; col > speciesModel.getColumnCount(); col++) {
-			regiment.add((VaccinationSchedule)speciesModel.getValueAt(col, 1));
+			vaccinationSchedules.add((VaccinationSchedule)speciesModel.getValueAt(col, 1));
 		}
-		spe.setVaccineIdCollection(this.vaccines);
-		spe.setVaccineRegiment(this.regiment);
+//		spe.setVaccineIdCollection(this.vaccines);
+//		spe.setVaccineSchedule(this.vaccinationSchedules);
 	}
 	
 	public void updateGUI() {

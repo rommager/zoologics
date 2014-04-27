@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class RecurrenceInstance implements Cloneable {
 
-	private static int idCounter = 8001;
+	private static int recurrenceInstanceIDCounter = 42001;
 	private int recurrenceInstanceID;
 	private int numberOfRecurrences;
 	private int numberRemaining;
@@ -14,7 +14,7 @@ public class RecurrenceInstance implements Cloneable {
 
 	private RecurrenceInstance() {
 		super();
-		recurrenceInstanceID = idCounter++;
+		recurrenceInstanceID = recurrenceInstanceIDCounter++;
 	}
 
 	public RecurrenceInstance(int numberOfRecurrences, 
@@ -168,8 +168,8 @@ public class RecurrenceInstance implements Cloneable {
 	}
 
 	public void setRecurrenceInstanceID(int recurrenceInstanceID) {
-		if (idCounter <= recurrenceInstanceID)
-			idCounter = recurrenceInstanceID + 1;
 		this.recurrenceInstanceID = recurrenceInstanceID;
+		if (recurrenceInstanceID >= recurrenceInstanceIDCounter)
+			recurrenceInstanceIDCounter = recurrenceInstanceID + 1;
 	}
 }

@@ -90,6 +90,7 @@ public class Application implements Serializable {
 		Application newApp = new Application(new Staff(0, "master", "master", "master"));
 
 		Species s1 = new Species("Tiger");
+		
 		Species s2 = new Species("Monkey");
 		Species s3 = new Species("Zebra");
 

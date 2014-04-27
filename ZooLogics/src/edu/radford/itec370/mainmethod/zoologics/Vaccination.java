@@ -1,12 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import java.util.Calendar;
-
 public class Vaccination extends Task {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3208824316987913037L;
 	private static final String TASK_TYPE = "Vaccination";
 	private Animal animal;

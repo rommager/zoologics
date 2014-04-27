@@ -21,7 +21,7 @@ public class Task implements Serializable {
 
 	private static final long serialVersionUID = -8687090435553311509L;
 	private static final String TASK_TYPE = "Task";
-	protected static int taskIDCounter = 3001;
+	protected static int taskIDCounter = 40001;
 
 	protected int taskID;
 	protected String taskName;
@@ -38,6 +38,7 @@ public class Task implements Serializable {
 	protected Task() {
 		super();
 		status = Task.ACTIVE;
+		taskID = taskIDCounter++;
 	}
 
 	// constructor for new blank task
@@ -68,7 +69,7 @@ public class Task implements Serializable {
 
 	// Full constructor for IO
 	public Task(int taskID,
-			String taskname,
+			String taskName,
 			String notes, 
 			String dueDate,
 			String completedDate,
@@ -76,11 +77,14 @@ public class Task implements Serializable {
 			int completedByStaffID,
 			ArrayList<Task> parentTaskList) throws ParseException {
 		super();
+		setTaskID(taskID);
+		this.taskName = taskName;
 		this.notes = notes;
-		this.status = status;
-		this.parentTaskList = parentTaskList;
 		this.dueDate = Application.getDateFormat().parse(dueDate);
 		this.completedDate = Application.getDateFormat().parse(dueDate);
+		this.status = status;
+		//TODO Resolve StaffID and put into staff variable
+		this.parentTaskList = parentTaskList;
 
 	}
 
@@ -270,7 +274,7 @@ public class Task implements Serializable {
 
 	public void setTaskID(int taskID) {
 		this.taskID = taskID;
-		if (taskIDCounter <= taskID)
+		if (taskID >= taskIDCounter)
 			taskIDCounter = taskID + 1;
 	}
 }

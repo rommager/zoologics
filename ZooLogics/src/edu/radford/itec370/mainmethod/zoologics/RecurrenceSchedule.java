@@ -7,14 +7,14 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 
 	private static final long serialVersionUID = -578725875891715725L;
 	
-	private static int idCounter = 9001;
-	private int scheduleID;
+	private static int recurrenceScheduleIDCounter = 41001;
+	private int recurrenceScheduleID;
 	private boolean fromCompletedDate;    // determines if next due date will be calculated from the last due date, or last completion date
 	private boolean isTemplate;
 
 	public RecurrenceSchedule() {
 		super();
-		this.scheduleID = idCounter++;
+		this.recurrenceScheduleID = recurrenceScheduleIDCounter++;
 	}
 	
 	public Date getNextRecurrenceDate(Date inDate) {
@@ -62,12 +62,14 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 		return newRecurrences;
 	}
 
-	public int getScheduleID() {
-		return scheduleID;
+	public int getRecurrenceScheduleID() {
+		return recurrenceScheduleID;
 	}
 
-	public void setScheduleID(int scheduleID) {
-		this.scheduleID = scheduleID;
+	public void setRecurrenceScheduleID(int recurrenceScheduleID) {
+		this.recurrenceScheduleID = recurrenceScheduleID;
+		if (recurrenceScheduleID >= recurrenceScheduleIDCounter)
+			recurrenceScheduleIDCounter = recurrenceScheduleID + 1;
 	}
 
 	public boolean isFromCompletedDate() {
