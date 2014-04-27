@@ -1,7 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements Cloneable {
 
@@ -17,7 +17,7 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 		this.scheduleID = idCounter++;
 	}
 	
-	public Calendar getNextRecurrenceDate(Calendar inDate) {
+	public Date getNextRecurrenceDate(Date inDate) {
 		int index = 0;
 		while (this.size() > index) {
 						

@@ -6,7 +6,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -104,14 +103,10 @@ public class Application implements Serializable {
 
 	}
 	
-	public static String formatDate(Date dateIn) {
+	public static String formatDateToString(Date dateIn) {
 		return dateFormat.format(dateIn);
 	}
-	
-	public static String formatDate(Calendar dateIn) {
-		return formatDate(dateIn.getTime());
-	}
-	
+		
 	public static Date parseDate(String stringIn) {
 		try {
 			return dateFormat.parse(stringIn);
@@ -121,17 +116,6 @@ public class Application implements Serializable {
 		return null;
 	}
 	
-	public static Calendar parseCalendar(String stringIn) {
-		Date date = parseDate(stringIn);
-		if (date != null) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			return calendar;
-		}
-		else
-			return null;
-	}
-
 	public ArrayList<Animal> getAnimals() {
 		return animals;
 	}

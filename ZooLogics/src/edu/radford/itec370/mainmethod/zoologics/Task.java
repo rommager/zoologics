@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 public class Task implements Serializable {
 
@@ -13,105 +13,122 @@ public class Task implements Serializable {
 	public static final int COMPLETED = 2;
 	public static final int DISMISSED = 3;
 	public static final int DELETED = 0;
-	
-	public static final int DAY = Calendar.DATE;
-	public static final int WEEK = Calendar.WEEK_OF_YEAR;
-	public static final int MONTH = Calendar.MONTH;
-	public static final int YEAR = Calendar.YEAR;
-	
+
+	public static final int DAY = 5;    // Calendar.DATE;
+	public static final int WEEK = 3;   // Calendar.WEEK_OF_YEAR;
+	public static final int MONTH = 2;  // Calendar.MONTH;
+	public static final int YEAR = 1;   // Calendar.YEAR;
+
 	private static final long serialVersionUID = -8687090435553311509L;
 	private static final String TASK_TYPE = "Task";
+	protected static int taskIDCounter = 3001;
+
+	protected int taskID;
 	protected String taskName;
 	protected String notes;
-	protected Calendar dueDate;
-	protected Calendar completedDate;
+	protected Date dueDate;
+	protected Date completedDate;
 	protected int status;
 	protected Staff completedBy;
-	
+
 	private RecurrenceSchedule recurrences;
-	
+
 	private ArrayList<Task> parentTaskList;
-	
-	public Task() {
+
+	protected Task() {
 		super();
+		status = Task.ACTIVE;
 	}
-	
-	public Task(String notes,
-			int status,
+
+	// constructor for new blank task
+	public Task(ArrayList<Task> parentTaskList) {
+		this();
+		this.parentTaskList = parentTaskList;
+		this.taskID = taskIDCounter++;
+	}
+
+	// constructor for test data
+	public Task(String taskName,
 			ArrayList<Task> parentTaskList) {
 		this();
+		this.taskName = taskName;
+		this.parentTaskList = parentTaskList;
+		this.taskID = taskIDCounter++;
+	}
+
+	// constructor for test data
+	public Task(String taskName, 
+			String dueDate,
+			ArrayList<Task> parentTaskList) {
+		this();
+		this.taskName = taskName;
+		this.dueDate = Application.parseDate(dueDate);
+		this.parentTaskList = parentTaskList;
+	}
+
+	// Full constructor for IO
+	public Task(int taskID,
+			String taskname,
+			String notes, 
+			String dueDate,
+			String completedDate,
+			int status, 
+			int completedByStaffID,
+			ArrayList<Task> parentTaskList) throws ParseException {
+		super();
 		this.notes = notes;
 		this.status = status;
 		this.parentTaskList = parentTaskList;
-	}
-	
-	public Task(String notes, 
-			int status,
-			ArrayList<Task> parentTaskList,
-			Calendar dueDate) {
-		this(notes, status, parentTaskList);
-		this.dueDate = dueDate;
-	}
-	
-	// Constructor that accepts strings for description and due date, for IO
-	public Task(String notes, 
-			int status, 
-			ArrayList<Task> parentTaskList,
-			String dueDate) throws ParseException {
-		this(new String(notes), status, parentTaskList);
-		Calendar dueCalendar = Calendar.getInstance();
-		dueCalendar.setTime(Application.getDateFormat().parse(dueDate));
-		setDueDate(dueCalendar);
+		this.dueDate = Application.getDateFormat().parse(dueDate);
+		this.completedDate = Application.getDateFormat().parse(dueDate);
+
 	}
 
 	public static void main(String[] args) {
 		ArrayList<Task> list = new ArrayList<Task>();
-		try {
-			Task newTask = new Task("Reminder to clean toilets", Task.ACTIVE, list, "11/17/2011");
-			RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
-			newTask.setRecurrences(newRecurrences);
-			newRecurrences.add(new RecurrenceInstance(3,WEEK,2));
-			newRecurrences.add(new RecurrenceInstance(2,MONTH,1));
-			newRecurrences.add(new RecurrenceInstance(-1,YEAR,1));
-			list.add(newTask);
-			list.add(new Task("Vet Visit for Puja", Task.ACTIVE, list, "05/17/2014"));
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
-			newTask =  newTask.spawnNextTaskRecurrence();
-			System.out.println("SPAWNED: " + newTask);
+
+		Task newTask = new Task("Reminder to clean toilets", "11/17/2011", list);
+		RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
+		newTask.setRecurrences(newRecurrences);
+		newRecurrences.add(new RecurrenceInstance(3,WEEK,2));
+		newRecurrences.add(new RecurrenceInstance(2,MONTH,1));
+		newRecurrences.add(new RecurrenceInstance(-1,YEAR,1));
+		list.add(newTask);
+		list.add(new Task("Vet Visit for Puja", "05/17/2014", list));
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
+		newTask =  newTask.spawnNextTaskRecurrence();
+		System.out.println("SPAWNED: " + newTask);
 
 
-			System.out.println(list.toString());
-			
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		System.out.println(list.toString());
+
 	}
 
 	public static String intervalToString(int interval) {
 		String output = "";
 		switch (interval) {
-			case Task.DAY: output = "Day";
-			case Task.WEEK: output = "Week";
-			case Task.MONTH: output = "Month";
-			case Task.YEAR: output = "Year";
-			default: output = "Invalid";
+		case Task.DAY: output = "Day";
+		case Task.WEEK: output = "Week";
+		case Task.MONTH: output = "Month";
+		case Task.YEAR: output = "Year";
+		default: output = "Invalid";
 		}
 		return output;
 	}
-	
+
 	public static int stringToInterval(String interval) {
 		int output = 0;
 		switch (interval) {
@@ -126,7 +143,7 @@ public class Task implements Serializable {
 	public void dismiss(){
 		setStatus(DISMISSED);
 	}
-	
+
 	public void complete() {
 		if (isValid()) {
 			setStatus(COMPLETED);
@@ -140,11 +157,11 @@ public class Task implements Serializable {
 	public boolean isValid(){
 		return true;
 	}
-	
+
 	public Task spawnNextTaskRecurrence(){
 		if (isRecurring()) {
-			Task newTask = new Task(notes, status, parentTaskList);
-			
+			Task newTask = new Task(taskName, parentTaskList);
+
 			// move recurrences collection from this instance to the newly spawned instance
 			newTask.setRecurrences(this.getRecurrences());
 			newTask.setDueDate(recurrences.getNextRecurrenceDate(dueDate));
@@ -155,14 +172,14 @@ public class Task implements Serializable {
 		this.setRecurrences(null);
 		return null;
 	}
-	
+
 	public void passRecurrenceSchedule(Task newTask) {
-//		recurrences.decrement();
+		//		recurrences.decrement();
 		newTask.setRecurrences(recurrences);
 		recurrences = null;
 	}
-	
-	
+
+
 	public String[] getGridRow() {
 		if (status == Task.ACTIVE)
 			return new String[] {taskName, Application.getDateFormat().format(dueDate)};
@@ -170,14 +187,14 @@ public class Task implements Serializable {
 			return new String[] {taskName, Application.getDateFormat().format(completedDate), completedBy.getDisplayName()};
 		else
 			return null;
-				
+
 	}
 
-	
+
 	public boolean isRecurring() {
 		return (recurrences != null);
 	}
-	
+
 	@Override
 	public String toString() {
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -190,10 +207,10 @@ public class Task implements Serializable {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public Calendar getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(Calendar dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 	public int getStatus() {
@@ -222,12 +239,12 @@ public class Task implements Serializable {
 	public String getTaskType() {
 		return TASK_TYPE;
 	}
-	
-	public Calendar getCompletedDate() {
+
+	public Date getCompletedDate() {
 		return completedDate;
 	}
 
-	public void setCompletedDate(Calendar completedDate) {
+	public void setCompletedDate(Date completedDate) {
 		this.completedDate = completedDate;
 	}
 
@@ -245,5 +262,15 @@ public class Task implements Serializable {
 
 	public void setCompletedBy(Staff completedBy) {
 		this.completedBy = completedBy;
+	}
+
+	public int getTaskID() {
+		return taskID;
+	}
+
+	public void setTaskID(int taskID) {
+		this.taskID = taskID;
+		if (taskIDCounter <= taskID)
+			taskIDCounter = taskID + 1;
 	}
 }

@@ -82,9 +82,7 @@ public class Staff implements Serializable {
 			MessageDigest md;
 			md = MessageDigest.getInstance("MD5");
 			returnHash = md.digest(addSalt(password));
-			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			returnHash = new String().getBytes();
 		}

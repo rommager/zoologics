@@ -2,6 +2,7 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JPanel;
 
@@ -157,12 +158,12 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		Vaccination v1 = new Vaccination();
 		v1.setTaskName("Vaccine 1");
 		//		v1.setCompletedBy(new Staff("Crazy Nick"));
-		v1.setCompletedDate(Calendar.getInstance());
+		v1.setCompletedDate(new Date());
 
 		Vaccination v2 = new Vaccination();
 		v2.setTaskName("Vaccine 2");
 		//		v2.setCompletedBy(new Staff("Chase"));
-		v2.setCompletedDate(Calendar.getInstance());
+		v2.setCompletedDate(new Date());
 
 		tester.setVisible(true);
 	}

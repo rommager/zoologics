@@ -16,11 +16,11 @@ public class Vaccination extends Task {
 	}
 	
 	public Vaccination(Animal animal, String vaccineName,
-			Calendar dateAdministered, Staff administeredBy) {
+			String dateAdministered, Staff administeredBy) {
 		this();
 		this.animal = animal;
 		this.taskName = vaccineName;
-		this.completedDate = dateAdministered;
+		this.completedDate = Application.parseDate(dateAdministered);
 		this.completedBy = administeredBy;
 	}
 

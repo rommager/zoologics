@@ -106,34 +106,11 @@ public class RecurrenceInstance implements Cloneable {
 		return output.toString();
 	}
 
-
-	/**
-	 * @param inCalendar
-	 * @return clone of Calendar object with the interval added
-	 * returns a copy of Calendar as not to change date on original passed in Calendar object
-	 */
-	public Calendar getNextRecurrenceDate(Calendar inCalendar) {
-		Calendar outCalendar = (Calendar) inCalendar.clone();
-		addInterval(outCalendar);
-		return outCalendar;
-	}
-
-	/**
-	 * @param inDate
-	 * @return Calendar object with interval added to the date
-	 */
-	public Calendar getNextRecurrenceDate(Date inDate) {
-		Calendar outCalendar = Calendar.getInstance();
-		addInterval(outCalendar);
-		return outCalendar;
-	}
-
-	/**
-	 * @param calendar
-	 * adds interval to the passed in Calendar object
-	 */
-	private void addInterval(Calendar calendar) {
+	public Date getNextRecurrenceDate(Date inDate) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(inDate);
 		calendar.add(intervalType, intervalCount);
+		return calendar.getTime();
 	}
 
 	public void decrement() {
@@ -141,7 +118,6 @@ public class RecurrenceInstance implements Cloneable {
 	}
 	
 	public String[] getRow() {
-		
 		String[] outArray = new String[4];
 		outArray[0] = Integer.toString(intervalCount);
 		outArray[1] = Task.intervalToString(intervalType);

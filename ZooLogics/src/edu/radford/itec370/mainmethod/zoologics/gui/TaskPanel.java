@@ -123,13 +123,8 @@ public class TaskPanel extends JDialog implements Navigable {
 		taskPanel.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 		Task newTask;
-		try {
-			newTask = new Task("Reminder to clean toilets", Task.ACTIVE, null, "11/17/2011");
-			taskPanel.add(newTask);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		newTask = new Task("Reminder to clean toilets", "11/17/2011", null);
+		taskPanel.add(newTask);
 		taskPanel.updateGUI();
 		taskPanel.setVisible(true);
 	}
@@ -157,9 +152,9 @@ public class TaskPanel extends JDialog implements Navigable {
 			if (task.getCompletedBy() != null)
 				this.txtCompletedBy.setText(task.getCompletedBy().getDisplayName());
 			if (task.getDueDate() != null)
-				this.txtDueDate.setText(Application.formatDate(task.getDueDate()));
+				this.txtDueDate.setText(Application.formatDateToString(task.getDueDate()));
 			if (task.getCompletedDate() != null)
-				this.txtCompletedDate.setText(Application.formatDate(task.getCompletedDate()));
+				this.txtCompletedDate.setText(Application.formatDateToString(task.getCompletedDate()));
 			this.txtNotes.setText(task.getNotes());
 		}
 		
@@ -170,8 +165,8 @@ public class TaskPanel extends JDialog implements Navigable {
 		if (task != null) {
 			task.setTaskName(this.txtTaskName.getText());
 //			task.setStaff(this.txtCompletedBy.getText());
-			task.setDueDate(Application.parseCalendar(this.txtDueDate.getText()));
-			task.setCompletedDate(Application.parseCalendar(this.txtCompletedBy.getText()));
+			task.setDueDate(Application.parseDate(this.txtDueDate.getText()));
+			task.setCompletedDate(Application.parseDate(this.txtCompletedBy.getText()));
 			task.setNotes(this.txtNotes.getText());
 		}
 	}
