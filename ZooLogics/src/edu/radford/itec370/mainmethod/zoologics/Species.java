@@ -10,6 +10,15 @@ import java.util.ArrayList;
 public class Species {
 	private String speciesName;
 	private ArrayList<Vaccine> vaccineIdCollection = new ArrayList<Vaccine>();
+	private ArrayList<VaccinationSchedule> vaccineRegiment = new ArrayList<VaccinationSchedule>();
+
+	public ArrayList<VaccinationSchedule> getVaccineRegiment() {
+		return vaccineRegiment;
+	}
+
+	public void setVaccineRegiment(ArrayList<VaccinationSchedule> vaccineRegiment) {
+		this.vaccineRegiment = vaccineRegiment;
+	}
 
 	public Species() {
 		super();

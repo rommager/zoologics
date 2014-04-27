@@ -3,10 +3,14 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -17,9 +21,13 @@ import javax.swing.JTable;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
+import edu.radford.itec370.mainmethod.zoologics.VaccinationSchedule;
+import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JScrollPane;
 
 
 /**
@@ -28,14 +36,19 @@ import java.awt.event.ActionEvent;
  */
 public class SpeciesPanel extends JDialog implements Navigable {
 
-	//ArrayList<Vaccine> vaccineList = new ArrayList<Vaccine>();
 	ArrayList<Species> species;
+	ArrayList<Vaccine> vaccines;
+	ArrayList<VaccinationSchedule> regiment;
 	int index = 0;
 	
 	private static final long serialVersionUID = 4119451221171558539L;
+	private static final String[] SPECIES_COLUMN_NAMES = new String[] {"Vaccine Name", "Schedule"};
 	private JPanel contentPanel;
 	private JTextField txtSpecies;
-	private JTable vaccineRegimentTable;
+	private JScrollPane speciesScroll;
+	private JTable speciesTable;
+	private DefaultTableModel speciesModel;
+	private JComboBox<String> dropdown; 
 
 	/**
 	 * Launch the application.
@@ -59,6 +72,8 @@ public class SpeciesPanel extends JDialog implements Navigable {
 	private SpeciesPanel() {
 		super();
 		this.species = new ArrayList<Species>();
+		this.vaccines = new ArrayList<Vaccine>();
+		this.regiment = new ArrayList<VaccinationSchedule>();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SpeciesPanel.class.getResource("/edu/radford/itec370/mainmethod/zoologics/z_icon.png")));
 		setTitle(Application.getAppName() + " Species");
@@ -84,11 +99,6 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		txtSpecies.setBounds(65, 8, 133, 20);
 		contentPanel.add(txtSpecies);
 		txtSpecies.setColumns(10);
-		{
-			vaccineRegimentTable = new JTable();
-			vaccineRegimentTable.setBounds(20, 36, 393, 182);
-			contentPanel.add(vaccineRegimentTable);
-		}
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
@@ -110,6 +120,26 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		});
 		btnOk.setBounds(423, 161, 89, 23);
 		contentPanel.add(btnOk);
+		
+		dropdown = new JComboBox<String>(new DefaultComboBoxModel<String>(new String[] {"Day(s)","Week(s)","Month(s)","Year(s)"}));
+		
+		speciesModel = new DefaultTableModel(null, SPECIES_COLUMN_NAMES);
+		speciesTable = new JTable(speciesModel);
+		speciesScroll = new JScrollPane(speciesTable);
+		speciesScroll.setBounds(20, 36, 393, 195);
+		contentPanel.add(speciesScroll);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				save();
+			}
+		});
+		btnSave.setBounds(423, 127, 89, 23);
+		contentPanel.add(btnSave);
+		speciesTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(dropdown));
+		speciesModel.addRow(new String[] {null,null,null});
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -145,8 +175,17 @@ public class SpeciesPanel extends JDialog implements Navigable {
 			
 	
 	public void save() {
-		Species x = species.get(index);
-		x.setSpeciesName(this.txtSpecies.getText());
+		Species spe = species.get(index);
+		spe.setSpeciesName(this.txtSpecies.getText());
+		
+		for (int row = 0; row > speciesModel.getRowCount(); row++) {
+			vaccines.add((Vaccine)speciesModel.getValueAt(row, 0));
+		}
+		for (int col = 0; col > speciesModel.getColumnCount(); col++) {
+			regiment.add((VaccinationSchedule)speciesModel.getValueAt(col, 1));
+		}
+		spe.setVaccineIdCollection(this.vaccines);
+		spe.setVaccineRegiment(this.regiment);
 	}
 	
 	public void updateGUI() {
