@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.print.*;
 
 public class Animal implements Printable, Serializable {
@@ -58,6 +59,25 @@ public class Animal implements Printable, Serializable {
 		this.thumbnail = thumbnail;
 	}
 
+	public static void main(String[] args) {
+		Animal testAnimal = new Animal(1001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "white with stripes", "Gentle, needs special attention","tiger.jpg");
+		System.out.println(testAnimal);
+		PrinterJob job = PrinterJob.getPrinterJob();
+		
+		job.setPrintable(testAnimal);
+		boolean doPrint = job.printDialog();
+		
+		if (doPrint) {
+		    try {
+		        job.print();
+		    } catch (PrinterException e) {
+		        // The job did not successfully
+		        // complete
+		    }
+		}
+
+//		testAnimal.print();
+	}
 
 	public Animal(String name) {
 
@@ -68,15 +88,28 @@ public class Animal implements Printable, Serializable {
 	}
 
 	@Override
-	public int print(Graphics arg0, PageFormat arg1, int arg2)
+	public int print(Graphics g, PageFormat pf, int page)
 			throws PrinterException {
-		// TODO Auto-generated method stub
-		if (arg2 > 0)
-	    {
-	        return NO_SUCH_PAGE;
+		 // We have only one page, and 'page'
+	    // is zero-based
+	    if (page > 0) {
+	         return NO_SUCH_PAGE;
 	    }
-		return arg2;
-	}
+
+	    // User (0,0) is typically outside the
+	    // imageable area, so we must translate
+	    // by the X and Y values in the PageFormat
+	    // to avoid clipping.
+	    Graphics2D g2d = (Graphics2D)g;
+	    g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+	    // Now we perform our rendering
+	    g.drawString(this.getName(), 100, 100);  // horizontal, vertical
+	    g.drawString(this.getSpecies().getSpeciesName(), 200, 100);
+
+	    // tell the caller that this page is part
+	    // of the printed document
+	    return PAGE_EXISTS;	}
 
 	public int getNewIDNumber() {
 		return animalIDCounter++;
