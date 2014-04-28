@@ -3,6 +3,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.*;
@@ -23,7 +24,7 @@ public class Animal implements Printable, Serializable {
 	private String father;
 	private String mother;
 	private boolean identificationChip;
-	private String chipId;
+	private String chipID;
 	private String breed;
 	private Date dateOfBirth;
 	private String markings;
@@ -49,7 +50,7 @@ public class Animal implements Printable, Serializable {
 		this.father = father;
 		this.mother = mother;
 		this.identificationChip = identificationChip;
-		this.chipId = chipId;
+		this.chipID = chipId;
 		this.breed = breed;
 		this.dateOfBirth = dateOfBirth;
 		this.markings = markings;
@@ -74,7 +75,30 @@ public class Animal implements Printable, Serializable {
 		
 	
 		PrintPreview preview = new PrintPreview(animal, job.getPageFormat(att));
-
+	}
+	
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(species.getSpeciesID()); sb.append("|");
+		sb.append(sex); sb.append("|");
+		sb.append(father); sb.append("|");
+		sb.append(mother); sb.append("|");
+		sb.append(identificationChip); sb.append("|");
+		sb.append(breed); sb.append("|");
+		sb.append(dateOfBirth); sb.append("|");
+		sb.append(markings); sb.append("|");
+		sb.append(notes); sb.append("|");
+		
+		return sb.toString();
+		
+// example output:		Puja|23400|M|3276|4358  (except it contains all the fields
+	}
+	
+	public Animal(String lineIO) {
+		super();
+		StringTokenizer st = new StringTokenizer(lineIO);
+		
+		
 	}
 
 
@@ -183,11 +207,11 @@ public class Animal implements Printable, Serializable {
 	}
 
 	public String getChipId() {
-		return chipId;
+		return chipID;
 	}
 
 	public void setChipId(String chipId) {
-		this.chipId = chipId;
+		this.chipID = chipId;
 	}
 
 	public String getBreed() {
