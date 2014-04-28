@@ -7,6 +7,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.*;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.swing.JEditorPane;
+import javax.swing.JTable;
+
 public class Animal implements Printable, Serializable {
 
 	private static final long serialVersionUID = 5761796477851733790L;
@@ -60,6 +64,17 @@ public class Animal implements Printable, Serializable {
 				breed, dateOfBirth, markings, notes);
 
 		this.thumbnail = thumbnail;
+	}
+
+	public static void main(String[] args) {
+		Animal animal = new Animal(2001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "Orange with stripes", "Gentle, needs special attention","tiger.jpg");
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setPrintable(animal);
+		HashPrintRequestAttributeSet att = new HashPrintRequestAttributeSet();
+		
+	
+		PrintPreview preview = new PrintPreview(animal, job.getPageFormat(att));
+
 	}
 
 
