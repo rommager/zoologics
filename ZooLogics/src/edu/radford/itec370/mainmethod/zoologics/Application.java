@@ -1,7 +1,9 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
+import java.awt.Component;
 import java.awt.Image;
-import java.io.Serializable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
@@ -17,7 +18,6 @@ import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
 public class Application implements Runnable {
 
-	private static final long serialVersionUID = -4947318641942709682L;
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
 	private final static String VERSION = "0.4 alpha";
@@ -159,10 +159,6 @@ public class Application implements Runnable {
 		dateFormat = inDateFormat;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public ArrayList<Task> getAllActiveTasks() {
 		return allActiveTasks;
 	}
@@ -223,5 +219,21 @@ public class Application implements Runnable {
 	public static String getVersion() {
 		return VERSION;
 	}
+	
+	public static void runPrintJob(Component comp) {
+		ComponentPrinter printable = new ComponentPrinter(comp);
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setPrintable(printable);
+		boolean doPrint = job.printDialog();
+		if (doPrint) {
+		    try {
+		        job.print();
+		    } catch (PrinterException e) {
+		        // The job did not successfully
+		        // complete
+		    }
+		}
+	}
+
 	
 }

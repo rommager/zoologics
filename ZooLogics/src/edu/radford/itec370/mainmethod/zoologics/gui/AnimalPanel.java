@@ -10,7 +10,11 @@ import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.JTextField;
@@ -19,6 +23,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -83,54 +93,13 @@ public class AnimalPanel extends JFrame implements Navigable {
 
 		getContentPane().add(navPanel, BorderLayout.SOUTH);
 
-		// set up animal panel and add to main frame		
+		// build animal panel		
 		animalPanel = new JPanel();
-		getContentPane().add(animalPanel, BorderLayout.CENTER);
-
-		// build animal panel
-		animalPanel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		animalPanel.setLayout(null);
 
 		txtName = new JTextField();
 		txtName.setBounds(121, 30, 210, 20);
 		animalPanel.add(txtName);
-		txtName.setColumns(10);
-
-/*		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(678, 315, 89, 23);
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		animalPanel.add(btnSearch);
-*/
-		JButton btnHistory = new JButton("Vaccination History");
-		btnHistory.setBounds(664, 315, 146, 23);
-		btnHistory.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		animalPanel.add(btnHistory);
-		
-		JButton btnSave = new JButton("Save");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				save();
-			}
-		});
-		btnSave.setBounds(664, 349, 146, 23);
-		animalPanel.add(btnSave);
-
-		JButton btnClose = new JButton("Close");
-		btnClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JButton caller = (JButton) e.getSource();				
-				JFrame caller2 = (JFrame) caller.getParent().getParent().getParent().getParent().getParent();
-				caller2.dispose();
-			}
-		});
-		btnClose.setBounds(664, 383, 146, 23);
-		animalPanel.add(btnClose);
 
 		pnlPhoto = new JPanel();
 		pnlPhoto.setBounds(389, 227, 265, 179);
@@ -144,17 +113,14 @@ public class AnimalPanel extends JFrame implements Navigable {
 		txtSpecies = new JTextField();
 		txtSpecies.setBounds(121, 62, 210, 20);
 		animalPanel.add(txtSpecies);
-		txtSpecies.setColumns(10);
 
 		txtSex = new JTextField();
 		txtSex.setBounds(121, 93, 210, 20);
 		animalPanel.add(txtSex);
-		txtSex.setColumns(10);
 
 		txtFather = new JTextField();
 		txtFather.setBounds(121, 124, 210, 20);
 		animalPanel.add(txtFather);
-		txtFather.setColumns(10);
 
 		JLabel lblName = new JLabel("Name");
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -269,6 +235,55 @@ public class AnimalPanel extends JFrame implements Navigable {
 		lblPhoto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPhoto.setBounds(389, 202, 46, 14);
 		animalPanel.add(lblPhoto);
+
+		getContentPane().add(animalPanel, BorderLayout.CENTER);
+
+		// Set up button panel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setPreferredSize(new Dimension(160,-1));
+		buttonPanel.setLayout(null);
+
+		/*		JButton btnSearch = new JButton("Search");
+		btnSearch.setBounds(678, 315, 89, 23);
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		animalPanel.add(btnSearch);
+		 */
+
+		JButton btnHistory = new JButton("Vaccination History");
+		//btnHistory.setBounds(664, 315, 146, 23);
+		btnHistory.setBounds(5, 315, 146, 23);
+		btnHistory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				print();
+			}
+		});
+		buttonPanel.add(btnHistory);
+
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				save();
+			}
+		});
+		btnSave.setBounds(5, 349, 146, 23);
+		buttonPanel.add(btnSave);
+
+		JButton btnClose = new JButton("Close");
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton caller = (JButton) e.getSource();				
+				JFrame caller2 = (JFrame) caller.getParent().getParent().getParent().getParent().getParent();
+				caller2.dispose();
+			}
+		});
+		btnClose.setBounds(5, 383, 146, 23);
+		buttonPanel.add(btnClose);
+
+		getContentPane().add(buttonPanel, BorderLayout.EAST);
+
 	}
 
 	public AnimalPanel(ArrayList<Animal> animals) {
@@ -277,6 +292,13 @@ public class AnimalPanel extends JFrame implements Navigable {
 		this.filteredAnimals = animals;
 		index = 0;
 		updateGUI();
+	}
+
+	public void setColor(Color color) {
+		animalPanel.setBackground(color);
+		rdbtnChipYes.setBackground(color);
+		rdbtnChipNo.setBackground(color);
+		pnlPhoto.setBackground(color);
 	}
 
 	public void updateGUI() {
@@ -320,7 +342,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 			a.setName(txtName.getText());
 			a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
 			if (!txtSex.getText().isEmpty())
-				a.setSex(txtSex.getText().toCharArray()[0]);  //TODO set txtSex to a max length of 1, and allow only m or f entries
+				a.setSex(txtSex.getText().toCharArray()[0]);   //TODO set txtSex to a max length of 1, and allow only m or f entries
 			else
 				a.setSex(' ');
 			a.setFather(txtFather.getText());
@@ -447,6 +469,13 @@ public class AnimalPanel extends JFrame implements Navigable {
 			}
 			updateGUI();
 		}
+	}
+
+	public void print() {
+		Color color = animalPanel.getBackground();
+		setColor(Color.WHITE);
+		Application.runPrintJob(animalPanel);
+		setColor(color);
 	}
 
 	private void updateRecordCount() {

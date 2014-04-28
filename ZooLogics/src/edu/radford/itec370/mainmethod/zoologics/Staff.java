@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Staff implements Serializable {
 
 	private static final long serialVersionUID = 4632391733615291271L;
-	private static final String SALT = Application.getAppName() + Application.getSerialversionuid();
+	private static final String SALT = Application.getAppName();
 	private static int staffIDCounter = 10001;
 	private int staffID;
 	private String lastName;
