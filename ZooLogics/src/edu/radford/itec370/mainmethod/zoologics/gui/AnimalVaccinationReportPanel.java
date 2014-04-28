@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Staff;
+import edu.radford.itec370.mainmethod.zoologics.Task;
 import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 import javax.swing.JFrame;
@@ -30,42 +31,40 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.print.*;
 
-public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
+public class AnimalVaccinationReportPanel extends JFrame {
 
+	// constants
 	private static final long serialVersionUID = 511782685113323967L;
 	private static final Object[] HISTORY_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Administered Date", "Administered By"};
 	private static final Object[] UPCOMING_COLUMN_NAMES = new String[] {"Vaccination Name/Dose", "Due Date"};
-	private static final int NO_SUCH_PAGE = 0;
-	private static final int PAGE_EXISTS = 0;
-	private ArrayList <Vaccination> vaccinations;
+	
+	// class variables
+	private ArrayList<Vaccination> upcomingVaccinations;
+	private ArrayList<Vaccination> overdueVaccinations;
+	private ArrayList<Vaccination> historyVaccinations;
 	private Animal animal;
+	
+	// GUI Elements
 	private JTextField txtAnimalName;
-
-	private JScrollPane historyScroll;
+	private ReadOnlyTableModel historyModel;
 	private JTable historyTable;
-	private MyTableModel historyModel;
-
-	private JScrollPane upcomingScroll;
+	private ReadOnlyTableModel upcomingModel;
 	private JTable upcomingTable;
-	private MyTableModel upcomingModel;
-
-	private JScrollPane pastDueScroll;
+	private ReadOnlyTableModel pastDueModel;
 	private JTable pastDueTable;
-	private MyTableModel pastDueModel;
 
-	public AnimalVaccinationReportPanel() {
-
+	// constructors
+	private AnimalVaccinationReportPanel() {
+		super();
 		setBounds(10, 10, 700, 500);
-		setTitle("Animal Vaccination Reports");
+		setTitle(Application.getAppName() + " - Animal Vaccination Report");
 
 		setIconImage(Application.getAppImage());
 		getContentPane().setLayout(new BorderLayout());
 
-
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		add(panel, BorderLayout.CENTER);
-		add(new NavigatorBar(this), BorderLayout.SOUTH);
 
 		txtAnimalName = new JTextField();
 		txtAnimalName.setBounds(140, 33, 173, 20);
@@ -113,35 +112,37 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		panel.add(lblPastDue);
 
 		// set up vaccination history table
-		historyModel = new MyTableModel();
+		historyModel = new ReadOnlyTableModel();
 		historyModel.setColumnIdentifiers(HISTORY_COLUMN_NAMES);
 		historyTable = new JTable(historyModel);
-		historyScroll = new JScrollPane(historyTable);
+		JScrollPane historyScroll = new JScrollPane(historyTable);
 		historyScroll.setBounds(21, 110, 649, 133);
 		panel.add(historyScroll);
 		historyModel.addRow(new String[] {null,null,null});
 
 		// set up upcoming vaccinations table
-		upcomingModel = new MyTableModel();
+		upcomingModel = new ReadOnlyTableModel();
 		upcomingModel.setColumnIdentifiers(UPCOMING_COLUMN_NAMES);
 		upcomingTable = new JTable(upcomingModel);
-		upcomingScroll = new JScrollPane(upcomingTable);
+		JScrollPane upcomingScroll = new JScrollPane(upcomingTable);
 		upcomingScroll.setBounds(21, 286, 322, 107);
 		panel.add(upcomingScroll);
 
 		// set up past due vaccinations table
-		pastDueModel = new MyTableModel();
+		pastDueModel = new ReadOnlyTableModel();
 		pastDueModel.setColumnIdentifiers(UPCOMING_COLUMN_NAMES);
 		historyModel.setColumnIdentifiers(HISTORY_COLUMN_NAMES);
 		pastDueTable = new JTable(pastDueModel);
-		pastDueScroll = new JScrollPane(pastDueTable);
+		JScrollPane pastDueScroll = new JScrollPane(pastDueTable);
 		pastDueScroll.setBounds(382, 286, 291, 107);
 		panel.add(pastDueScroll);
-		//		pack();
-
 	}
 
-	public String[][] getAllTableRows() {
+	public AnimalVaccinationReportPanel(ArrayList<Animal> animals, ArrayList<Task> activeTasks, ArrayList<Task> inactiveTasks) {
+		this();
+	}
+
+	/*	public String[][] getAllTableRows() {
 		//TODO
 		String[][] outArray;
 		for (Vaccination vacc : vaccinations) {
@@ -150,7 +151,7 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		return null;	
 
 	}
-
+	 */
 	public static void main(String[] args) {
 		AnimalVaccinationReportPanel tester = new AnimalVaccinationReportPanel();
 		tester.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -180,86 +181,36 @@ public class AnimalVaccinationReportPanel extends JFrame implements Navigable {
 		this.animal = animal;
 	}
 
-	public ArrayList <Vaccination> getVaccinations() {
-		return vaccinations;
-	}
-
-	public void setVaccinations(ArrayList <Vaccination> vaccinations) {
-		this.vaccinations = vaccinations;
-	}
-
-	@Override
-	public void firstRecord() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void previousRecord() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void nextRecord() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void lastRecord() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void newRecord() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@SuppressWarnings("serial")
-	class MyTableModel extends DefaultTableModel {
+	class ReadOnlyTableModel extends DefaultTableModel {
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			//all cells false
 			return false;
 		}
 	}
-	 public int print(Graphics g, PageFormat pf, int page)
-		      throws PrinterException {
+	
+	public int print(Graphics g, PageFormat pf, int page)
+			throws PrinterException {
 
-		    // We have only one page, and 'page'
-		    // is zero-based
-		    if (page > 0) {
-		         return NO_SUCH_PAGE;
-		    }
+		// We have only one page, and 'page'
+		// is zero-based
+		if (page > 0) {
+			return Printable.NO_SUCH_PAGE;
+		}
 
-		    Graphics2D g2d = (Graphics2D)g;
-		    g2d.translate(pf.getImageableX(), pf.getImageableY());
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.translate(pf.getImageableX(), pf.getImageableY());
 
-		    // Now we perform our rendering
-		    g.drawString(getName(), 100, 100);
-		    g.drawString(getVaccine(), 200, 100);
-		    
+		// Now we perform our rendering
+		g.drawString(getName(), 100, 100);
+//		g.drawString(getVaccine(), 200, 100);
 
-		    // tell the caller that this page is part
-		    // of the printed document
-		    return PAGE_EXISTS;
-		  }
-		
 
-	private String getVaccine() {
-		// TODO Auto-generated method stub
-		return null;
+		// tell the caller that this page is part
+		// of the printed document
+		return Printable.PAGE_EXISTS;
 	}
 
-
-	}
+}
 
