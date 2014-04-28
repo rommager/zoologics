@@ -11,7 +11,7 @@ public class Animal implements Printable, Serializable {
 
 	private static final long serialVersionUID = 5761796477851733790L;
 	private static int animalIDCounter = 20001;
-	
+
 	private int animalID;
 	private String name;
 	private Species species;
@@ -67,35 +67,39 @@ public class Animal implements Printable, Serializable {
 	public int print(Graphics g, PageFormat pf, int page)
 			throws PrinterException {
 
-		    // We have only one page, and 'page'
-		    // is zero-based
-		    if (page > 0) {
-		         return NO_SUCH_PAGE;
-		    }
+		// We have only one page, and 'page'
+		// is zero-based
+		if (page > 0) {
+			return NO_SUCH_PAGE;
+		}
 
-		    Graphics2D g2d = (Graphics2D)g;
-		    g2d.translate(pf.getImageableX(), pf.getImageableY());
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.translate(pf.getImageableX(), pf.getImageableY());
 
-		    // Now we perform our rendering
-		    g.drawString(getName(), 100, 100);
-		    g.drawString(getSpecies().getSpeciesName(), 200, 100);
-		    
+		// Now we perform our rendering
+		g.drawString(getName(), 100, 100);
+		g.drawString(getSpecies().getSpeciesName(), 200, 100);
 
-		    // tell the caller that this page is part
-		    // of the printed document
-		    return PAGE_EXISTS;
-		  }
-		
+
+		// tell the caller that this page is part
+		// of the printed document
+		return PAGE_EXISTS;
+	}
+
 	public boolean isVisibleWithFilter(String filter) {
 		if (filter.isEmpty() || filter == null)
-			return true;		
-		if (name.toUpperCase().indexOf(filter) >= 0)
 			return true;
-		if (species.getSpeciesName().toUpperCase().indexOf(filter) >= 0)
-			return true;
+		if (name != null) {
+			if (name.toUpperCase().indexOf(filter) >= 0)
+				return true;
+		}
+		if (species != null) {
+			if (species.getSpeciesName().toUpperCase().indexOf(filter) >= 0)
+				return true;
+		}
 		return false;
 	}
-	
+
 	public int getAnimalID() {
 		return animalID;
 	}
@@ -125,7 +129,7 @@ public class Animal implements Printable, Serializable {
 	public char getSex() {
 		return sex;
 	}
-	
+
 	public void Printable() {
 		PrinterJob job = PrinterJob.getPrinterJob();
 		job.setPrintable (this);

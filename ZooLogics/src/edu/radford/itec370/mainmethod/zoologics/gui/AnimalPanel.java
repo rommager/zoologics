@@ -21,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,28 +28,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.border.Border;
 
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.io.File;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 
-public class AnimalPanel extends JFrame implements Navigable, Serializable {
+public class AnimalPanel extends JFrame implements Navigable {
 
+	// constants
 	private static final long serialVersionUID = 6632886394131544115L;
 	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
 	public static final String PHOTO_FOLDER = "./photos/"; 
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
+
+	// class variables
 	private ArrayList <Animal> allAnimals;
 	private ArrayList <Animal> filteredAnimals;
 	private int index;
 
+	// gui elements
 	private JPanel animalPanel;
 	private JTextField txtName;
 	private JTextField txtSpecies;
@@ -65,39 +62,25 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	private JRadioButton rdbtnChipNo;
 	private JTextPane txtMarkings;
 	private JTextPane txtNotes;
-
 	private JPanel pnlPhoto;
 	private JLabel thumbnail;
+	NavigatorBar navPanel;
 
-	public static void main(String[] args) {
-		AnimalPanel panel = new AnimalPanel();
-
-		panel.setVisible(true);
-		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		panel.setAnimals(new ArrayList<Animal>());
-		panel.getAnimals().add(new Animal(2001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "Orange with stripes", "Gentle, needs special attention","tiger.jpg"));
-		panel.getAnimals().add(new Animal(2002, "Rawr", new Species("Feline"), 'M', "Timbre", "Saber", false, "", "Leopard", new Date(), "golden with ring spots", "Snappy","leopard.jpg"));
-		panel.getAnimals().add(new Animal(2003, "Fran", new Species("Feline"), 'F', "Goomba", "Mush", true, "A12343201", "Ocelot", new Date(), "Cute, but dangerous", "Will eat your hand if you let her","ocelot.jpg"));
-		panel.getAnimals().add(new Animal(2004, "George", new Species("Primate"), 'M', "unknown", "unknown", false, "", "golden-mantled tamarin", new Date(), "Has white cheeks","alpha male - watch for this one","tamarin.jpg"));
-		panel.getAnimals().add(new Animal(2005, "Spots", new Species("Deer"), 'F', "unknown", "unknown", false, "", "White Tailed Deer", new Date(), "just another deer",""));
-		panel.setAnimal(panel.getAnimals().get(0));
-	}
-
-	public AnimalPanel() {
+	// constructors
+	private AnimalPanel() {
+		super();
 		// initialize class variables;
 		index = 0;
 
 		// set up window
 		setTitle(WINDOW_TITLE);
 		setIconImage(Application.getAppImage());
-		this.setSize(new Dimension(800, 480));
+		this.setSize(new Dimension(836, 480));
 		getContentPane().setLayout(new BorderLayout());
 
 		// add navigator bar in south window area
-		NavigatorBar navPanel = new NavigatorBar(this);
-		//		navPanel.setNewRecordVisible(false);
-		//		navPanel.setSearchBoxVisible(false);
-		navPanel.setBounds(0, 415, 784, 30);
+		navPanel = new NavigatorBar(this);
+
 		getContentPane().add(navPanel, BorderLayout.SOUTH);
 
 		// set up animal panel and add to main frame		
@@ -109,25 +92,33 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		animalPanel.setLayout(null);
 
 		txtName = new JTextField();
-		txtName.setBounds(121, 30, 102, 20);
+		txtName.setBounds(121, 30, 210, 20);
 		animalPanel.add(txtName);
 		txtName.setColumns(10);
 
-		JButton btnSearch = new JButton("Search");
+/*		JButton btnSearch = new JButton("Search");
 		btnSearch.setBounds(678, 315, 89, 23);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		animalPanel.add(btnSearch);
-
+*/
+		JButton btnHistory = new JButton("Vaccination History");
+		btnHistory.setBounds(664, 315, 146, 23);
+		btnHistory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		animalPanel.add(btnHistory);
+		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save();
 			}
 		});
-		btnSave.setBounds(678, 349, 89, 23);
+		btnSave.setBounds(664, 349, 146, 23);
 		animalPanel.add(btnSave);
 
 		JButton btnClose = new JButton("Close");
@@ -138,7 +129,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 				caller2.dispose();
 			}
 		});
-		btnClose.setBounds(678, 383, 89, 23);
+		btnClose.setBounds(664, 383, 146, 23);
 		animalPanel.add(btnClose);
 
 		pnlPhoto = new JPanel();
@@ -151,17 +142,17 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 
 
 		txtSpecies = new JTextField();
-		txtSpecies.setBounds(121, 62, 102, 20);
+		txtSpecies.setBounds(121, 62, 210, 20);
 		animalPanel.add(txtSpecies);
 		txtSpecies.setColumns(10);
 
 		txtSex = new JTextField();
-		txtSex.setBounds(121, 93, 102, 20);
+		txtSex.setBounds(121, 93, 210, 20);
 		animalPanel.add(txtSex);
 		txtSex.setColumns(10);
 
 		txtFather = new JTextField();
-		txtFather.setBounds(121, 124, 102, 20);
+		txtFather.setBounds(121, 124, 210, 20);
 		animalPanel.add(txtFather);
 		txtFather.setColumns(10);
 
@@ -232,12 +223,12 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 
 		rdbtnChipYes = new JRadioButton("Yes");
 		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
-		rdbtnChipYes.setBounds(121, 148, 55, 23);
+		rdbtnChipYes.setBounds(122, 151, 55, 23);
 		animalPanel.add(rdbtnChipYes);
 
 		rdbtnChipNo = new JRadioButton("No");
 		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
-		rdbtnChipNo.setBounds(178, 148, 46, 23);
+		rdbtnChipNo.setBounds(179, 151, 46, 23);
 		animalPanel.add(rdbtnChipNo);
 
 		ButtonGroup group = new ButtonGroup();
@@ -246,66 +237,46 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 
 		JLabel lblIdChip = new JLabel("Tattoo or Chip?");
 		lblIdChip.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblIdChip.setBounds(27, 152, 102, 14);
+		lblIdChip.setBounds(28, 155, 102, 14);
 		animalPanel.add(lblIdChip);
 
 		txtZooID = new JTextField();
-		txtZooID.setBounds(484, 30, 137, 20);
+		txtZooID.setBounds(484, 30, 170, 20);
 		animalPanel.add(txtZooID);
 		txtZooID.setColumns(10);
 
 		txtBreed = new JTextField();
-		txtBreed.setBounds(484, 62, 137, 20);
+		txtBreed.setBounds(484, 62, 170, 20);
 		animalPanel.add(txtBreed);
 		txtBreed.setColumns(10);
 
 		txtDOB = new JTextField();
-		txtDOB.setBounds(484, 93, 137, 20);
+		txtDOB.setBounds(484, 93, 170, 20);
 		animalPanel.add(txtDOB);
 		txtDOB.setColumns(10);
 
 		txtMother = new JTextField();
-		txtMother.setBounds(484, 124, 137, 20);
+		txtMother.setBounds(484, 124, 170, 20);
 		animalPanel.add(txtMother);
 		txtMother.setColumns(10);
 
 		txtIDNumber = new JTextField();
-		txtIDNumber.setBounds(484, 155, 137, 20);
+		txtIDNumber.setBounds(484, 155, 170, 20);
 		animalPanel.add(txtIDNumber);
 		txtIDNumber.setColumns(10);
 
 		JLabel lblPhoto = new JLabel("Photo");
 		lblPhoto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPhoto.setBounds(389, 202, 46, 14);
-		animalPanel.add(lblPhoto);		
-
+		animalPanel.add(lblPhoto);
 	}
 
-	public Animal getAnimal() {
-		return filteredAnimals.get(index);
-	}
-
-	public void setAnimal(Animal animal) {
-		index = filteredAnimals.indexOf(animal);
+	public AnimalPanel(ArrayList<Animal> animals) {
+		this();
+		this.allAnimals = animals;
+		this.filteredAnimals = animals;
+		index = 0;
 		updateGUI();
-	}
-
-	public void setThumbnail(String fileName)  {
-		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
-		URL imageURL = null;
-		try {
-			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
-		} catch (MalformedURLException e) {
-			// do nothing
-		}
-
-		File newFile = new File(imageURL.getPath());
-		if (!newFile.exists())
-			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
-
-		Image image = new ImageIcon(imageURL).getImage();
-		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
-
 	}
 
 	public void updateGUI() {
@@ -340,33 +311,63 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 			}
 			this.setThumbnail(getAnimal().getThumbnail());
 		}
+		updateRecordCount();
 	}
 
 	public void save() {
 		try {
-		Animal a = getAnimal();
-		a.setName(txtName.getText());
-		a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
-		if (!txtSex.getText().isEmpty())
-			a.setSex(txtSex.getText().toCharArray()[0]);  //TODO set txtSex to a max length of 1, and allow only m or f entries
-		else
-			a.setSex(' ');
-		a.setFather(txtFather.getText());
-		a.setMother(txtMother.getText());
-		a.setAnimalID(Integer.parseInt(txtZooID.getText()));
-		a.setBreed(txtBreed.getText());
-		a.setChipId(txtIDNumber.getText());
-		a.setMarkings(txtMarkings.getText());
-		a.setNotes(txtNotes.getText());
-		if(this.rdbtnChipYes.isSelected())
-			a.setIdenficationChip(true);
-		else
-			a.setIdenficationChip(false);
-		updateGUI();
+			Animal a = getAnimal();
+			a.setName(txtName.getText());
+			a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
+			if (!txtSex.getText().isEmpty())
+				a.setSex(txtSex.getText().toCharArray()[0]);  //TODO set txtSex to a max length of 1, and allow only m or f entries
+			else
+				a.setSex(' ');
+			a.setFather(txtFather.getText());
+			a.setMother(txtMother.getText());
+			a.setAnimalID(Integer.parseInt(txtZooID.getText()));
+			a.setBreed(txtBreed.getText());
+			a.setChipId(txtIDNumber.getText());
+			a.setMarkings(txtMarkings.getText());
+			a.setNotes(txtNotes.getText());
+			if(this.rdbtnChipYes.isSelected())
+				a.setIdenficationChip(true);
+			else
+				a.setIdenficationChip(false);
+			updateGUI();
 		}
 		catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+
+	// setters and getters 
+	public Animal getAnimal() {
+		return filteredAnimals.get(index);
+	}
+
+	public void setAnimal(Animal animal) {
+		index = filteredAnimals.indexOf(animal);
+		updateGUI();
+	}
+
+	public void setThumbnail(String fileName)  {
+		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
+		URL imageURL = null;
+		try {
+			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
+		} catch (MalformedURLException e) {
+			// do nothing
+		}
+
+		File newFile = new File(imageURL.getPath());
+		if (!newFile.exists())
+			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
+
+		Image image = new ImageIcon(imageURL).getImage();
+		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
+
 	}
 
 	public ArrayList<Animal> getAnimals() {
@@ -376,6 +377,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 	public void setAnimals(ArrayList<Animal> animals) {
 		this.allAnimals = animals;
 		this.filteredAnimals = animals;
+		index = 0;
 	}
 
 	public int getIndex() {
@@ -387,6 +389,7 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 		updateGUI();
 	}
 
+	// interface implementations
 	@Override
 	public void firstRecord() {
 		index = 0;
@@ -444,5 +447,24 @@ public class AnimalPanel extends JFrame implements Navigable, Serializable {
 			}
 			updateGUI();
 		}
+	}
+
+	private void updateRecordCount() {
+		navPanel.updateRecordCount(index + 1, filteredAnimals.size());
+	}
+
+	// testing methods
+	public static void main(String[] args) {
+		ArrayList<Animal> animals = new ArrayList<Animal>();
+		animals.add(new Animal(2001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "Orange with stripes", "Gentle, needs special attention","tiger.jpg"));
+		animals.add(new Animal(2002, "Rawr", new Species("Feline"), 'M', "Timbre", "Saber", false, "", "Leopard", new Date(), "golden with ring spots", "Snappy","leopard.jpg"));
+		animals.add(new Animal(2003, "Fran", new Species("Feline"), 'F', "Goomba", "Mush", true, "A12343201", "Ocelot", new Date(), "Cute, but dangerous", "Will eat your hand if you let her","ocelot.jpg"));
+		animals.add(new Animal(2004, "George", new Species("Primate"), 'M', "unknown", "unknown", false, "", "golden-mantled tamarin", new Date(), "Has white cheeks","alpha male - watch for this one","tamarin.jpg"));
+		animals.add(new Animal(2005, "Spots", new Species("Deer"), 'F', "unknown", "unknown", false, "", "White Tailed Deer", new Date(), "just another deer",""));
+
+		AnimalPanel panel = new AnimalPanel(animals);
+		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		panel.setVisible(true);
+
 	}
 }

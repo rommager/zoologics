@@ -28,108 +28,134 @@ import javax.swing.SwingConstants;
 public class NavigatorBar extends JPanel implements FocusListener {
 	private static final long serialVersionUID = -7765321196155993760L;
 	private static final String SEARCH_TEXT = "Type to Search";
+
+	// Class variables
 	private boolean newButtonVisible; 
 	private Navigable parentGUI;
-	private JTextField txtSearch;
+	private String currentFilter;
+
+	// GUI elements
 	private JButton btnFirst;
 	private JButton btnPrevious;
+	private JLabel lblRecordCount;
 	private JButton btnNext;
 	private JButton btnLast;
 	private JButton btnNew;
+	private JTextField txtSearch;
 	private JLabel lblDateTime;
-	
+
 
 	private NavigatorBar() {
 		super();
+		currentFilter = "";
 		setLayout(new BorderLayout());
 
 		FlowLayout leftFlowLayout = new FlowLayout(FlowLayout.LEFT);
 		leftFlowLayout.setVgap(0);
 		leftFlowLayout.setHgap(0);
-		
-		JPanel leftPanel = new JPanel(leftFlowLayout);
-		
-		btnFirst = new JButton("[<");
+
+		JPanel leftPanel = new JPanel(new BorderLayout());
+		JPanel leftButtonPanel = new JPanel(leftFlowLayout);
+
+		btnFirst = new JButton("|<");
 		btnFirst.setPreferredSize(new Dimension(45,20));
+		btnFirst.setToolTipText("Skip to First Record");
 		btnFirst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentGUI.firstRecord();
 			}
 		});
-		leftPanel.add(btnFirst);
-		
+		leftButtonPanel.add(btnFirst);
+
 		btnPrevious = new JButton("<");
 		btnPrevious.setPreferredSize(new Dimension(45,20));
+		btnPrevious.setToolTipText("Go To Previous Record");
 		btnPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentGUI.previousRecord();
 			}
 		});
-		leftPanel.add(btnPrevious);
-		
-		txtSearch = new JTextField();
-		txtSearch.addFocusListener(this);
-		txtSearch.setText(SEARCH_TEXT);
-		txtSearch.setForeground(Color.GRAY);
-		txtSearch.setFont(setFontFace(txtSearch.getFont(),Font.ITALIC));
-		leftPanel.add(txtSearch);
-		//txtSearch.setColumns(10);
-		txtSearch.setPreferredSize(new Dimension(100,20));
-		txtSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				parentGUI.applyFilter(txtSearch.getText());
-			}
-		});
-		
+		leftButtonPanel.add(btnPrevious);
+
+		lblRecordCount = new JLabel();
+		lblRecordCount.setFont(setFontFace(lblRecordCount.getFont(),Font.ITALIC));
+		updateRecordCount(0,0);
+		leftButtonPanel.add(lblRecordCount);
+
 		btnNext = new JButton(">");
 		btnNext.setPreferredSize(new Dimension(45,20));
+		btnNext.setToolTipText("Go To Next Record");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentGUI.nextRecord();
 			}
 		});
-		leftPanel.add(btnNext);
-		
-		btnLast = new JButton(">]");
+		leftButtonPanel.add(btnNext);
+
+		btnLast = new JButton(">|");
 		btnLast.setPreferredSize(new Dimension(45,20));
+		btnLast.setToolTipText("Skip to Last Record");
 		btnLast.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentGUI.lastRecord();
 			}
 		});
-		leftPanel.add(btnLast);
-		
-		btnNew = new JButton(">]*");
+		leftButtonPanel.add(btnLast);
+
+		btnNew = new JButton(">|*");
 		btnNew.setPreferredSize(new Dimension(50,20));
+		btnNew.setToolTipText("Add New Record");
 		btnNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentGUI.newRecord();
 			}
 		});
 		newButtonVisible = true;
-		leftPanel.add(btnNew);
-		
-		JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		leftButtonPanel.add(btnNew);
+		leftPanel.add(leftButtonPanel,BorderLayout.WEST);
+
+		FlowLayout leftSearchLayout = new FlowLayout(FlowLayout.RIGHT);
+		leftSearchLayout.setVgap(0);
+		JPanel leftSearchPanel = new JPanel(leftSearchLayout);
+		txtSearch = new JTextField();
+		txtSearch.addFocusListener(this);
+		txtSearch.setText(SEARCH_TEXT);
+		txtSearch.setForeground(Color.GRAY);
+		txtSearch.setFont(setFontFace(txtSearch.getFont(),Font.ITALIC));
+		txtSearch.setPreferredSize(new Dimension(100,20));
+		txtSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				applyFilter(txtSearch,false);
+			}
+		});
+		leftSearchPanel.add(txtSearch);
+		leftPanel.add(leftSearchPanel,BorderLayout.EAST);
+
 		lblDateTime = new JLabel("Time");
 		lblDateTime.setHorizontalAlignment(SwingConstants.RIGHT);
-		rightPanel.add(lblDateTime);
-		
+
 		setPreferredSize(new Dimension(500,20));
 		add(leftPanel,BorderLayout.WEST);
-		add(rightPanel,BorderLayout.EAST);
-		
+		add(lblDateTime,BorderLayout.EAST);
+
 		refresh();
 	}
-	
+
 	public NavigatorBar(Navigable parentGUI){
 		this();
 		this.parentGUI = parentGUI;
 	}
-		
+
 	public void refresh() {
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd, yyyy h:mm a");
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM dd, yyyy h:mm a   ");
 		Date now = new Date();
 		lblDateTime.setText(sdf.format(now));
+	}
+
+	public void updateRecordCount(int index, int total) {
+		if (total == 0)
+			lblRecordCount.setText("  0 of 0  ");
+		lblRecordCount.setText("   " + Integer.toString(index) + " of " + Integer.toString(total) + "   ");
 	}
 
 	public Navigable getParentGUI() {
@@ -172,28 +198,39 @@ public class NavigatorBar extends JPanel implements FocusListener {
 			field.setForeground(Color.BLACK);
 			field.setFont(setFontFace(field.getFont(),Font.PLAIN));
 			field.setText(null);
-			
+
 		}
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
 		JTextField field = (JTextField) e.getSource();
-		if (field.getText().isEmpty() || field.getText().equals(SEARCH_TEXT) || field.getText() == null) {
-			field.setForeground(Color.GRAY);
-			field.setFont(setFontFace(field.getFont(),Font.ITALIC));
-			field.setText(SEARCH_TEXT);
-			btnNew.setVisible(newButtonVisible);
-			parentGUI.applyFilter(null);
-		}
-		else {
-			btnNew.setVisible(false);
-			parentGUI.applyFilter(field.getText().toUpperCase());
-		}
+		applyFilter(field,true);
 	}
-	
+
 	private Font setFontFace(Font font, int type) {
 		return new Font(font.getName(),type,font.getSize());
 	}
-	
+
+	private void applyFilter(JTextField field, boolean setSearchTextOnNull) {
+		String filter = field.getText().toUpperCase();
+		if ((!filter.equals(currentFilter)) || currentFilter.isEmpty()) {
+			if (filter.isEmpty() || filter.equals(SEARCH_TEXT) || filter == null) {
+				if (setSearchTextOnNull) {
+					field.setForeground(Color.GRAY);
+					field.setFont(setFontFace(field.getFont(),Font.ITALIC));
+					field.setText(SEARCH_TEXT);
+				}
+				btnNew.setVisible(newButtonVisible);
+				currentFilter = "";
+				parentGUI.applyFilter(null);
+			}
+			else {
+				btnNew.setVisible(false);
+				currentFilter = filter;
+				parentGUI.applyFilter(filter);
+			}
+		}
+	}
+
 }
