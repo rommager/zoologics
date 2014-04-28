@@ -15,9 +15,13 @@ public class Vaccine implements Serializable {
 	}
 
 	public Vaccine(int vaccineID, String vaccineName) {
-		this();
-		this.vaccineID = vaccineID;
+		super();
+		setVaccineID(vaccineID);
 		this.vaccineName = vaccineName;
+	}
+	
+	public Object[] getVaccinePanelRow() {
+		return new Object[] {vaccineID, vaccineName};
 	}
 	
 	public String toString() {

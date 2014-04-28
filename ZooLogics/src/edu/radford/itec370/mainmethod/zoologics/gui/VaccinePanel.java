@@ -2,6 +2,7 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,94 +12,74 @@ import java.util.Date;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
-public class VaccinePanel extends JFrame implements Navigable{
+public class VaccinePanel extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = -3966249468484312613L; 
+	private static final String[] COLUMN_NAMES = new String[] {"VaccineID","Vaccine Name"};
 	private ArrayList<Vaccine> vaccines;
 	private int index = 0;
 	
-	private JTextField txtVaccineID;
-	private JTextField txtName;
-	private JTextField txtDosage;
-	private JTextField txtDueAt;
+	DefaultTableModel model;
+	JTable table;
 	
-    
 	public static void main(String[] args) {
-		
-		VaccinePanel panel = new VaccinePanel();
+		ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
+		vaccines.add(new Vaccine(92001, "Ivomec"));
+		vaccines.add(new Vaccine(92002, "Rabies"));
+		vaccines.add(new Vaccine(92003, "Dewormer"));
 
+		VaccinePanel panel = new VaccinePanel(vaccines);
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		panel.setVaccines(new ArrayList<Vaccine>());
-//		panel.getVaccines().add(
-//				new Vaccine("1001", "Ivomec", "50ML", true, new Date()));
-//		panel.getVaccines().add(
-//				new Vaccine("1002", "Rabies", "50ML", true, new Date()));
-//		panel.getVaccines().add(
-//				new Vaccine("1003", "Dewormer", "100ML", true, new Date()));
-
 	}
 
-	public VaccinePanel() {
+	private VaccinePanel() {
+		super();
+	}
+	
+	public VaccinePanel(ArrayList<Vaccine> vaccines) {
+		this();
+		this.vaccines = vaccines;
+		buildGUI();
+		refreshGUI();
+	}
+	
+	public void buildGUI() {
+		// set up JFrame
 		setIconImage(Application.getAppImage());
-		setTitle(Application.getAppName() + " Vaccination and Regiments");
-		this.setSize(new Dimension(800, 480));
-		getContentPane().setLayout(null);
-		// add navigator bar in south window area
-		NavigatorBar navPanel = new NavigatorBar(this);
-//		navPanel.setNewRecordVisible(false);
-//		navPanel.setSearchBoxVisible(false);
-		navPanel.setBounds(0, 415, 784, 30);
-		getContentPane().add(navPanel, BorderLayout.SOUTH);
+		setTitle(Application.getAppName() + " - Vaccines");
+		this.setSize(new Dimension(640, 480));
+		getContentPane().setLayout(new BorderLayout());
 
-		JLabel lblNewLabel = new JLabel("Name");
-		lblNewLabel.setBounds(32, 85, 46, 14);
-		getContentPane().add(lblNewLabel);
-
-		txtVaccineID = new JTextField();
-		txtVaccineID.setBounds(109, 29, 86, 20);
-		getContentPane().add(txtVaccineID);
-		txtVaccineID.setColumns(10);
-
-		txtName = new JTextField();
-		txtName.setBounds(109, 82, 86, 20);
-		getContentPane().add(txtName);
-		txtName.setColumns(10);
-
-		txtDosage = new JTextField();
-		txtDosage.setBounds(109, 138, 86, 20);
-		getContentPane().add(txtDosage);
-		txtDosage.setColumns(10);
-
-		txtDueAt = new JTextField();
-		txtDueAt.setBounds(109, 203, 86, 20);
-		getContentPane().add(txtDueAt);
-		txtDueAt.setColumns(10);
-
-		JButton btnNewButton = new JButton("Search");
-		btnNewButton.setBounds(678, 315, 89, 23);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		getContentPane().add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("Save");
-		btnNewButton_1.setBounds(678, 349, 89, 23);
-		getContentPane().add(btnNewButton_1);
-
+		// create center panel
+		model = new DefaultTableModel(null, COLUMN_NAMES);
+		table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
+		getContentPane().add(scrollPane,BorderLayout.CENTER);
+		
+		// create button panel
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JButton btnAdd = new JButton("Add New Vaccine");
+		btnAdd.addActionListener(this);
+		buttonPanel.add(btnAdd);
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(this);
+		buttonPanel.add(btnSave);
 		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(678, 383, 89, 23);
-		getContentPane().add(btnClose);
-
-		ButtonGroup group = new ButtonGroup();
+		btnClose.addActionListener(this);
+		buttonPanel.add(btnClose);
+		getContentPane().add(buttonPanel,BorderLayout.SOUTH);
 		
 	}
 	public Vaccine getVaccine() {
@@ -111,42 +92,35 @@ public class VaccinePanel extends JFrame implements Navigable{
 
 	public void setVaccines(ArrayList<Vaccine> vaccines) {
 		this.vaccines = vaccines;
-
+		refreshGUI();
 	}
-
-	@Override
-	public void firstRecord() {
-
+	
+	public void refreshGUI() {
+		model.setDataVector(null, COLUMN_NAMES);
+		for (Vaccine vaccine : vaccines) {
+			model.addRow(vaccine.getVaccinePanelRow());
+		}
+	}
+	
+	public void save() {
 		
 	}
 
 	@Override
-	public void previousRecord() {
-
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
 		
-	}
-
-	@Override
-	public void nextRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void lastRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void newRecord() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void applyFilter(String filter) {
-		// TODO Auto-generated method stub
+		if (command.equals("Add New Vaccine")) {
+			Vaccine newVaccine = new Vaccine();
+			vaccines.add(newVaccine);
+			refreshGUI();
+		}
+		else if (command.equals("Save")) {
+			
+		}
+		else if (command.equals("Close")) {
+			
+		}
 		
 	}
 
