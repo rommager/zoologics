@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JPanel;
+
+import edu.radford.itec370.mainmethod.zoologics.gui.TaskPanel;
+
 public class Task implements Serializable {
 
 	// public constants
@@ -30,7 +34,7 @@ public class Task implements Serializable {
 	protected Date dueDate;
 	protected Date completedDate;
 	protected Staff completedBy;
-
+	
 	private RecurrenceSchedule recurrences;
 
 	private ArrayList<Task> parentTaskList;
@@ -281,5 +285,9 @@ public class Task implements Serializable {
 		this.taskID = taskID;
 		if (taskID >= taskIDCounter)
 			taskIDCounter = taskID + 1;
+	}
+
+	public JPanel getPanel() {
+		return new TaskPanel(this);
 	}
 }

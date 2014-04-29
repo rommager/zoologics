@@ -19,9 +19,13 @@ public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -1052426461587559703L;
 	protected Task task;
 
+	protected JPanel detailPanel;
+	protected JPanel buttonPanel;
+	
 	protected JTextField txtTaskName;
 	protected JTextField txtDueDate;
 	protected JTextPane txtNotes;
+	protected JScrollPane scrollPane;
 	protected JTextField txtCompletedBy;
 	protected JTextField txtCompletedDate;
 
@@ -38,21 +42,22 @@ public class TaskPanel extends JPanel {
 	protected TaskPanel() {
 		super();
 		setLayout(new BorderLayout());
-		
-		JPanel detailPanel = new JPanel();
+		setPreferredSize(new Dimension(580,250));
+		setSize(getPreferredSize());
+		detailPanel = new JPanel();
 		detailPanel.setLayout(null);
 		detailPanel.setPreferredSize(new Dimension(580, 250));
 		
 		lblTaskName = new JLabel("Task Name");
-		lblTaskName.setBounds(10, 11, 70, 22);
+		lblTaskName.setBounds(10, 11, 122, 22);
 		detailPanel.add(lblTaskName);
 
 		txtTaskName = new JTextField();
-		txtTaskName.setBounds(133, 12, 202, 20);
+		txtTaskName.setBounds(132, 11, 202, 20);
 		detailPanel.add(txtTaskName);
 
 		lblDueDate = new JLabel("Due Date");
-		lblDueDate.setBounds(345, 14, 96, 14);
+		lblDueDate.setBounds(345, 11, 96, 22);
 		detailPanel.add(lblDueDate);
 
 		txtDueDate = new JTextField();
@@ -60,31 +65,31 @@ public class TaskPanel extends JPanel {
 		detailPanel.add(txtDueDate);
 
 		lblNotes = new JLabel("Notes");
-		lblNotes.setBounds(10, 76, 113, 14);
+		lblNotes.setBounds(10, 77, 132, 22);
 		detailPanel.add(lblNotes);
 
 		txtNotes = new JTextPane();
-		JScrollPane scrollPane = new JScrollPane(txtNotes);
+		scrollPane = new JScrollPane(txtNotes);
 		scrollPane.setBounds(10, 101, 560, 101);
 		detailPanel.add(scrollPane);
 
 		txtCompletedBy = new JTextField();
-		txtCompletedBy.setBounds(132, 45, 203, 20);
+		txtCompletedBy.setBounds(132, 44, 203, 20);
 		detailPanel.add(txtCompletedBy);
 
 		lblCompletedBy = new JLabel("Completed by");
-		lblCompletedBy.setBounds(10, 44, 113, 22);
+		lblCompletedBy.setBounds(10, 44, 122, 22);
 		detailPanel.add(lblCompletedBy);
 
 		lblCompletionDate = new JLabel("Completion Date");
-		lblCompletionDate.setBounds(345, 48, 96, 14);
+		lblCompletionDate.setBounds(345, 44, 96, 22);
 		detailPanel.add(lblCompletionDate);
 
 		txtCompletedDate = new JTextField();
 		txtCompletedDate.setBounds(451, 44, 119, 20);
 		detailPanel.add(txtCompletedDate);
 
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		btnCompleteTask = new JButton("Complete Task");
 		//btnCompleteTask.setBounds(211, 213, 120, 23);
 		buttonPanel.add(btnCompleteTask);
@@ -112,7 +117,6 @@ public class TaskPanel extends JPanel {
 
 	public static void main(String[] args) {
 		Task newTask = new Task("Reminder to clean toilets", "11/17/2011", null);
-
 		TaskPanel taskPanel = new TaskPanel(newTask);
 		GUITester.launchTestFrame(taskPanel);
 	}

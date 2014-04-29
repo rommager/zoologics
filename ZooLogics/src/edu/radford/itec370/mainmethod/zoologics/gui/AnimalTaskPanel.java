@@ -1,14 +1,12 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
-import java.util.ArrayList;
+
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
-import edu.radford.itec370.mainmethod.zoologics.Vaccination;
-
-	
-
+import edu.radford.itec370.mainmethod.zoologics.AnimalTask;
 
 public class AnimalTaskPanel extends TaskPanel {
 
@@ -20,42 +18,39 @@ public class AnimalTaskPanel extends TaskPanel {
 	
 	public AnimalTaskPanel() {
 		super();
-		lblNotes.setLocation(10, 75);
-		lblDueDate.setLocation(236, 46);
-		txtTaskName.setLocation(90, 43);
-		txtDueDate.setLocation(342, 43);
-		txtNotes.setLocation(10, 100);
-		txtCompletedDate.setLocation(342, 225);
-		txtCompletedBy.setLocation(90, 225);
-		btnDismiss.setLocation(245, 276);
-		btnCancel.setLocation(359, 276);
-		btnCompleteTask.setBounds(90, 276, 130, 23);
-		btnCompleteTask.setText("Administer Vaccine");
-		lblCompletionDate.setBounds(236, 228, 106, 14);
-		lblCompletedBy.setBounds(10, 224, 89, 22);
-		lblTaskName.setLocation(10, 42);
-
-		lblCompletionDate.setText("Administer Date");
-		lblCompletedBy.setText("Administered by");
-		lblTaskName.setText("Vaccine");				
+		lblTaskName.setSize(122, 22);
+		setPreferredSize(new Dimension(580,283));
+		setSize(getPreferredSize());
+		
+		scrollPane.setLocation(10, 134);
+		txtNotes.setLocation(12, 140);
+		lblNotes.setLocation(10, 110);
+		txtCompletedDate.setLocation(451, 77);
+		lblCompletionDate.setLocation(345, 77);
+		txtDueDate.setLocation(451, 44);
+		lblDueDate.setLocation(345, 44);
+		txtCompletedBy.setLocation(132, 77);
+		lblCompletedBy.setLocation(10, 77);
+		txtTaskName.setLocation(132, 44);
+		lblTaskName.setLocation(10, 44);
 		
 		lblAnimalName = new JLabel("Animal Name");
-		lblAnimalName.setBounds(10, 17, 70, 14);
-		add(lblAnimalName);
+		lblAnimalName.setBounds(10, 11, 122, 22);
+		detailPanel.add(lblAnimalName);
 		
 		txtAnimalName = new JTextField();
-		txtAnimalName.setBounds(90, 12, 244, 20);
-		add(txtAnimalName);
+		txtAnimalName.setBounds(132, 11, 202, 20);
+		detailPanel.add(txtAnimalName);
 	}
 	
-	public AnimalTaskPanel(Vaccination vaccination) {
+	public AnimalTaskPanel(AnimalTask animalTask) {
 		this();
-		this.task = vaccination;
-		
+		this.task = animalTask;
 	}
 	
 	public static void main(String[] args) {
-		AnimalTaskPanel vacTaskPanel = new AnimalTaskPanel();
+		AnimalTaskPanel panel = new AnimalTaskPanel();
+		GUITester.launchTestFrame(panel);
 	}
 
 	public Animal getAnimal() {
@@ -66,11 +61,19 @@ public class AnimalTaskPanel extends TaskPanel {
 		this.animal = animal;
 	}
 	
+	public AnimalTask getAnimalTask() {
+		return (AnimalTask) task;
+	}
+	
+	@Override
 	public void updateGUI() {
+		txtAnimalName.setText(animal.getName());
 		super.updateGUI();
 	}
 	
+	@Override
 	public void save() {
+//		animal = txtAnimalName.getText();  //TODO Fix this
 		super.save();
 	}
 }
