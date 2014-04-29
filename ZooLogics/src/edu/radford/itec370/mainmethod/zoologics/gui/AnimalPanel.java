@@ -420,7 +420,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			this.dirty = dirty;
 			btnSave.setEnabled(dirty);
 			if (dirty)
-				this.setTitle(WINDOW_TITLE + " *");
+				this.setTitle(" * " + WINDOW_TITLE);
 			else
 				this.setTitle(WINDOW_TITLE);
 
