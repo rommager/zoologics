@@ -1,10 +1,14 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.text.ParseException;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JPanel;
+import java.io.File;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
@@ -15,16 +19,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.Font;
 
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
@@ -37,11 +41,6 @@ import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
-
-import java.awt.Font;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class AnimalPanel extends JFrame implements Navigable, DocumentListener, ActionListener, WindowListener  {
 
