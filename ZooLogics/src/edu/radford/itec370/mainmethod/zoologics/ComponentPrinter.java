@@ -8,6 +8,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.text.MessageFormat;
+
+import javax.print.attribute.HashPrintRequestAttributeSet;
 
 public class ComponentPrinter implements Printable {
 
@@ -22,6 +26,28 @@ public class ComponentPrinter implements Printable {
 		this.comp = comp;
 	}
 
+	public static void preview(Component comp) {
+		ComponentPrinter printable = new ComponentPrinter(comp);
+		HashPrintRequestAttributeSet att = new HashPrintRequestAttributeSet();
+		PrinterJob pj = PrinterJob.getPrinterJob();
+		new PrintPreview(printable, pj.getPageFormat(att));
+	}
+	
+	public static void runPrintJob(Component comp) {
+		ComponentPrinter printable = new ComponentPrinter(comp);
+		PrinterJob job = PrinterJob.getPrinterJob();
+		job.setPrintable(printable);
+		boolean doPrint = job.printDialog();
+		if (doPrint) {
+		    try {
+		        job.print();
+		    } catch (PrinterException e) {
+		        // The job did not successfully
+		        // complete
+		    }
+		}
+	}
+	
 	public int print(Graphics g, PageFormat pf, int pageNumber)
 			throws PrinterException {
 		if (pageNumber > 0) {

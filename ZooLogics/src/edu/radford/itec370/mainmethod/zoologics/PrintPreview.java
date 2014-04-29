@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 import javax.swing.event.*;
 
@@ -36,9 +37,9 @@ class PrintPreview extends JFrame implements ActionListener, ChangeListener, Ite
 		super("Print Preview");
 		this.pg = new Pageable() {
 			public int getNumberOfPages() {
-				Graphics g = new java.awt.image.BufferedImage(2,2,java.awt.image.BufferedImage.TYPE_INT_RGB).getGraphics();
-				int n=0;
-				try { while(pr.print(g, p, n) == pr.PAGE_EXISTS) n++; }
+				Graphics g = new BufferedImage(2,2,BufferedImage.TYPE_INT_RGB).getGraphics();
+				int n = 0;
+				try { while(pr.print(g, p, n) == Printable.PAGE_EXISTS) n++; }
 				catch(Exception ex) {ex.printStackTrace();}
 				return n;
 			}
@@ -49,12 +50,10 @@ class PrintPreview extends JFrame implements ActionListener, ChangeListener, Ite
 	}
 	private void createPreview() {
 		page = new Page[pg.getNumberOfPages()];
-		FlowLayout fl = new FlowLayout();
 		PageFormat pf = pg.getPageFormat(0);
 		Dimension size = new Dimension((int)pf.getPaper().getWidth(), (int)pf.getPaper().getHeight());
 		if(pf.getOrientation() != PageFormat.PORTRAIT)
 			size = new Dimension(size.height, size.width);
-		JPanel temp = null;
 		for(int i=0; i<page.length; i++) {
 			jcb.addItem(""+(i+1));
 			page[i] = new Page(i, size);
@@ -189,7 +188,7 @@ class PrintPreview extends JFrame implements ActionListener, ChangeListener, Ite
 		} 
 		public void refreshScale() { 
 			if(scale != 1.0)
-				this.setIcon(new ImageIcon(bi.getScaledInstance((int)(size.width*scale), (int)(size.height*scale), bi.SCALE_FAST)));
+				this.setIcon(new ImageIcon(bi.getScaledInstance((int)(size.width*scale), (int)(size.height*scale), BufferedImage.SCALE_FAST)));
 			else 
 				this.setIcon(new ImageIcon(bi));
 			this.validate();

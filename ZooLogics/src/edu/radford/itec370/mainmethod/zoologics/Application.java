@@ -21,8 +21,8 @@ public class Application implements Runnable {
 	private final static String APPLICATION_NAME = "ZooLogics";
 	private final static String ICON_FILE = "z_icon.png";
 	private final static String VERSION = "0.4 alpha";
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
-			"MM/dd/yyyy");
+	public static final String DELIMITER = "|";
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	// operating Application variables
 	private Staff currentUser;
@@ -114,13 +114,13 @@ public class Application implements Runnable {
 		return dateFormat.format(dateIn);
 	}
 		
-	public static Date parseDate(String stringIn) {
+	public static Date parseDate(String stringIn) throws ParseException {
 		try {
 			return dateFormat.parse(stringIn);
 		} catch (ParseException e) {
 			JOptionPane.showMessageDialog(null, "'" + stringIn + "' is not a valid date.\n\nPlease try again", "Date Entry Error", JOptionPane.ERROR_MESSAGE);
-		}
-		return null;
+			throw e;
+		}		
 	}
 	
 	public ArrayList<Animal> getAnimals() {
@@ -219,21 +219,5 @@ public class Application implements Runnable {
 	public static String getVersion() {
 		return VERSION;
 	}
-	
-	public static void runPrintJob(Component comp) {
-		ComponentPrinter printable = new ComponentPrinter(comp);
-		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPrintable(printable);
-		boolean doPrint = job.printDialog();
-		if (doPrint) {
-		    try {
-		        job.print();
-		    } catch (PrinterException e) {
-		        // The job did not successfully
-		        // complete
-		    }
-		}
-	}
-
 	
 }

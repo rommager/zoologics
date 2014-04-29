@@ -155,7 +155,8 @@ public class NavigatorBar extends JPanel implements FocusListener {
 	public void updateRecordCount(int index, int total) {
 		if (total == 0)
 			lblRecordCount.setText("  0 of 0  ");
-		lblRecordCount.setText("   " + Integer.toString(index) + " of " + Integer.toString(total) + "   ");
+		else
+			lblRecordCount.setText("   " + Integer.toString(index) + " of " + Integer.toString(total) + "   ");
 	}
 
 	public Navigable getParentGUI() {

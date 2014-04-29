@@ -14,9 +14,11 @@ import javax.swing.JTable;
 
 public class Animal implements Printable, Serializable {
 
+	// Constants and static counters
 	private static final long serialVersionUID = 5761796477851733790L;
 	private static int animalIDCounter = 20001;
 
+	// Class variables
 	private int animalID;
 	private String name;
 	private Species species;
@@ -30,15 +32,19 @@ public class Animal implements Printable, Serializable {
 	private String markings;
 	private String notes;
 	private String thumbnail;
+	
+	// Collections
 	private ArrayList<Task> activeTasks;
 	private ArrayList<Task> completedTasks;
 	private ArrayList<Photo> photos;
 
+	// constructors
 	public Animal() {
 		super();
 		this.animalID = animalIDCounter++;
 	}
 
+	// full constructor
 	public Animal(int animalID, String name, Species species, char sex, String father,
 			String mother, boolean identificationChip, String chipId,
 			String breed, Date dateOfBirth, String markings, String notes) {
@@ -66,6 +72,14 @@ public class Animal implements Printable, Serializable {
 
 		this.thumbnail = thumbnail;
 	}
+	
+	// IO constructor
+	public Animal(String lineIO) {
+		super();
+		StringTokenizer st = new StringTokenizer(lineIO, Application.DELIMITER);
+		name = st.nextToken();
+	}
+
 
 	public static void main(String[] args) {
 		Animal animal = new Animal(2001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "Orange with stripes", "Gentle, needs special attention","tiger.jpg");
@@ -75,10 +89,13 @@ public class Animal implements Printable, Serializable {
 		
 	
 		PrintPreview preview = new PrintPreview(animal, job.getPageFormat(att));
+		
 	}
 	
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(animalID); sb.append("|");
+		sb.append(name); sb.append("|");
 		sb.append(species.getSpeciesID()); sb.append("|");
 		sb.append(sex); sb.append("|");
 		sb.append(father); sb.append("|");
@@ -93,14 +110,6 @@ public class Animal implements Printable, Serializable {
 		
 // example output:		Puja|23400|M|3276|4358  (except it contains all the fields
 	}
-	
-	public Animal(String lineIO) {
-		super();
-		StringTokenizer st = new StringTokenizer(lineIO);
-		
-		
-	}
-
 
 	@Override
 	public int print(Graphics g, PageFormat pf, int page)
@@ -268,6 +277,14 @@ public class Animal implements Printable, Serializable {
 
 	public void setActiveTasks(ArrayList<Task> tasks) {
 		this.activeTasks = tasks;
+	}
+
+	public ArrayList<Task> getCompletedTasks() {
+		return completedTasks;
+	}
+
+	public void setCompletedTasks(ArrayList<Task> completedTasks) {
+		this.completedTasks = completedTasks;
 	}
 
 }

@@ -1,5 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,14 +8,12 @@ import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
+import edu.radford.itec370.mainmethod.zoologics.ComponentPrinter;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.JTextField;
@@ -23,28 +22,27 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import java.awt.Font;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AnimalPanel extends JFrame implements Navigable {
+public class AnimalPanel extends JFrame implements Navigable, DocumentListener  {
 
 	// constants
 	private static final long serialVersionUID = 6632886394131544115L;
@@ -52,20 +50,23 @@ public class AnimalPanel extends JFrame implements Navigable {
 	public static final String PHOTO_FOLDER = "./photos/"; 
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
 
+
 	// class variables
 	private ArrayList <Animal> allAnimals;
 	private ArrayList <Animal> filteredAnimals;
 	private int index;
+	private boolean dirty;	
+	private boolean changing;
 
 	// gui elements
 	private JPanel animalPanel;
 	private JTextField txtName;
 	private JTextField txtSpecies;
-	private JTextField txtSex;
+	private JFormattedTextField txtSex;
 	private JTextField txtFather;
 	private JTextField txtZooID;
 	private JTextField txtBreed;
-	private JTextField txtDOB;
+	private JFormattedTextField txtDOB;
 	private JTextField txtMother;
 	private JTextField txtIDNumber;
 	private JRadioButton rdbtnChipYes;
@@ -74,7 +75,8 @@ public class AnimalPanel extends JFrame implements Navigable {
 	private JTextPane txtNotes;
 	private JPanel pnlPhoto;
 	private JLabel thumbnail;
-	NavigatorBar navPanel;
+	private JButton btnSave;
+	private NavigatorBar navPanel;
 
 	// constructors
 	private AnimalPanel() {
@@ -87,6 +89,8 @@ public class AnimalPanel extends JFrame implements Navigable {
 		setIconImage(Application.getAppImage());
 		this.setSize(new Dimension(836, 480));
 		getContentPane().setLayout(new BorderLayout());
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new MyWindowListener());
 
 		// add navigator bar in south window area
 		navPanel = new NavigatorBar(this);
@@ -99,28 +103,75 @@ public class AnimalPanel extends JFrame implements Navigable {
 
 		txtName = new JTextField();
 		txtName.setBounds(121, 30, 210, 20);
+		txtName.getDocument().addDocumentListener(this);
 		animalPanel.add(txtName);
-
-		pnlPhoto = new JPanel();
-		pnlPhoto.setBounds(389, 227, 265, 179);
-		thumbnail = new JLabel();
-		thumbnail.setBounds(389, 227, 262, 179);
-		thumbnail.setSize(new Dimension(265,180));
-		animalPanel.add(pnlPhoto);
-		pnlPhoto.add(thumbnail);
-
 
 		txtSpecies = new JTextField();
 		txtSpecies.setBounds(121, 62, 210, 20);
+		txtSpecies.getDocument().addDocumentListener(this);
 		animalPanel.add(txtSpecies);
 
-		txtSex = new JTextField();
+		txtSex = new JFormattedTextField();
 		txtSex.setBounds(121, 93, 210, 20);
+		txtSex.getDocument().addDocumentListener(this);
 		animalPanel.add(txtSex);
 
 		txtFather = new JTextField();
 		txtFather.setBounds(121, 124, 210, 20);
+		txtFather.getDocument().addDocumentListener(this);
 		animalPanel.add(txtFather);
+
+		txtMarkings = new JTextPane();
+		JScrollPane scrollPane1 = new JScrollPane(txtMarkings);
+		scrollPane1.setBounds(28, 202, 303, 63);
+		txtMarkings.getDocument().addDocumentListener(this);
+		animalPanel.add(scrollPane1);
+
+		txtNotes = new JTextPane();
+		JScrollPane scrollPane2 = new JScrollPane(txtNotes);
+		scrollPane2.setBounds(28, 283, 303, 123);
+		txtNotes.getDocument().addDocumentListener(this);
+		animalPanel.add(scrollPane2);
+
+		txtZooID = new JTextField();
+		txtZooID.setBounds(484, 30, 170, 20);
+		txtZooID.setEnabled(false);
+		txtZooID.setBackground(Color.WHITE);
+		animalPanel.add(txtZooID);
+
+		txtBreed = new JTextField();
+		txtBreed.setBounds(484, 62, 170, 20);
+		txtBreed.getDocument().addDocumentListener(this);
+		animalPanel.add(txtBreed);
+
+		txtDOB = new JFormattedTextField();
+		txtDOB.setBounds(484, 93, 170, 20);
+		txtDOB.getDocument().addDocumentListener(this);
+		animalPanel.add(txtDOB);
+
+		txtMother = new JTextField();
+		txtMother.setBounds(484, 124, 170, 20);
+		txtMother.getDocument().addDocumentListener(this);
+		animalPanel.add(txtMother);
+
+		txtIDNumber = new JTextField();
+		txtIDNumber.setBounds(484, 155, 170, 20);
+		txtIDNumber.getDocument().addDocumentListener(this);
+		animalPanel.add(txtIDNumber);
+
+		rdbtnChipYes = new JRadioButton("Yes");
+		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
+		rdbtnChipYes.setBounds(122, 151, 55, 23);
+		animalPanel.add(rdbtnChipYes);
+
+		rdbtnChipNo = new JRadioButton("No");
+		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
+		rdbtnChipNo.setBounds(179, 151, 46, 23);
+		animalPanel.add(rdbtnChipNo);
+
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnChipYes);
+		group.add(rdbtnChipNo);
 
 		JLabel lblName = new JLabel("Name");
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -141,16 +192,6 @@ public class AnimalPanel extends JFrame implements Navigable {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setBounds(28, 127, 46, 14);
 		animalPanel.add(lblNewLabel);
-
-		txtMarkings = new JTextPane();
-		JScrollPane scrollPane1 = new JScrollPane(txtMarkings);
-		scrollPane1.setBounds(28, 202, 303, 63);
-		animalPanel.add(scrollPane1);
-
-		txtNotes = new JTextPane();
-		JScrollPane scrollPane2 = new JScrollPane(txtNotes);
-		scrollPane2.setBounds(28, 283, 303, 123);
-		animalPanel.add(scrollPane2);
 
 		JLabel lblDescriptiveMarkings = new JLabel("Descriptive Markings");
 		lblDescriptiveMarkings.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -187,54 +228,23 @@ public class AnimalPanel extends JFrame implements Navigable {
 		lblNewLabel_5.setBounds(389, 158, 61, 14);
 		animalPanel.add(lblNewLabel_5);
 
-		rdbtnChipYes = new JRadioButton("Yes");
-		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
-		rdbtnChipYes.setBounds(122, 151, 55, 23);
-		animalPanel.add(rdbtnChipYes);
-
-		rdbtnChipNo = new JRadioButton("No");
-		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
-		rdbtnChipNo.setBounds(179, 151, 46, 23);
-		animalPanel.add(rdbtnChipNo);
-
-		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnChipYes);
-		group.add(rdbtnChipNo);
-
 		JLabel lblIdChip = new JLabel("Tattoo or Chip?");
 		lblIdChip.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblIdChip.setBounds(28, 155, 102, 14);
 		animalPanel.add(lblIdChip);
 
-		txtZooID = new JTextField();
-		txtZooID.setBounds(484, 30, 170, 20);
-		animalPanel.add(txtZooID);
-		txtZooID.setColumns(10);
-
-		txtBreed = new JTextField();
-		txtBreed.setBounds(484, 62, 170, 20);
-		animalPanel.add(txtBreed);
-		txtBreed.setColumns(10);
-
-		txtDOB = new JTextField();
-		txtDOB.setBounds(484, 93, 170, 20);
-		animalPanel.add(txtDOB);
-		txtDOB.setColumns(10);
-
-		txtMother = new JTextField();
-		txtMother.setBounds(484, 124, 170, 20);
-		animalPanel.add(txtMother);
-		txtMother.setColumns(10);
-
-		txtIDNumber = new JTextField();
-		txtIDNumber.setBounds(484, 155, 170, 20);
-		animalPanel.add(txtIDNumber);
-		txtIDNumber.setColumns(10);
-
 		JLabel lblPhoto = new JLabel("Photo");
 		lblPhoto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPhoto.setBounds(389, 202, 46, 14);
 		animalPanel.add(lblPhoto);
+
+		pnlPhoto = new JPanel();
+		pnlPhoto.setBounds(389, 227, 265, 179);
+		thumbnail = new JLabel();
+		thumbnail.setBounds(389, 227, 262, 179);
+		thumbnail.setSize(new Dimension(265,180));
+		animalPanel.add(pnlPhoto);
+		pnlPhoto.add(thumbnail);
 
 		getContentPane().add(animalPanel, BorderLayout.CENTER);
 
@@ -243,17 +253,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 		buttonPanel.setPreferredSize(new Dimension(160,-1));
 		buttonPanel.setLayout(null);
 
-		/*		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(678, 315, 89, 23);
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		animalPanel.add(btnSearch);
-		 */
-
 		JButton btnHistory = new JButton("Vaccination History");
-		//btnHistory.setBounds(664, 315, 146, 23);
 		btnHistory.setBounds(5, 315, 146, 23);
 		btnHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -262,7 +262,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 		});
 		buttonPanel.add(btnHistory);
 
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				save();
@@ -274,9 +274,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 		JButton btnClose = new JButton("Close");
 		btnClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JButton caller = (JButton) e.getSource();				
-				JFrame caller2 = (JFrame) caller.getParent().getParent().getParent().getParent().getParent();
-				caller2.dispose();
+				closeWindow();
 			}
 		});
 		btnClose.setBounds(5, 383, 146, 23);
@@ -302,6 +300,7 @@ public class AnimalPanel extends JFrame implements Navigable {
 	}
 
 	public void updateGUI() {
+		changing = true;
 		if (filteredAnimals.size() == 0)
 			animalPanel.setVisible(false);
 		else
@@ -324,7 +323,8 @@ public class AnimalPanel extends JFrame implements Navigable {
 			this.txtIDNumber.setText(getAnimal().getChipId());
 			this.txtMarkings.setText(getAnimal().getMarkings());
 			this.txtNotes.setText(getAnimal().getNotes());
-			// TODO Add Date of birth
+			if (getAnimal().getDateOfBirth() != null)
+				this.txtDOB.setText(Application.formatDateToString(getAnimal().getDateOfBirth()));
 			if(getAnimal().isIdenficationChip()){
 				this.rdbtnChipYes.setSelected(true);
 			}
@@ -334,9 +334,11 @@ public class AnimalPanel extends JFrame implements Navigable {
 			this.setThumbnail(getAnimal().getThumbnail());
 		}
 		updateRecordCount();
+		setDirty(false);
+		changing = false;
 	}
 
-	public void save() {
+	public boolean save() {
 		try {
 			Animal a = getAnimal();
 			a.setName(txtName.getText());
@@ -356,13 +358,18 @@ public class AnimalPanel extends JFrame implements Navigable {
 				a.setIdenficationChip(true);
 			else
 				a.setIdenficationChip(false);
+			a.setDateOfBirth(Application.parseDate(txtDOB.getText()));
 			updateGUI();
+			return true;
 		}
 		catch (IllegalArgumentException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		catch (ParseException e) {
+			return false;
 		}
 	}
-
 
 	// setters and getters 
 	public Animal getAnimal() {
@@ -392,6 +399,35 @@ public class AnimalPanel extends JFrame implements Navigable {
 
 	}
 
+	private void setDirty(boolean dirty) {
+		if (this.dirty != dirty) {
+			this.dirty = dirty;
+			btnSave.setEnabled(dirty);
+			if (dirty)
+				this.setTitle(WINDOW_TITLE + " *");
+			else
+				this.setTitle(WINDOW_TITLE);
+		}
+	}
+
+	private boolean validated() {
+		if (dirty) {
+			int n = JOptionPane.showConfirmDialog(
+					this, 
+					"This record has been changed.  Would you like to save?",
+					"Record Changed",
+					JOptionPane.YES_NO_CANCEL_OPTION);
+			if (n == JOptionPane.YES_OPTION)
+				return save();
+			else if (n == JOptionPane.NO_OPTION)
+				return true;
+			else
+				return false;
+		}
+		else
+			return true;
+	}
+
 	public ArrayList<Animal> getAnimals() {
 		return filteredAnimals;
 	}
@@ -414,67 +450,83 @@ public class AnimalPanel extends JFrame implements Navigable {
 	// interface implementations
 	@Override
 	public void firstRecord() {
-		index = 0;
-		updateGUI();
+		if (index != 0) {
+			if (validated()) {
+				index = 0;
+				updateGUI();
+			}
+		}
 	}
 
 	@Override
 	public void previousRecord() {
 		if (index > 0) {
-			index--;
-			updateGUI();
+			if (validated()) {
+				index--;
+				updateGUI();
+			}
 		}
 	}
 
 	@Override
 	public void nextRecord() {
-		if (index < filteredAnimals.size()-1) {
-			index++;
-			updateGUI();
+		if (index < filteredAnimals.size() - 1) {
+			if (validated()) {
+				index++;
+				updateGUI();
+			}
 		}
 	}
 
 	@Override
 	public void lastRecord() {
-		index = filteredAnimals.size()-1;
-		updateGUI();
+		if (index != filteredAnimals.size() - 1) {
+			if (validated()) {
+				index = filteredAnimals.size() - 1;
+				updateGUI();
+			}
+		}
 	}
 
 	@Override
 	public void newRecord() {
-		Animal newAnimal = new Animal();
-		filteredAnimals.add(newAnimal);
-		index = filteredAnimals.indexOf(newAnimal);
-		updateGUI();
+		if (validated()) {
+			Animal newAnimal = new Animal();
+			filteredAnimals.add(newAnimal);
+			index = filteredAnimals.indexOf(newAnimal);
+			updateGUI();
+		}
 	}
 
 	@Override
 	public void applyFilter(String filter) {
-		if (filter == null) {
-			if (filteredAnimals != allAnimals) {
-				if (filteredAnimals.size() != 0)
-					index = allAnimals.indexOf(filteredAnimals.get(index));
-				else
-					index = 0;
-				filteredAnimals = allAnimals;
+		if (validated()) {
+			if (filter == null) {
+				if (filteredAnimals != allAnimals) {
+					if (filteredAnimals.size() != 0)
+						index = allAnimals.indexOf(filteredAnimals.get(index));
+					else
+						index = 0;
+					filteredAnimals = allAnimals;
+					updateGUI();
+				}
+			}
+			else {
+				index = 0;
+				filteredAnimals = new ArrayList<Animal>();
+				for (Animal animal : allAnimals) {
+					if (animal.isVisibleWithFilter(filter))
+						filteredAnimals.add(animal);
+				}
 				updateGUI();
 			}
-		}
-		else {
-			index = 0;
-			filteredAnimals = new ArrayList<Animal>();
-			for (Animal animal : allAnimals) {
-				if (animal.isVisibleWithFilter(filter))
-					filteredAnimals.add(animal);
-			}
-			updateGUI();
 		}
 	}
 
 	public void print() {
 		Color color = animalPanel.getBackground();
 		setColor(Color.WHITE);
-		Application.runPrintJob(animalPanel);
+		ComponentPrinter.runPrintJob(animalPanel);
 		setColor(color);
 	}
 
@@ -492,8 +544,52 @@ public class AnimalPanel extends JFrame implements Navigable {
 		animals.add(new Animal(2005, "Spots", new Species("Deer"), 'F', "unknown", "unknown", false, "", "White Tailed Deer", new Date(), "just another deer",""));
 
 		AnimalPanel panel = new AnimalPanel(animals);
-		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panel.setVisible(true);
 
 	}
+
+	@Override
+	public void changedUpdate(DocumentEvent arg0) {
+		// TODO Auto-generated method stub
+		if (!changing)
+			setDirty(true);
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent arg0) {
+		// TODO Auto-generated method stub
+		if (!changing)
+			setDirty(true);
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent arg0) {
+		// TODO Auto-generated method stub
+		if (!changing)
+			setDirty(true);
+	}
+
+	public void closeWindow() {
+		if (dirty) {
+			if (validated()) 
+				this.dispose();		
+		}
+		else
+			this.dispose();
+
+	}
+
+	class MyWindowListener implements WindowListener {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			closeWindow();
+		}
+		@Override public void windowActivated(WindowEvent e) {}
+		@Override public void windowClosed(WindowEvent e) {}
+		@Override public void windowDeactivated(WindowEvent e) {}
+		@Override public void windowDeiconified(WindowEvent e) {}
+		@Override public void windowIconified(WindowEvent e) {}
+		@Override public void windowOpened(WindowEvent e) {}
+	}	
 }
