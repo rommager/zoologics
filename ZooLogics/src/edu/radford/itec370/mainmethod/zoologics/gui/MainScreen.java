@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,18 +20,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.print.*;
-
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
 public class MainScreen extends JFrame {
 
 	// constants
 	private static final long serialVersionUID = -6514056067808688533L;
-	private static final String[] COLUMN_HEADER = new String[] {"Task Tpye", "Animal", "Description", "Due"};
-	private static final int PAGE_EXISTS = 0;
-	private static final int NO_SUCH_PAGE = 0;
-	
+	private static final String[] COLUMN_HEADER = new String[] {"Task Type", "Animal", "Description", "Due"};
+
 	// class variables
 	private Application application;
 
@@ -49,12 +43,8 @@ public class MainScreen extends JFrame {
 	private JMenuItem mntmAboutMainMethod;
 	private StatusBar statusBar;
 
-	public MainScreen(Application application) {
+	private MainScreen() {
 		super();
-		buildGUI();
-	}
-	
-	public void buildGUI() {
 		// set up JFrame properties
 		setTitle(Application.getAppName() + " Main Task Screen");
 		setIconImage(Application.getAppImage());
@@ -78,7 +68,7 @@ public class MainScreen extends JFrame {
 
 		// build button panel for center panel - this is an embedded south panel for the center panel
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		
+
 		JButton btnOpenItem = new JButton("Open");
 		buttonPanel.add(btnOpenItem);
 
@@ -89,7 +79,7 @@ public class MainScreen extends JFrame {
 		// build status bar as south panel
 		statusBar = new StatusBar();
 		getContentPane().add(statusBar,BorderLayout.SOUTH);
-		
+
 		// build menu bar
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar_1.setToolTipText("");
@@ -114,7 +104,7 @@ public class MainScreen extends JFrame {
 		mntmVaccinePanel = new JMenuItem("Vaccine Panel");
 		mntmVaccinePanel.addActionListener(new MenuListener());
 		mnFile.add(mntmVaccinePanel);
-		
+
 		mntmAdminPanel = new JMenuItem("Admin Panel");
 		mntmAdminPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmAdminPanel);
@@ -123,7 +113,7 @@ public class MainScreen extends JFrame {
 		mntmExit.setMnemonic(KeyEvent.VK_X);
 		mntmExit.addActionListener(new MenuListener());
 		mnFile.add(mntmExit);
-		
+
 		mntmPrint = new JMenuItem("Print");
 		mntmPrint.setMnemonic(KeyEvent.VK_X);
 		mntmPrint.addActionListener(new MenuListener());
@@ -137,29 +127,12 @@ public class MainScreen extends JFrame {
 		mntmAboutMainMethod.addActionListener(new MenuListener());
 		mnAbout.add(mntmAboutMainMethod);
 	}
-	
-	 public int print(Graphics g, PageFormat pf, int page)
-		      throws PrinterException {
 
-		    // We have only one page, and 'page'
-		    // is zero-based
-		    if (page > 0) {
-		         return NO_SUCH_PAGE;
-		    }
+	public MainScreen(Application application) {
+		this();
+		this.application = application;
+	}
 
-		    Graphics2D g2d = (Graphics2D)g;
-		    g2d.translate(pf.getImageableX(), pf.getImageableY());
-
-		    // Now we perform our rendering
-		    g.drawString(getName(), 100, 100);
-//		    g.drawString(getMainSceen(), 200, 100);
-		    
-
-		    // tell the caller that this page is part
-		    // of the printed document
-		    return PAGE_EXISTS;
-		  }
-		
 	public Application getApplication() {
 		return application;
 	}
@@ -181,7 +154,7 @@ public class MainScreen extends JFrame {
 				AnimalPanel animalPanel = new AnimalPanel(application.getAnimals());
 				animalPanel.setVisible(true);
 			} else if (e.getSource() == mntmAdminPanel) {
-				StaffPanel adminPanel = new StaffPanel(application.getStaffHive());
+				StaffPanel adminPanel = new StaffPanel(Application.getStaffHive());
 				adminPanel.setVisible(true);
 			} else if (e.getSource() == mntmAboutMainMethod) {
 				JOptionPane.showMessageDialog(null, 
@@ -191,7 +164,7 @@ public class MainScreen extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE,
 						Application.getAppIcon());
 			}
-			 
+
 		}
 	}
 }

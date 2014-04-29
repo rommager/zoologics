@@ -8,10 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -21,8 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.Timer;
 import javax.swing.SwingConstants;
 
 public class NavigatorBar extends JPanel implements FocusListener {
@@ -43,6 +41,7 @@ public class NavigatorBar extends JPanel implements FocusListener {
 	private JButton btnNew;
 	private JTextField txtSearch;
 	private JLabel lblDateTime;
+	private Timer clockTimer;
 
 
 	private NavigatorBar() {
@@ -139,6 +138,16 @@ public class NavigatorBar extends JPanel implements FocusListener {
 		add(lblDateTime,BorderLayout.EAST);
 
 		refresh();
+
+		int initialDelay = (60 - Calendar.getInstance().get(Calendar.SECOND)) * 1000;  // set to
+		int delay = 60000;
+		ActionListener taskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				refresh();
+			}};
+		clockTimer = new Timer(delay, taskPerformer);
+		clockTimer.setInitialDelay(initialDelay);
+		clockTimer.start();
 	}
 
 	public NavigatorBar(Navigable parentGUI){
