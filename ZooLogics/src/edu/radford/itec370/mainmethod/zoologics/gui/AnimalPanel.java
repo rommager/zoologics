@@ -36,13 +36,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.MaskFormatter;
 
 import java.awt.Font;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AnimalPanel extends JFrame implements Navigable, DocumentListener  {
+public class AnimalPanel extends JFrame implements Navigable, DocumentListener, ActionListener  {
 
 	// constants
 	private static final long serialVersionUID = 6632886394131544115L;
@@ -100,13 +101,32 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		// build animal panel		
 		animalPanel = new JPanel();
 		animalPanel.setLayout(null);
-		
+
 		txtAnimalID = new JTextField();
 		txtAnimalID.setBounds(484, 30, 170, 20);
 		txtAnimalID.setEditable(false);
 		txtAnimalID.setBackground(Color.WHITE);
 		animalPanel.add(txtAnimalID);
 
+		try {
+			txtDOB = new JFormattedTextField(Application.getDateFormat());
+			txtDOB.setBounds(484, 93, 170, 20);
+			MaskFormatter dateMask = new MaskFormatter("##/##/####");
+			dateMask.install(txtDOB);
+			txtDOB.getDocument().addDocumentListener(this);
+			animalPanel.add(txtDOB);
+
+			txtSex = new JFormattedTextField();
+			txtSex.setBounds(121, 93, 210, 20);
+			MaskFormatter sexMask = new MaskFormatter("U");
+			sexMask.setValidCharacters("FM");
+			sexMask.install(txtSex);
+			txtSex.getDocument().addDocumentListener(this);
+			animalPanel.add(txtSex);
+		}
+		catch (ParseException e) {
+
+		}
 
 		txtName = new JTextField();
 		txtName.setBounds(121, 30, 210, 20);
@@ -117,11 +137,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		txtSpecies.setBounds(121, 62, 210, 20);
 		txtSpecies.getDocument().addDocumentListener(this);
 		animalPanel.add(txtSpecies);
-
-		txtSex = new JFormattedTextField();
-		txtSex.setBounds(121, 93, 210, 20);
-		txtSex.getDocument().addDocumentListener(this);
-		animalPanel.add(txtSex);
 
 		txtFather = new JTextField();
 		txtFather.setBounds(121, 124, 210, 20);
@@ -145,11 +160,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		txtBreed.getDocument().addDocumentListener(this);
 		animalPanel.add(txtBreed);
 
-		txtDOB = new JFormattedTextField();
-		txtDOB.setBounds(484, 93, 170, 20);
-		txtDOB.getDocument().addDocumentListener(this);
-		animalPanel.add(txtDOB);
-
 		txtMother = new JTextField();
 		txtMother.setBounds(484, 124, 170, 20);
 		txtMother.getDocument().addDocumentListener(this);
@@ -163,11 +173,13 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		rdbtnChipYes = new JRadioButton("Yes");
 		rdbtnChipYes.setMnemonic(KeyEvent.VK_Y);
 		rdbtnChipYes.setBounds(122, 151, 55, 23);
+		rdbtnChipYes.addActionListener(this);
 		animalPanel.add(rdbtnChipYes);
 
 		rdbtnChipNo = new JRadioButton("No");
 		rdbtnChipNo.setMnemonic(KeyEvent.VK_N);
 		rdbtnChipNo.setBounds(179, 151, 46, 23);
+		rdbtnChipNo.addActionListener(this);
 		animalPanel.add(rdbtnChipNo);
 
 		ButtonGroup group = new ButtonGroup();
@@ -401,6 +413,9 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 	}
 
 	private void setDirty(boolean dirty) {
+		// if changing (refreshing GUI) then override dirty - it should always be false when changing!
+		if (changing)
+			dirty = false;
 		if (this.dirty != dirty) {
 			this.dirty = dirty;
 			btnSave.setEnabled(dirty);
@@ -408,6 +423,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 				this.setTitle(WINDOW_TITLE + " *");
 			else
 				this.setTitle(WINDOW_TITLE);
+
 		}
 	}
 
@@ -552,23 +568,17 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 
 	@Override
 	public void changedUpdate(DocumentEvent arg0) {
-		// TODO Auto-generated method stub
-		if (!changing)
-			setDirty(true);
+		setDirty(true);
 	}
 
 	@Override
 	public void insertUpdate(DocumentEvent arg0) {
-		// TODO Auto-generated method stub
-		if (!changing)
-			setDirty(true);
+		setDirty(true);
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent arg0) {
-		// TODO Auto-generated method stub
-		if (!changing)
-			setDirty(true);
+		setDirty(true);
 	}
 
 	public void closeWindow() {
@@ -592,5 +602,10 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		@Override public void windowDeiconified(WindowEvent e) {}
 		@Override public void windowIconified(WindowEvent e) {}
 		@Override public void windowOpened(WindowEvent e) {}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		setDirty(true);
 	}	
 }
