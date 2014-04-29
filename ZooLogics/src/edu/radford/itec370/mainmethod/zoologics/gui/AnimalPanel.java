@@ -57,7 +57,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 	private ArrayList <Animal> filteredAnimals;
 	private int index;
 	private boolean dirty;	
-	private boolean changing;
+	private boolean updating;
 
 	// gui elements
 	private JPanel animalPanel;
@@ -313,7 +313,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 	}
 
 	public void updateGUI() {
-		changing = true;
+		updating = true;
 		if (filteredAnimals.size() == 0)
 			animalPanel.setVisible(false);
 		else
@@ -348,7 +348,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 		}
 		updateRecordCount();
 		setDirty(false);
-		changing = false;
+		updating = false;
 	}
 
 	public boolean save() {
@@ -414,7 +414,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 
 	private void setDirty(boolean dirty) {
 		// if changing (refreshing GUI) then override dirty - it should always be false when changing!
-		if (changing)
+		if (updating)
 			dirty = false;
 		if (this.dirty != dirty) {
 			this.dirty = dirty;
