@@ -9,10 +9,10 @@ import java.awt.Graphics2D;
 import java.awt.print.*;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.swing.JEditorPane;
-import javax.swing.JTable;
 
-public class Animal implements Printable, Serializable {
+import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
+
+public class Animal implements Printable, Serializable, Filterable {
 
 	// Constants and static counters
 	private static final long serialVersionUID = 5761796477851733790L;
@@ -134,6 +134,7 @@ public class Animal implements Printable, Serializable {
 		return PAGE_EXISTS;
 	}
 
+	@Override
 	public boolean isVisibleWithFilter(String filter) {
 		if (filter.isEmpty() || filter == null)
 			return true;

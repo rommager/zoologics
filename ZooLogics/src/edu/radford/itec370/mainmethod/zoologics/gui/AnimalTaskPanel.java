@@ -18,7 +18,6 @@ public class AnimalTaskPanel extends TaskPanel {
 	
 	public AnimalTaskPanel() {
 		super();
-		lblTaskName.setSize(122, 22);
 		setPreferredSize(new Dimension(580,283));
 		setSize(getPreferredSize());
 		
@@ -32,6 +31,7 @@ public class AnimalTaskPanel extends TaskPanel {
 		txtCompletedBy.setLocation(132, 77);
 		lblCompletedBy.setLocation(10, 77);
 		txtTaskName.setLocation(132, 44);
+		lblTaskName.setSize(122, 22);
 		lblTaskName.setLocation(10, 44);
 		
 		lblAnimalName = new JLabel("Animal Name");
@@ -48,11 +48,6 @@ public class AnimalTaskPanel extends TaskPanel {
 		this.task = animalTask;
 	}
 	
-	public static void main(String[] args) {
-		AnimalTaskPanel panel = new AnimalTaskPanel();
-		GUITester.launchTestFrame(panel);
-	}
-
 	public Animal getAnimal() {
 		return animal;
 	}
@@ -76,4 +71,11 @@ public class AnimalTaskPanel extends TaskPanel {
 //		animal = txtAnimalName.getText();  //TODO Fix this
 		super.save();
 	}
+	
+	// testing method
+	public static void main(String[] args) {
+		AnimalTaskPanel panel = new AnimalTaskPanel();
+		GUITester.launchTestFrame(panel);
+	}
+
 }
