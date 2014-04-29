@@ -24,11 +24,11 @@ public class Task implements Serializable {
 	protected static int taskIDCounter = 40001;
 
 	protected int taskID;
+	protected int status;
 	protected String taskName;
 	protected String notes;
 	protected Date dueDate;
 	protected Date completedDate;
-	protected int status;
 	protected Staff completedBy;
 
 	private RecurrenceSchedule recurrences;

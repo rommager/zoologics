@@ -5,21 +5,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
+import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 	
 
 
-public class VaccinationTaskPanel extends TaskPanel {
-	/**
-	 * 
-	 */
+public class AnimalTaskPanel extends TaskPanel {
+
 	private static final long serialVersionUID = -3909857959125438949L;
+
 	protected JTextField txtAnimalName;
 	protected JLabel lblAnimalName;
-	private Animal currentAnimal;
-	private ArrayList<Animal> animals;
+	private Animal animal;
 	
-	public VaccinationTaskPanel() {
+	public AnimalTaskPanel() {
 		super();
 		lblNotes.setLocation(10, 75);
 		lblDueDate.setLocation(236, 46);
@@ -36,48 +35,42 @@ public class VaccinationTaskPanel extends TaskPanel {
 		lblCompletedBy.setBounds(10, 224, 89, 22);
 		lblTaskName.setLocation(10, 42);
 
-		setTitle("Vaccination");
 		lblCompletionDate.setText("Administer Date");
 		lblCompletedBy.setText("Administered by");
 		lblTaskName.setText("Vaccine");				
 		
 		lblAnimalName = new JLabel("Animal Name");
 		lblAnimalName.setBounds(10, 17, 70, 14);
-		taskPanel.add(lblAnimalName);
+		add(lblAnimalName);
 		
 		txtAnimalName = new JTextField();
 		txtAnimalName.setBounds(90, 12, 244, 20);
-		taskPanel.add(txtAnimalName);
-		txtAnimalName.setColumns(10);
+		add(txtAnimalName);
+	}
+	
+	public AnimalTaskPanel(Vaccination vaccination) {
+		this();
+		this.task = vaccination;
+		
 	}
 	
 	public static void main(String[] args) {
-		VaccinationTaskPanel vacTaskPanel = new VaccinationTaskPanel();
-		vacTaskPanel.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		vacTaskPanel.setVisible(true);
+		AnimalTaskPanel vacTaskPanel = new AnimalTaskPanel();
 	}
 
-	public Animal getCurrentAnimal() {
-		return currentAnimal;
+	public Animal getAnimal() {
+		return animal;
 	}
 
-	public void setCurrentAnimal(Animal currentAnimal) {
-		this.currentAnimal = currentAnimal;
-	}
-
-	public ArrayList<Animal> getAnimals() {
-		return animals;
-	}
-
-	public void setAnimals(ArrayList<Animal> animals) {
-		this.animals = animals;
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 	
-	public void load() {
-		
+	public void updateGUI() {
+		super.updateGUI();
 	}
 	
 	public void save() {
-		
+		super.save();
 	}
 }
