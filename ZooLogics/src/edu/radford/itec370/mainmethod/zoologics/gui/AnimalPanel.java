@@ -64,7 +64,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 	private JTextField txtSpecies;
 	private JFormattedTextField txtSex;
 	private JTextField txtFather;
-	private JTextField txtZooID;
+	private JTextField txtAnimalID;
 	private JTextField txtBreed;
 	private JFormattedTextField txtDOB;
 	private JTextField txtMother;
@@ -100,6 +100,13 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		// build animal panel		
 		animalPanel = new JPanel();
 		animalPanel.setLayout(null);
+		
+		txtAnimalID = new JTextField();
+		txtAnimalID.setBounds(484, 30, 170, 20);
+		txtAnimalID.setEditable(false);
+		txtAnimalID.setBackground(Color.WHITE);
+		animalPanel.add(txtAnimalID);
+
 
 		txtName = new JTextField();
 		txtName.setBounds(121, 30, 210, 20);
@@ -132,12 +139,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 		scrollPane2.setBounds(28, 283, 303, 123);
 		txtNotes.getDocument().addDocumentListener(this);
 		animalPanel.add(scrollPane2);
-
-		txtZooID = new JTextField();
-		txtZooID.setBounds(484, 30, 170, 20);
-		txtZooID.setEnabled(false);
-		txtZooID.setBackground(Color.WHITE);
-		animalPanel.add(txtZooID);
 
 		txtBreed = new JTextField();
 		txtBreed.setBounds(484, 62, 170, 20);
@@ -318,7 +319,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 				this.txtSex.setText("");
 			this.txtFather.setText(getAnimal().getFather());
 			this.txtMother.setText(getAnimal().getMother());
-			this.txtZooID.setText(Integer.toString(getAnimal().getAnimalID()));
+			this.txtAnimalID.setText(Integer.toString(getAnimal().getAnimalID()));
 			this.txtBreed.setText(getAnimal().getBreed());
 			this.txtIDNumber.setText(getAnimal().getChipId());
 			this.txtMarkings.setText(getAnimal().getMarkings());
@@ -349,7 +350,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener  
 				a.setSex(' ');
 			a.setFather(txtFather.getText());
 			a.setMother(txtMother.getText());
-			a.setAnimalID(Integer.parseInt(txtZooID.getText()));
+			a.setAnimalID(Integer.parseInt(txtAnimalID.getText()));
 			a.setBreed(txtBreed.getText());
 			a.setChipId(txtIDNumber.getText());
 			a.setMarkings(txtMarkings.getText());
