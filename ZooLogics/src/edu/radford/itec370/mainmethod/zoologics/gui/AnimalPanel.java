@@ -43,7 +43,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AnimalPanel extends JFrame implements Navigable, DocumentListener, ActionListener  {
+public class AnimalPanel extends JFrame implements Navigable, DocumentListener, ActionListener, WindowListener  {
 
 	// constants
 	private static final long serialVersionUID = 6632886394131544115L;
@@ -91,7 +91,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 		this.setSize(new Dimension(836, 480));
 		getContentPane().setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new MyWindowListener());
+		this.addWindowListener(this);
 
 		// add navigator bar in south window area
 		navPanel = new NavigatorBar(this);
@@ -305,12 +305,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 		updateGUI();
 	}
 
-	public void setColor(Color color) {
-		animalPanel.setBackground(color);
-		rdbtnChipYes.setBackground(color);
-		rdbtnChipNo.setBackground(color);
-		pnlPhoto.setBackground(color);
-	}
+	// methods
 
 	public void updateGUI() {
 		updating = true;
@@ -357,7 +352,7 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			a.setName(txtName.getText());
 			a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
 			if (!txtSex.getText().isEmpty())
-				a.setSex(txtSex.getText().toCharArray()[0]);   //TODO set txtSex to a max length of 1, and allow only m or f entries
+				a.setSex(txtSex.getText().toCharArray()[0]);
 			else
 				a.setSex(' ');
 			a.setFather(txtFather.getText());
@@ -384,31 +379,13 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 		}
 	}
 
-	// setters and getters 
-	public Animal getAnimal() {
-		return filteredAnimals.get(index);
-	}
-
-	public void setAnimal(Animal animal) {
-		index = filteredAnimals.indexOf(animal);
-		updateGUI();
-	}
-
-	public void setThumbnail(String fileName)  {
-		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
-		URL imageURL = null;
-		try {
-			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
-		} catch (MalformedURLException e) {
-			// do nothing
+	public void closeWindow() {
+		if (dirty) {
+			if (validated()) 
+				this.dispose();		
 		}
-
-		File newFile = new File(imageURL.getPath());
-		if (!newFile.exists())
-			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
-
-		Image image = new ImageIcon(imageURL).getImage();
-		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
+		else
+			this.dispose();
 
 	}
 
@@ -445,6 +422,47 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			return true;
 	}
 
+	// print methods
+	public void print() {
+		Color color = animalPanel.getBackground();
+		setColor(Color.WHITE);
+		ComponentPrinter.runPrintJob(animalPanel);
+		setColor(color);
+	}
+	private void setColor(Color color) {
+		animalPanel.setBackground(color);
+		rdbtnChipYes.setBackground(color);
+		rdbtnChipNo.setBackground(color);
+		pnlPhoto.setBackground(color);
+	}
+
+	// setters and getters 
+	public Animal getAnimal() {
+		return filteredAnimals.get(index);
+	}
+
+	public void setAnimal(Animal animal) {
+		index = filteredAnimals.indexOf(animal);
+		updateGUI();
+	}
+
+	public void setThumbnail(String fileName)  {
+		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
+		URL imageURL = null;
+		try {
+			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
+		} catch (MalformedURLException e) {
+			// do nothing
+		}
+
+		File newFile = new File(imageURL.getPath());
+		if (!newFile.exists())
+			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
+
+		Image image = new ImageIcon(imageURL).getImage();
+		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
+	}
+
 	public ArrayList<Animal> getAnimals() {
 		return filteredAnimals;
 	}
@@ -460,11 +478,13 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 	}
 
 	public void setIndex(int index) {
-		this.index = index;
-		updateGUI();
+		if (this.index != index) {
+			this.index = index;
+			updateGUI();
+		}
 	}
 
-	// interface implementations
+	// Navigable implementation
 	@Override
 	public void firstRecord() {
 		if (index != 0) {
@@ -474,7 +494,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			}
 		}
 	}
-
 	@Override
 	public void previousRecord() {
 		if (index > 0) {
@@ -484,7 +503,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			}
 		}
 	}
-
 	@Override
 	public void nextRecord() {
 		if (index < filteredAnimals.size() - 1) {
@@ -494,7 +512,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			}
 		}
 	}
-
 	@Override
 	public void lastRecord() {
 		if (index != filteredAnimals.size() - 1) {
@@ -504,7 +521,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			}
 		}
 	}
-
 	@Override
 	public void newRecord() {
 		if (validated()) {
@@ -514,7 +530,6 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			updateGUI();
 		}
 	}
-
 	@Override
 	public void applyFilter(String filter) {
 		if (validated()) {
@@ -539,19 +554,29 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 			}
 		}
 	}
-
-	public void print() {
-		Color color = animalPanel.getBackground();
-		setColor(Color.WHITE);
-		ComponentPrinter.runPrintJob(animalPanel);
-		setColor(color);
-	}
-
-	private void updateRecordCount() {
+	@Override
+	public void updateRecordCount() {
 		navPanel.updateRecordCount(index + 1, filteredAnimals.size());
 	}
 
-	// testing methods
+	// DocumentListener implementation (sets dirty for text boxes)
+	@Override public void changedUpdate(DocumentEvent e) {setDirty(true);}
+	@Override public void insertUpdate(DocumentEvent e) {setDirty(true);}
+	@Override public void removeUpdate(DocumentEvent e) {setDirty(true);}
+
+	// ActionListener implementation (sets dirty for radio buttons)
+	@Override public void actionPerformed(ActionEvent arg0) {setDirty(true);}
+
+	// WindowListener implementation (calls closeWindow() method when red X is clicked
+	@Override public void windowClosing(WindowEvent e) {closeWindow();}
+	@Override public void windowActivated(WindowEvent e) {}
+	@Override public void windowClosed(WindowEvent e) {}
+	@Override public void windowDeactivated(WindowEvent e) {}
+	@Override public void windowDeiconified(WindowEvent e) {}
+	@Override public void windowIconified(WindowEvent e) {}
+	@Override public void windowOpened(WindowEvent e) {}
+
+	// testing method
 	public static void main(String[] args) {
 		ArrayList<Animal> animals = new ArrayList<Animal>();
 		animals.add(new Animal(2001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "Orange with stripes", "Gentle, needs special attention","tiger.jpg"));
@@ -564,48 +589,5 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 		//panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panel.setVisible(true);
 
-	}
-
-	@Override
-	public void changedUpdate(DocumentEvent e) {
-		setDirty(true);
-	}
-
-	@Override
-	public void insertUpdate(DocumentEvent e) {
-		setDirty(true);
-	}
-
-	@Override
-	public void removeUpdate(DocumentEvent e) {
-		setDirty(true);
-	}
-
-	public void closeWindow() {
-		if (dirty) {
-			if (validated()) 
-				this.dispose();		
-		}
-		else
-			this.dispose();
-
-	}
-
-	class MyWindowListener implements WindowListener {
-		@Override
-		public void windowClosing(WindowEvent e) {
-			closeWindow();
-		}
-		@Override public void windowActivated(WindowEvent e) {}
-		@Override public void windowClosed(WindowEvent e) {}
-		@Override public void windowDeactivated(WindowEvent e) {}
-		@Override public void windowDeiconified(WindowEvent e) {}
-		@Override public void windowIconified(WindowEvent e) {}
-		@Override public void windowOpened(WindowEvent e) {}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		setDirty(true);
 	}	
 }

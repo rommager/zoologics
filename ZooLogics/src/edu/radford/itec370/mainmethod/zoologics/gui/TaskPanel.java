@@ -18,7 +18,10 @@ public class TaskPanel extends JPanel {
 
 	private static final long serialVersionUID = -1052426461587559703L;
 	protected Task task;
-
+	protected boolean editable;
+	protected boolean dirty;
+	protected boolean updating;
+	
 	protected JPanel detailPanel;
 	protected JPanel buttonPanel;
 	
@@ -128,6 +131,7 @@ public class TaskPanel extends JPanel {
 
 	public void updateGUI() {
 		if (task != null) {
+			updating = true;
 			this.txtTaskName.setText(task.getTaskName());
 			if (task.getCompletedBy() != null)
 				this.txtCompletedBy.setText(task.getCompletedBy().getDisplayName());
@@ -136,6 +140,7 @@ public class TaskPanel extends JPanel {
 			if (task.getCompletedDate() != null)
 				this.txtCompletedDate.setText(Application.formatDateToString(task.getCompletedDate()));
 			this.txtNotes.setText(task.getNotes());
+			updating = false;
 		}
 
 	}
@@ -154,4 +159,25 @@ public class TaskPanel extends JPanel {
 			task.setNotes(this.txtNotes.getText());
 		}
 	}
+	
+	public boolean isEditable() {
+		return editable;
+	}
+	
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+		updateEditable();
+	}
+	
+	protected void updateEditable() {
+		txtTaskName.setEditable(editable);
+		txtNotes.setEditable(editable);
+		txtDueDate.setEditable(editable);
+	}
+	
+	protected void completeTask() {
+		txtCompletedBy.setEditable(true);
+		txtCompletedDate.setEditable(true);
+	}
+	
 }

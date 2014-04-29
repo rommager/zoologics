@@ -200,9 +200,7 @@ public class Task implements Serializable {
 			return new String[] {taskName, Application.getDateFormat().format(completedDate), completedBy.getDisplayName()};
 		else
 			return null;
-
 	}
-
 
 	public boolean isRecurring() {
 		return (recurrences != null);

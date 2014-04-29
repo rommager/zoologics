@@ -22,7 +22,6 @@ import javax.swing.JTable;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 import edu.radford.itec370.mainmethod.zoologics.VaccinationSchedule;
-import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -190,15 +189,12 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		Species x = species.get(index);
 		this.txtSpecies.setText(x.getSpeciesName());
 	}
-
-
+	
 	@Override
 	public void firstRecord() {
 		index = 0;
 		updateGUI();
 	}
-
-
 	@Override
 	public void previousRecord() {
 		if (index > 0 && species.size() != 0) {
@@ -206,8 +202,6 @@ public class SpeciesPanel extends JDialog implements Navigable {
 			updateGUI();
 		}
 	}
-
-
 	@Override
 	public void nextRecord() {
 		if (index < species.size() && species.size() != 0) {
@@ -215,15 +209,11 @@ public class SpeciesPanel extends JDialog implements Navigable {
 			updateGUI();
 		}
 	}
-
-
 	@Override
 	public void lastRecord() {
 		index = species.size();
 		updateGUI();
 	}
-
-
 	@Override
 	public void newRecord() {
 		Species newSpecies = new Species();
@@ -231,10 +221,13 @@ public class SpeciesPanel extends JDialog implements Navigable {
 		index = species.indexOf(newSpecies);
 		updateGUI();
 	}
-
-
 	@Override
 	public void applyFilter(String filter) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void updateRecordCount() {
 		// TODO Auto-generated method stub
 		
 	}

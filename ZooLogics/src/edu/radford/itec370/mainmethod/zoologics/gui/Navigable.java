@@ -7,4 +7,5 @@ public interface Navigable {
 	public void lastRecord();
 	public void newRecord();
 	public void applyFilter(String filter);
+	public void updateRecordCount();
 }
