@@ -1,5 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
+import java.util.Date;
+
 public class Vaccination extends Task {
 
 	private static final long serialVersionUID = -3208824316987913037L;
@@ -11,11 +13,11 @@ public class Vaccination extends Task {
 	}
 	
 	public Vaccination(Animal animal, String vaccineName,
-			String dateAdministered, Staff administeredBy) {
+			Date dateAdministered, Staff administeredBy) {
 		this();
 		this.animal = animal;
 		this.taskName = vaccineName;
-		this.completedDate = Application.parseDate(dateAdministered);
+		this.completedDate = dateAdministered;
 		this.completedBy = administeredBy;
 	}
 

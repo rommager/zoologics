@@ -145,6 +145,10 @@ public class Animal implements Printable, Serializable {
 			if (species.getSpeciesName().toUpperCase().indexOf(filter) >= 0)
 				return true;
 		}
+		if (breed != null) {
+			if (breed.toUpperCase().indexOf(filter) >= 0)
+				return true;
+		}
 		return false;
 	}
 

@@ -181,8 +181,8 @@ public class MainScreen extends JFrame {
 				AnimalPanel animalPanel = new AnimalPanel(application.getAnimals());
 				animalPanel.setVisible(true);
 			} else if (e.getSource() == mntmAdminPanel) {
-//				StaffPanel adminPanel = new StaffPanel(application.getStaffHive());
-//				adminPanel.setVisible(true);
+				StaffPanel adminPanel = new StaffPanel(application.getStaffHive());
+				adminPanel.setVisible(true);
 			} else if (e.getSource() == mntmAboutMainMethod) {
 				JOptionPane.showMessageDialog(null, 
 						Application.getAppName() + " version " + Application.getVersion() + 

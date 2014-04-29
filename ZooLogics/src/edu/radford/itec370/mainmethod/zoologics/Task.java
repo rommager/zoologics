@@ -63,7 +63,12 @@ public class Task implements Serializable {
 			ArrayList<Task> parentTaskList) {
 		this();
 		this.taskName = taskName;
+		try {
 		this.dueDate = Application.parseDate(dueDate);
+		}
+		catch (ParseException e) {
+			
+		}
 		this.parentTaskList = parentTaskList;
 	}
 

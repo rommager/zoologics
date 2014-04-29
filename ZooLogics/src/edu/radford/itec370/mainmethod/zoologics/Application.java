@@ -1,9 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import java.awt.Component;
 import java.awt.Image;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
