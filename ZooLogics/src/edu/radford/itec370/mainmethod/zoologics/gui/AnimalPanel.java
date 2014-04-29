@@ -567,17 +567,17 @@ public class AnimalPanel extends JFrame implements Navigable, DocumentListener, 
 	}
 
 	@Override
-	public void changedUpdate(DocumentEvent arg0) {
+	public void changedUpdate(DocumentEvent e) {
 		setDirty(true);
 	}
 
 	@Override
-	public void insertUpdate(DocumentEvent arg0) {
+	public void insertUpdate(DocumentEvent e) {
 		setDirty(true);
 	}
 
 	@Override
-	public void removeUpdate(DocumentEvent arg0) {
+	public void removeUpdate(DocumentEvent e) {
 		setDirty(true);
 	}
 
