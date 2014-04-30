@@ -101,7 +101,7 @@ public class NavigatorBar extends JPanel implements FocusListener {
 		});
 		leftButtonPanel.add(btnLast);
 
-		btnNew = new JButton(">|*");
+		btnNew = new JButton("+");
 		btnNew.setPreferredSize(new Dimension(50,20));
 		btnNew.setToolTipText("Add New Record");
 		btnNew.addActionListener(new ActionListener() {
