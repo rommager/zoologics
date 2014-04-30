@@ -3,7 +3,8 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.util.ArrayList;
 
 public class DataIO {
-
+	public static final String DATA_FOLDER = "./data/";
+	
 	public void saveAnimal (ArrayList <Animal> animal){
 		
 	}
