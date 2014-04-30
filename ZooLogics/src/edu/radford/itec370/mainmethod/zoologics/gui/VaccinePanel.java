@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
@@ -137,4 +138,28 @@ public class VaccinePanel extends JFrame implements ActionListener {
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+	
+	class VaccineTableModel extends AbstractTableModel {
+		private final String[] COLUMN_NAMES = new String[] {"VaccineID","Vaccine Name"}; 
+	    public String getColumnName(int col) {
+	        return columnNames[col].toString();
+	    }
+	    
+	    public int getRowCount() { return rowData.length; }
+	    
+	    public int getColumnCount() { return columnNames.length; }
+	    
+	    public Object getValueAt(int row, int col) {
+	        return rowData[row][col];
+	    }
+	    
+	    public boolean isCellEditable(int row, int col)
+	        { return true; }
+	    
+	    public void setValueAt(Object value, int row, int col) {
+	        rowData[row][col] = value;
+	        fireTableCellUpdated(row, col);
+	    }
+	}
+	
 }
