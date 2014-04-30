@@ -33,17 +33,6 @@ public class VaccinePanel extends JFrame implements ActionListener {
 	DefaultTableModel model;
 	JTable table;
 	
-	public static void main(String[] args) {
-		ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
-		vaccines.add(new Vaccine(92001, "Ivomec"));
-		vaccines.add(new Vaccine(92002, "Rabies"));
-		vaccines.add(new Vaccine(92003, "Dewormer"));
-
-		VaccinePanel panel = new VaccinePanel(vaccines);
-		panel.setVisible(true);
-		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	}
-
 	private VaccinePanel() {
 		super();
 	}
@@ -103,9 +92,22 @@ public class VaccinePanel extends JFrame implements ActionListener {
 	}
 	
 	public void save() {
-		
+		int count = model.getRowCount();
+		for (int x = 0; x < count; x++) {
+			Vaccine vacc = (Vaccine) model.getValueAt(x, 1);
+			vacc.setVaccineName(model.getValueAt(x, 1).toString());
+			System.out.println(vacc);
+		}
 	}
 
+	public Vaccine findVaccine(int id) {
+		for (Vaccine vaccine : vaccines) {
+			if (vaccine.getVaccineID() == id)
+				return vaccine;
+		}
+		return null;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
@@ -113,10 +115,10 @@ public class VaccinePanel extends JFrame implements ActionListener {
 		if (command.equals("Add New Vaccine")) {
 			Vaccine newVaccine = new Vaccine();
 			vaccines.add(newVaccine);
-			refreshGUI();
+			model.addRow(newVaccine.getVaccinePanelRow());
 		}
 		else if (command.equals("Save")) {
-			
+			save();
 		}
 		else if (command.equals("Close")) {
 			
@@ -124,5 +126,15 @@ public class VaccinePanel extends JFrame implements ActionListener {
 		
 	}
 
+	// tester method
+	public static void main(String[] args) {
+		ArrayList<Vaccine> vaccines = new ArrayList<Vaccine>();
+		vaccines.add(new Vaccine(92001, "Ivomec"));
+		vaccines.add(new Vaccine(92002, "Rabies"));
+		vaccines.add(new Vaccine(92003, "Dewormer"));
 
+		VaccinePanel panel = new VaccinePanel(vaccines);
+		panel.setVisible(true);
+		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
 }
