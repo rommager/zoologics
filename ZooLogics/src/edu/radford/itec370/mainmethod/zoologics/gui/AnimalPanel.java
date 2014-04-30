@@ -44,7 +44,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	// constants
 	private static final long serialVersionUID = 6632886394131544115L;
 	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
-	public static final String PHOTO_FOLDER = "./photos/"; 
+	public static final String PHOTO_FOLDER = "./photos/";
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
     private String photoFileName;
 	// gui elements
@@ -272,29 +272,14 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		
 		final JButton btnPhotos = new JButton("Photos");
 		btnPhotos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(btnPhotos);	
 				 if (returnVal == JFileChooser.APPROVE_OPTION) {
-			            File file = fc.getSelectedFile();
-
-			    		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
-			    		URL imageURL = null;
-			    		try {
-			    			imageURL = new URL(jarLocation, PHOTO_FOLDER + file.getName());
-			    		} catch (MalformedURLException e) {
-			    			// do nothing
-			    		}
-
-			    		File newFile = new File(imageURL.getPath());
-			    		try {
-							copyFile(file, newFile);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-			            System.out.println(file.getName()+ file.getPath());
-			            updatePhoto(file.getName());
+			            File sourceFile = fc.getSelectedFile();
+			            File destinationFile = Application.getFile(PHOTO_FOLDER, sourceFile.getName());
+						Application.copyFile(sourceFile, destinationFile);
+			            updatePhoto(sourceFile.getName());
 				 }
 			}
 		});
@@ -384,18 +369,10 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	}
 
 	// setters and getters 
-	public void updatePhoto(String fileName)  {
-		photoFileName = fileName;
-		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
-		URL imageURL = null;
-		try {
-			imageURL = new URL(jarLocation, PHOTO_FOLDER + fileName);
-		} catch (MalformedURLException e) {
-			// do nothing
-		}
-
-		File newFile = new File(imageURL.getPath());
-		if (!newFile.exists())
+	public void updatePhoto(String filename)  {
+		URL imageURL = Application.getLocalFilePath(PHOTO_FOLDER, filename);
+		
+		if (Application.getFile(imageURL).exists())
 			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
 
 		Image image = new ImageIcon(imageURL).getImage();

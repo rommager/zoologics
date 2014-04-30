@@ -138,7 +138,7 @@ public class VaccinePanel extends JFrame implements ActionListener {
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	
+	/*
 	class VaccineTableModel extends AbstractTableModel {
 		private final String[] COLUMN_NAMES = new String[] {"VaccineID","Vaccine Name"}; 
 	    public String getColumnName(int col) {
@@ -160,6 +160,6 @@ public class VaccinePanel extends JFrame implements ActionListener {
 	        rowData[row][col] = value;
 	        fireTableCellUpdated(row, col);
 	    }
-	}
+	}*/
 	
 }

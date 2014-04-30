@@ -17,6 +17,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import edu.radford.itec370.mainmethod.zoologics.gui.AnimalPanel;
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
@@ -230,7 +231,7 @@ public class Application implements Runnable {
 		return application;
 	}
 
-	public static URL geLocalFilePath(String path, String filename) {
+	public static URL getLocalFilePath(String path, String filename) {
 		URL jarLocation = Application.class.getProtectionDomain().getCodeSource().getLocation();
 		URL outputURL = null;
 		try {
@@ -241,32 +242,49 @@ public class Application implements Runnable {
 		return outputURL;
 	}
 
-	public static void copyFile(File source, File dest) throws IOException {
-		if(!dest.exists()) {
-			dest.createNewFile();
-		}
-		InputStream in = null;
-		OutputStream out = null;
-		try {
-			in = new FileInputStream(source);
-			out = new FileOutputStream(dest);
-
-			// Transfer bytes from in to out
-			byte[] buf = new byte[1024];
-			int len;
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
-			}
-		}
-		finally {
-			if(in != null) {
-				in.close();
-			}
-			if(out != null) {
-				out.close();
-			}
-		}
+	public static File getFile(String path, String filename) {
+		URL url = getLocalFilePath(path, filename);
+		return(getFile(url));
 	}
 
+	public static File getFile(URL url) {
+		File newFile = new File(url.getPath());
+		if (!newFile.exists())
+			return null;
+		else
+			return newFile;
+	}
 
+	public static boolean copyFile(File source, File dest) {
+		try {
+			if(!dest.exists()) {
+				dest.createNewFile();
+			}
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				in = new FileInputStream(source);
+				out = new FileOutputStream(dest);
+
+				// Transfer bytes from in to out
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+			}
+			finally {
+				if(in != null) {
+					in.close();
+				}
+				if(out != null) {
+					out.close();
+				}
+			}
+		}
+		catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
 }
