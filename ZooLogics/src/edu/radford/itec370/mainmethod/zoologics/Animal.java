@@ -77,7 +77,9 @@ public class Animal implements Printable, Serializable, Filterable {
 	public Animal(String lineIO) {
 		super();
 		StringTokenizer st = new StringTokenizer(lineIO, Application.DELIMITER);
+		setAnimalID(Integer.parseInt(st.nextToken()));
 		name = st.nextToken();
+		
 	}
 
 
@@ -89,7 +91,7 @@ public class Animal implements Printable, Serializable, Filterable {
 		
 	
 		PrintPreview preview = new PrintPreview(animal, job.getPageFormat(att));
-		
+	
 	}
 	
 	public String getIOLine() {

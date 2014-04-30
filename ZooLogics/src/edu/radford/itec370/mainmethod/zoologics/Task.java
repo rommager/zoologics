@@ -8,9 +8,10 @@ import java.util.Date;
 
 import javax.swing.JPanel;
 
+import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
 import edu.radford.itec370.mainmethod.zoologics.gui.TaskPanel;
 
-public class Task implements Serializable {
+public class Task implements Serializable, Filterable {
 
 	// public constants
 	public static final int ACTIVE = 1;
@@ -39,7 +40,7 @@ public class Task implements Serializable {
 
 	private ArrayList<Task> parentTaskList;
 
-	protected Task() {
+	public Task() {
 		super();
 		status = Task.ACTIVE;
 		taskID = taskIDCounter++;
@@ -287,5 +288,11 @@ public class Task implements Serializable {
 
 	public JPanel getPanel() {
 		return new TaskPanel(this);
+	}
+
+	@Override
+	public boolean isVisibleWithFilter(String filter) {
+		// tasks are not filterable
+		return false;
 	}
 }
