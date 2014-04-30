@@ -65,7 +65,11 @@ public class Application implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		new LogonDialog();
+		//new LogonDialog();
+		URL url = getLocalFilePath("./photos/","leopard.jpg");
+		System.out.println(url.getFile());
+		File file = getFile("./photos/","leopard.jpg");
+		System.out.println(file);
 	}
 
 	@Override
@@ -249,10 +253,7 @@ public class Application implements Runnable {
 
 	public static File getFile(URL url) {
 		File newFile = new File(url.getPath());
-		if (!newFile.exists())
-			return null;
-		else
-			return newFile;
+		return newFile;
 	}
 
 	public static boolean copyFile(File source, File dest) {

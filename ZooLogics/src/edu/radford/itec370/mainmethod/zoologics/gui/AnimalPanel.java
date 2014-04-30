@@ -46,7 +46,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
 	public static final String PHOTO_FOLDER = "./photos/";
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
-    private String photoFileName;
+	private String photoFileName;
 	// gui elements
 	private JTextField txtName;
 	private JTextField txtSpecies;
@@ -269,18 +269,23 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		buttonPanel.add(btnClose);
 
 		getContentPane().add(buttonPanel, BorderLayout.EAST);
-		
+
 		final JButton btnPhotos = new JButton("Photos");
 		btnPhotos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(btnPhotos);	
-				 if (returnVal == JFileChooser.APPROVE_OPTION) {
-			            File sourceFile = fc.getSelectedFile();
-			            File destinationFile = Application.getFile(PHOTO_FOLDER, sourceFile.getName());
-						Application.copyFile(sourceFile, destinationFile);
-			            updatePhoto(sourceFile.getName());
-				 }
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File sourceFile = fc.getSelectedFile();
+					File destinationFile = Application.getFile(PHOTO_FOLDER, sourceFile.getName());
+					boolean success = Application.copyFile(sourceFile, destinationFile);
+					if (success) {
+						photoFileName = sourceFile.getName();
+						updatePhoto(photoFileName);}
+					else {
+						//TODO show file error dialog
+					}
+				}
 			}
 		});
 		btnPhotos.setBounds(5, 281, 145, 23);
@@ -299,31 +304,31 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	// methods
 	@Override
 	public void updateGUIElements() {
-			this.txtName.setText(getItem().getName());
-			if (getItem().getSpecies() != null)
-				this.txtSpecies.setText(getItem().getSpecies().getSpeciesName());
-			else
-				this.txtSpecies.setText("");
-			if (Character.getNumericValue(getItem().getSex()) != -1)
-				this.txtSex.setText(Character.toString(getItem().getSex()));
-			else
-				this.txtSex.setText("");
-			this.txtFather.setText(getItem().getFather());
-			this.txtMother.setText(getItem().getMother());
-			this.txtAnimalID.setText(Integer.toString(getItem().getAnimalID()));
-			this.txtBreed.setText(getItem().getBreed());
-			this.txtIDNumber.setText(getItem().getChipId());
-			this.txtMarkings.setText(getItem().getMarkings());
-			this.txtNotes.setText(getItem().getNotes());
-			if (getItem().getDateOfBirth() != null)
-				this.txtDOB.setText(Application.formatDateToString(getItem().getDateOfBirth()));
-			if(getItem().isIdenficationChip()){
-				this.rdbtnChipYes.setSelected(true);
-			}
-			else {
-				this.rdbtnChipNo.setSelected(true);
-			}
-			this.updatePhoto(getItem().getThumbnail());
+		this.txtName.setText(getItem().getName());
+		if (getItem().getSpecies() != null)
+			this.txtSpecies.setText(getItem().getSpecies().getSpeciesName());
+		else
+			this.txtSpecies.setText("");
+		if (Character.getNumericValue(getItem().getSex()) != -1)
+			this.txtSex.setText(Character.toString(getItem().getSex()));
+		else
+			this.txtSex.setText("");
+		this.txtFather.setText(getItem().getFather());
+		this.txtMother.setText(getItem().getMother());
+		this.txtAnimalID.setText(Integer.toString(getItem().getAnimalID()));
+		this.txtBreed.setText(getItem().getBreed());
+		this.txtIDNumber.setText(getItem().getChipId());
+		this.txtMarkings.setText(getItem().getMarkings());
+		this.txtNotes.setText(getItem().getNotes());
+		if (getItem().getDateOfBirth() != null)
+			this.txtDOB.setText(Application.formatDateToString(getItem().getDateOfBirth()));
+		if(getItem().isIdenficationChip()){
+			this.rdbtnChipYes.setSelected(true);
+		}
+		else {
+			this.rdbtnChipNo.setSelected(true);
+		}
+		this.updatePhoto(getItem().getThumbnail());
 	}
 
 	@Override
@@ -371,8 +376,8 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	// setters and getters 
 	public void updatePhoto(String filename)  {
 		URL imageURL = Application.getLocalFilePath(PHOTO_FOLDER, filename);
-		
-		if (Application.getFile(imageURL).exists())
+
+		if (!Application.getFile(imageURL).exists())
 			imageURL = AnimalPanel.class.getResource(DEFAULT_THUMBNAIL_FILE);
 
 		Image image = new ImageIcon(imageURL).getImage();
@@ -382,7 +387,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 
 	@Override
 	public Animal getNewInstance() {
-			return new Animal();
+		return new Animal();
 	}
 
 	// testing method
