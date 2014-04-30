@@ -73,7 +73,7 @@ public abstract class DataManagerFrame<T extends Filterable> extends JFrame impl
 		updating = false;
 	}
 
-	private void setDirty(boolean dirty) {
+	protected void setDirty(boolean dirty) {
 		// if updating (refreshing GUI) then override dirty - it should always be false when updating!
 		if (windowTitle == null)
 			windowTitle = getTitle();

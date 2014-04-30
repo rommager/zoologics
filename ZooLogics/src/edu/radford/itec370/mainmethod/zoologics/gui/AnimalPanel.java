@@ -1,12 +1,14 @@
 package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.text.ParseException;
-
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.io.File;
-
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -23,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
 
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -43,7 +46,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
 	public static final String PHOTO_FOLDER = "./photos/"; 
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
-
+    private String photoFileName;
 	// gui elements
 	private JTextField txtName;
 	private JTextField txtSpecies;
@@ -266,8 +269,65 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		buttonPanel.add(btnClose);
 
 		getContentPane().add(buttonPanel, BorderLayout.EAST);
+		
+		final JButton btnPhotos = new JButton("Photos");
+		btnPhotos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				final JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(btnPhotos);	
+				 if (returnVal == JFileChooser.APPROVE_OPTION) {
+			            File file = fc.getSelectedFile();
+
+			    		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
+			    		URL imageURL = null;
+			    		try {
+			    			imageURL = new URL(jarLocation, PHOTO_FOLDER + file.getName());
+			    		} catch (MalformedURLException e) {
+			    			// do nothing
+			    		}
+
+			    		File newFile = new File(imageURL.getPath());
+			    		try {
+							copyFile(file, newFile);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			            System.out.println(file.getName()+ file.getPath());
+			            updatePhoto(file.getName());
+				 }
+			}
+		});
+		btnPhotos.setBounds(5, 281, 145, 23);
+		buttonPanel.add(btnPhotos);
 
 	}
+	public static void copyFile(File source, File dest) throws IOException {
+		 if(!dest.exists()) {
+		  dest.createNewFile();
+		 }
+		 InputStream in = null;
+		 OutputStream out = null;
+		 try {
+		  in = new FileInputStream(source);
+		  out = new FileOutputStream(dest);
+		  
+		  // Transfer bytes from in to out
+		  byte[] buf = new byte[1024];
+		  int len;
+		  while ((len = in.read(buf)) > 0) {
+		   out.write(buf, 0, len);
+		  }
+		 }
+		 finally {
+		  if(in != null) {
+		   in.close();
+		  }
+		  if(out != null) {
+		   out.close();
+		  }
+		 }
+		}
 
 	public AnimalPanel(ArrayList<Animal> animals) {
 		this();
@@ -304,7 +364,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 			else {
 				this.rdbtnChipNo.setSelected(true);
 			}
-			this.setThumbnail(getItem().getThumbnail());
+			this.updatePhoto(getItem().getThumbnail());
 	}
 
 	@Override
@@ -329,6 +389,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 			else
 				a.setIdenficationChip(false);
 			a.setDateOfBirth(Application.parseDate(txtDOB.getText()));
+			a.setThumbnail(photoFileName);
 			updateGUI();
 			return true;
 		}
@@ -349,7 +410,8 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	}
 
 	// setters and getters 
-	public void setThumbnail(String fileName)  {
+	public void updatePhoto(String fileName)  {
+		photoFileName = fileName;
 		URL jarLocation = AnimalPanel.class.getProtectionDomain().getCodeSource().getLocation();
 		URL imageURL = null;
 		try {
@@ -364,6 +426,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 
 		Image image = new ImageIcon(imageURL).getImage();
 		thumbnail.setIcon(new ImageIcon(image.getScaledInstance(265, 180, Image.SCALE_SMOOTH)));
+		setDirty(true);
 	}
 
 	@Override
