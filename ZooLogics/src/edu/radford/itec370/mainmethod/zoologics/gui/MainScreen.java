@@ -63,8 +63,16 @@ public class MainScreen extends JFrame implements WindowListener {
 		getContentPane().add(northPanel,BorderLayout.NORTH);
 
 		// build center panel
+		
+		String[][] demoData = new String[][] {
+				{"Vaccination","Muthosh","Ivomec, 40ml","04/28/2014"},
+				{"Vaccination","Puja","Dewormer","05/02/2014"},
+				{"Vaccination","George","Ivomec, 20ml","05/04/2014"},
+				{"Vaccination","Muthosh","Rabies","05/07/2014"},
+				{"Vaccination","Muthosh","Dewormer","05/13/2014"}};
+		
 		JPanel centerPanel = new JPanel(new BorderLayout());
-		table = new JTable(new DefaultTableModel(null,COLUMN_HEADER));
+		table = new JTable(new DefaultTableModel(demoData,COLUMN_HEADER));
 		JScrollPane scrollPane = new JScrollPane(table);
 		centerPanel.add(scrollPane, BorderLayout.CENTER);
 		getContentPane().add(centerPanel);
@@ -168,7 +176,6 @@ public class MainScreen extends JFrame implements WindowListener {
 						JOptionPane.INFORMATION_MESSAGE,
 						Application.getAppIcon());
 			}
-
 		}
 	}
 

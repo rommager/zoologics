@@ -95,7 +95,6 @@ public class Application implements Runnable {
 		new DataIO<Vaccine>("Vaccines.dta").saveData(vaccines);
 		new DataIO<Animal>("Animals.dta").saveData(animals);
 		new DataIO<Task>("Tasks.dta").saveData(activeTasks);
-		
 	}
 
 	public Staff getCurrentUser() {

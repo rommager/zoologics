@@ -13,6 +13,10 @@ public class Vaccination extends AnimalTask implements DataIOable<Task> {
 	private static final long serialVersionUID = -5452735200526026986L;
 	private static final String TASK_TYPE = "Vaccination";
 	
+	public Vaccination() {
+		super();
+	}
+	
 	public Vaccination(int id) {
 		super();
 		this.taskID = id;

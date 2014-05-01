@@ -9,6 +9,7 @@ import java.net.URL;
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Species;
+import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -234,7 +235,8 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		buttonPanel.setPreferredSize(new Dimension(160,-1));
 		buttonPanel.setLayout(null);
 
-		JButton btnHistory = new JButton("Vaccination History");
+//		JButton btnHistory = new JButton("Vaccination History");
+		JButton btnHistory = new JButton("Print");
 		btnHistory.setBounds(5, 315, 146, 23);
 		btnHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -283,6 +285,20 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		});
 		btnPhotos.setBounds(5, 281, 145, 23);
 		buttonPanel.add(btnPhotos);
+		
+		JButton btnNewVaccination = new JButton("New Vaccination");
+		btnNewVaccination.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Vaccination vacc = new Vaccination();
+				TaskFrame frame = new TaskFrame(vacc);
+				Application.getRunningInstance().getAllActiveTasks().add(vacc);
+				frame.setVisible(true);
+				frame.updateGUIElements();
+				frame.pack();
+			}
+		});
+		btnNewVaccination.setBounds(5, 247, 145, 23);
+		buttonPanel.add(btnNewVaccination);
 
 	}
 
@@ -382,6 +398,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		return new Animal();
 	}
 
+	/*
 	// testing method
 	public static void main(String[] args) {
 		ArrayList<Animal> animals = new ArrayList<Animal>();
@@ -393,5 +410,6 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 
 		AnimalPanel panel = new AnimalPanel(animals);
 		panel.setVisible(true);
-	}	
+	}
+	*/	
 }

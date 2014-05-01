@@ -113,8 +113,6 @@ public class TaskPanel extends JPanel {
 	public TaskPanel(Task task) {
 		this();
 		this.task = task;
-
-		
 		updateGUI();
 	}
 
@@ -127,7 +125,6 @@ public class TaskPanel extends JPanel {
 	public Task getTask() {
 		return task;
 	}
-
 
 	public void updateGUI() {
 		if (task != null) {
@@ -142,7 +139,6 @@ public class TaskPanel extends JPanel {
 			this.txtNotes.setText(task.getNotes());
 			updating = false;
 		}
-
 	}
 
 	public void save() {

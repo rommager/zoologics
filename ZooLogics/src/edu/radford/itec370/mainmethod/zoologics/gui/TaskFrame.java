@@ -2,22 +2,15 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Task;
+import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
+@SuppressWarnings("serial")
 public class TaskFrame extends DataManagerFrame<Task> {
 
-	private static final long serialVersionUID = 6640903267745319370L;
 	private static final String WINDOW_TITLE = Application.getAppName() + "Task";
 	
 	protected int index;
@@ -39,11 +32,20 @@ public class TaskFrame extends DataManagerFrame<Task> {
 		setArrayList(tasks);
 		
 	}
-
-	@Override
-	public boolean save() {
-		// TODO write save method and return a boolean whether save was successful
-		return false;
+	
+	public TaskFrame(Vaccination task) {
+		this();
+		VaccinationPanel vPanel = new VaccinationPanel(task);
+		super.dataPanel = vPanel;
+		getContentPane().add(vPanel,BorderLayout.CENTER);
+		
+	}
+	
+	// tester method
+	public static void main(String[] args) {
+		ArrayList<Task> tasks = new ArrayList<Task>();
+		TaskFrame frame = new TaskFrame(tasks);
+		frame.setVisible(true);
 	}
 
 	@Override
@@ -53,21 +55,21 @@ public class TaskFrame extends DataManagerFrame<Task> {
 	}
 
 	@Override
+	public boolean save() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public Task getNewInstance() {
-		// This window does not implement a new button
-		return new Task();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	protected void setComponentColorForPrinting(Color color) {
-		// Do nothing because there are no weird components on this form
-	}
-
-	// tester method
-	public static void main(String[] args) {
-		ArrayList<Task> tasks = new ArrayList<Task>();
-		TaskFrame frame = new TaskFrame(tasks);
-		frame.setVisible(true);
+		// TODO Auto-generated method stub
+		
 	}
 }
 
