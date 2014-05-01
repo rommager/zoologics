@@ -186,7 +186,7 @@ public class MainScreen extends JFrame implements WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
-		application.save();
+		application.saveDataToIO();
 		System.exit(0);
 	}
 

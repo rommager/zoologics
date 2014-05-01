@@ -12,7 +12,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
 
-public class Animal implements Printable, Serializable, Filterable, Savable {
+public class Animal implements Printable, Serializable, Filterable, Savable<Animal> {
 
 	// Constants and static counters
 	private static final long serialVersionUID = 5761796477851733790L;
@@ -42,6 +42,11 @@ public class Animal implements Printable, Serializable, Filterable, Savable {
 	public Animal() {
 		super();
 		this.animalID = animalIDCounter++;
+	}
+	
+	public Animal(int id) {
+		super();
+		this.animalID = id;
 	}
 
 	// full constructor
@@ -76,14 +81,14 @@ public class Animal implements Printable, Serializable, Filterable, Savable {
 	// IO constructor
 	public Animal(String lineIO) {
 		super();
-
+		StringTokenizer st = new StringTokenizer(lineIO, Application.DELIMITER);
+		setAnimalID(Integer.parseInt(st.nextToken()));
+		name = st.nextToken();
 	}
 
 	@Override
-	public void buildInstanceFromIO(String ioString) {
-		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);
-		setAnimalID(Integer.parseInt(st.nextToken()));
-		name = st.nextToken();		
+	public Animal getNewInstanceFromIO(String ioString) {
+		return new Animal(ioString);
 	}
 	
 	@Override

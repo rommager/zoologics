@@ -9,146 +9,80 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DataIO<T extends Savable> {
+public class DataIO<T extends Savable<T>> {
 	public static final String DATA_FOLDER = "./data/";
-	private ArrayList<T> items;
+	private String filename;
 
-	public static void main (String[] args) {
-		System.out.println(DataIO.class.getSimpleName());
-		
+	private DataIO() {
+		super();
 	}
 	
-	public DataIO(ArrayList<T> items) {
-		super();
-		this.items = items;
+	public DataIO(String filename) {
+		this();
+		this.filename = filename;
 	}
-
-	public void saveData(String filename) {
+	
+	public void saveData(ArrayList<T> arrayList) {
+		createBackup(filename);
 		File file = Application.getFile(DATA_FOLDER, filename);
 		System.out.println(file.getPath());
 		BufferedWriter writer = null;
 		try {
 			file.createNewFile();
 			writer = new BufferedWriter(new FileWriter(file));
-			for (T item : items) {
+			for (T item : arrayList) {
 				writer.write(item.getIOLine());
 				System.out.println(item.getIOLine());
 				writer.newLine();
 			}
 			writer.close();
-		} catch (IOException e) {e.printStackTrace();} 
+		} catch (IOException e) { } 
 		finally { }
 	}
 	
-	public ArrayList<T> loadData(String filename) {
-		BufferedReader read = null;
+	public ArrayList<T> loadData(T template) {
+		BufferedReader reader = null;
 		File file = Application.getFile(DATA_FOLDER, filename);
 		String inLine;
-		ArrayList<T> items = new ArrayList<T>();
+		ArrayList<T> arrayList = new ArrayList<T>();
+
 		try {
-			read = new BufferedReader(new FileReader(file));
-			inLine = read.readLine();
+			reader = new BufferedReader(new FileReader(file));
+			inLine = reader.readLine();
 			while (inLine != null) {
-//				T item = new T();
-//				items.add(new Animal(inLine));
-				inLine = read.readLine();
+				arrayList.add(template.getNewInstanceFromIO(inLine));
+				inLine = reader.readLine();
 			}
-			read.close();
+			reader.close();
 		}
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		catch (IOException e) {
-			e.printStackTrace();			
-		}
+		catch (FileNotFoundException e) { }
+		catch (IOException e) {	}
 		finally{ }
-
-		return items;
-
+		return arrayList;
 	}
 
-
-
-	public static void saveAnimals(ArrayList<Animal> animals) {
-		File file = Application.getFile(DATA_FOLDER, "Animals.dta");
-		System.out.println(file.getPath());
-		BufferedWriter writer = null;
-
-		try {
-
-			file.createNewFile();
-
-			writer = new BufferedWriter(new FileWriter(file));
-			for (Animal animal : animals) {
-
-				writer.write(animal.getIOLine());
-				System.out.println(animal.getIOLine());
-				writer.newLine();
-			}
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			// file.close();
-		}
+	public static void createBackup(String filename) {
+		//TODO This happens on save
+		
+		String backupName = filename + ".backup";
+		
+	// delete backupName
+	// rename the existing something backupName
+		
 	}
 
-	public static void saveTasks(ArrayList<Task> tasks) {
-		File file = Application.getFile(DATA_FOLDER, "Tasks.dat");
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			for (Task task : tasks) {
-				// writer.write(task.getIOLine());
-
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	public String getFilename() {
+		return filename;
 	}
 
-	public static ArrayList<Animal> loadAnimals() {
-		BufferedReader read = null;
-		File file = Application.getFile(DATA_FOLDER, "Animals.dta");
-		String inLine;
-		ArrayList<Animal> animals = new ArrayList<Animal>();
-		try {
-			read = new BufferedReader(new FileReader(file));
-			inLine = read.readLine();
-			while (inLine != null) {
-				animals.add(new Animal(inLine));
-				inLine = read.readLine();
-			}
-			read.close();
-		}
-		catch (FileNotFoundException e) {
-			
-		}
-		catch (IOException e) {
-			e.printStackTrace();			
-		}
-		finally{
-
-		}
-
-		return animals;
-
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
-	public static ArrayList<Task> loadTask() {
-
-		return null;
-	}
-
-	public static void loadReferenceData(ArrayList<Vaccine> vaccine,
-			ArrayList<Species> species) {
-
-	}
-
-	public static void createBackup() {
-
+	// tester method
+	public static void main (String[] args) {
+		System.out.println(DataIO.class.getSimpleName());
+		
 	}
 
 }

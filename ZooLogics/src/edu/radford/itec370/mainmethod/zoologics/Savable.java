@@ -1,8 +1,10 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-public interface Savable {
+import java.util.ArrayList;
 
-    public void buildInstanceFromIO(String ioString);
+public interface Savable<T> {
+
+    public T getNewInstanceFromIO(String ioString);
 	public String getIOLine();
 	
 }

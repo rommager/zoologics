@@ -19,7 +19,6 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import edu.radford.itec370.mainmethod.zoologics.gui.AnimalPanel;
 import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
@@ -68,10 +67,6 @@ public class Application implements Runnable {
 
 	public static void main(String[] args) {
 		new LogonDialog();
-//		URL url = getLocalFilePath("./photos/","leopard.jpg");
-//		System.out.println(url.getFile());
-//		File file = getFile("./photos/","leopard.jpg");
-//		System.out.println(file);
 	}
 
 	@Override
@@ -84,8 +79,17 @@ public class Application implements Runnable {
 
 	public void loadDataFromIO() {
 		//TODO implement use of DataIO class
-		animals = DataIO.loadAnimals();
+		//animals = DataIO.loadAnimals();
+		DataIO<Animal> animalIO = new DataIO<Animal>("Animals.dta");
+		animals = animalIO.loadData(new Animal(-1));
 	}
+	
+	public void saveDataToIO() {
+		// TODO add more of each savable element
+		new DataIO<Animal>("Animals.dta").saveData(animals);
+		
+	}
+
 
 	public Staff getCurrentUser() {
 		return currentUser;
@@ -124,11 +128,6 @@ public class Application implements Runnable {
 //
 //	}
 	
-	public void save() {
-		new DataIO<Animal>(animals).saveData("Animals.dta");
-		
-	}
-
 	public static String formatDateToString(Date dateIn) {
 		return dateFormat.format(dateIn);
 	}

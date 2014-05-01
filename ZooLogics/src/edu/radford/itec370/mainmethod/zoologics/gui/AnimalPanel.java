@@ -402,6 +402,5 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 
 		AnimalPanel panel = new AnimalPanel(animals);
 		panel.setVisible(true);
-		DataIO.saveAnimals(animals);
 	}	
 }
