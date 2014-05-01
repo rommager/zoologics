@@ -18,7 +18,7 @@ public class VaccinationPanel extends AnimalTaskPanel{
 		JComboBox cboVaccines = new JComboBox<String>(new DefaultComboBoxModel<String>(new String[] {"Ivomec","Rabies","Dewormer"}));
 		
 		cboVaccines.setBounds(txtTaskName.getX(), txtTaskName.getY(), txtTaskName.getSize().width, txtTaskName.getSize().height);
-		add(cboVaccines);
+		detailPanel.add(cboVaccines);
 		txtTaskName.setVisible(false);
 	}
 	
