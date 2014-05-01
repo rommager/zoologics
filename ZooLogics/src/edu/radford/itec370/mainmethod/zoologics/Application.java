@@ -66,11 +66,11 @@ public class Application implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		//new LogonDialog();
+		new LogonDialog();
 
-		Staff authStaff = getStaffHive().findUser("master");
+		/*Staff authStaff = getStaffHive().findUser("master");
 		Application app = new Application(authStaff);
-		app.run();
+		app.run();*/
 	}
 
 	@Override

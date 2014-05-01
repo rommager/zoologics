@@ -54,6 +54,7 @@ public class AnimalTaskPanel extends TaskPanel {
 
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
+		updateGUI();
 	}
 	
 	public AnimalTask getAnimalTask() {

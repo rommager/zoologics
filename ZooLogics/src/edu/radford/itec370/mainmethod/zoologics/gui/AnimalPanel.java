@@ -2,13 +2,11 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.io.File;
 import java.net.URL;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
-import edu.radford.itec370.mainmethod.zoologics.Species;
 import edu.radford.itec370.mainmethod.zoologics.Vaccination;
 
 import java.awt.BorderLayout;
@@ -290,10 +288,12 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		btnNewVaccination.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Vaccination vacc = new Vaccination();
-				TaskFrame frame = new TaskFrame(vacc);
+				vacc.setAnimal(getItem());
+				System.out.println(vacc.getAnimal().getName());
 				Application.getRunningInstance().getAllActiveTasks().add(vacc);
+				TaskFrame frame = new TaskFrame(vacc);
+				
 				frame.setVisible(true);
-				frame.updateGUIElements();
 				frame.pack();
 			}
 		});

@@ -36,6 +36,7 @@ public class TaskFrame extends DataManagerFrame<Task> {
 	public TaskFrame(Vaccination task) {
 		this();
 		VaccinationPanel vPanel = new VaccinationPanel(task);
+		vPanel.setAnimal(task.getAnimal());
 		super.dataPanel = vPanel;
 		getContentPane().add(vPanel,BorderLayout.CENTER);
 		

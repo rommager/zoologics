@@ -122,7 +122,8 @@ public abstract class DataManagerFrame<T extends Filterable> extends JFrame impl
 		Color color = dataPanel.getBackground();
 		setComponentColorForPrinting(Color.WHITE);
 		dataPanel.setBackground(Color.WHITE);
-		ComponentPrinter.runPrintJob(dataPanel);
+		//ComponentPrinter.runPrintJob(dataPanel);
+		ComponentPrinter.preview(dataPanel);
 		dataPanel.setBackground(color);
 		setComponentColorForPrinting(color);
 	}
