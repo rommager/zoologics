@@ -1,13 +1,13 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
+import java.util.StringTokenizer;
 
 public class VaccinationSchedule implements Serializable, DataIOable<VaccinationSchedule> {
 
 	private static final long serialVersionUID = -3195843828057553503L;
 	private static int vaccinationScheduleIDCounter = 93001;
 	private int vaccinationScheduleID;
-	private int animalID;
 	private String scheduleName;
 	private Vaccine vaccine;
 	private String dosage;
@@ -40,6 +40,12 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 		this(id, scheduleName, vaccine, dosage);
 		this.taskRecurrences = taskRecurrences;
 	}
+	public VaccinationSchedule(String ioString){
+		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);
+		setVaccinationScheduleID(Integer.parseInt(st.nextToken()));
+		scheduleName = st.nextToken();
+	}
+	
 
 	// setters and getters
 	public String getScheduleName() {
@@ -77,6 +83,23 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 
 	public void setDosage(String dosage) {
 		this.dosage = dosage;
+	}
+
+	@Override
+	public VaccinationSchedule getNewInstanceFromIO(String ioString) {
+		return new VaccinationSchedule(ioString);
+	}
+
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(vaccinationScheduleID); sb.append("|");
+		sb.append(scheduleName); sb.append("|");
+		sb.append(vaccine.getVaccineID()); sb.append("|");
+		sb.append(dosage); sb.append("|");
+		sb.append(taskRecurrences.getRecurrenceScheduleID()); sb.append("|");
+		return sb.toString(); 
+		// TODO Auto-generated method stub
 	}
 	
 }
