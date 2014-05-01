@@ -50,7 +50,7 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		table.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cboInterval));
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("valueChanged" + e.getValueIsAdjusting() + e.getFirstIndex()+ e.getLastIndex());
+//				System.out.println("valueChanged" + e.getValueIsAdjusting() + e.getFirstIndex()+ e.getLastIndex());
 			}
 		});
 		table.setCellSelectionEnabled(true);
@@ -96,7 +96,7 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
-		System.out.println(command);
+//		System.out.println(command);
 		if (command.equalsIgnoreCase("Add New")) {
 			model.addRow(new String[] {null,null,"forever","8001"});
 		}

@@ -8,7 +8,7 @@ public class GUITester {
 	
 	public static void launchTestFrame(JPanel panel) {
 		// TODO Auto-generated method stub
-		JFrame frame = new JFrame("Tester Frame");
+		JFrame frame = new JFrame("Task Recurrence Setup");
 		frame.setLayout(new GridLayout(1,1));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);

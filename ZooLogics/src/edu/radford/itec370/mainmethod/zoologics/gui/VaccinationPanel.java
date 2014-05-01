@@ -4,6 +4,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import edu.radford.itec370.mainmethod.zoologics.Vaccination;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class VaccinationPanel extends AnimalTaskPanel{
@@ -14,6 +17,14 @@ public class VaccinationPanel extends AnimalTaskPanel{
 		lblCompletedBy.setText("Administered by");
 		lblTaskName.setText("Vaccination Name");		
 		btnCompleteTask.setText("Administer Vaccination");
+		
+		JButton btnRecurrence = new JButton("Recurrence");
+		btnRecurrence.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUITester.launchTestFrame(new RecurrenceSchedulePanel());
+			}
+		});
+		buttonPanel.add(btnRecurrence);
 		
 		JComboBox cboVaccines = new JComboBox<String>(new DefaultComboBoxModel<String>(new String[] {"Ivomec","Rabies","Dewormer"}));
 		
