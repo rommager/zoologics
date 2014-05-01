@@ -41,7 +41,7 @@ public class Application implements Runnable {
 	private ArrayList<Task> outstandingTasks;  // used to store all outstanding tasks (all active tasks with an upcoming due date) 
 
 	// reference data variables
-	private static StaffHive staffHive;
+	private static StaffHive staffHive; 
 	private ArrayList<Vaccine> vaccines;
 	private ArrayList<Species> allSpecies;
 	private ArrayList<RecurrenceSchedule> recurrenceScheduleTemplates;

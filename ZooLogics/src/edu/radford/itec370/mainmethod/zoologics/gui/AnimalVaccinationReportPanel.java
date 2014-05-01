@@ -156,15 +156,15 @@ public class AnimalVaccinationReportPanel extends JFrame {
 		AnimalVaccinationReportPanel tester = new AnimalVaccinationReportPanel();
 		tester.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		Vaccination v1 = new Vaccination();
-		v1.setTaskName("Vaccine 1");
+//		Vaccination v1 = new Vaccination();
+//		v1.setTaskName("Vaccine 1");
 		//		v1.setCompletedBy(new Staff("Crazy Nick"));
-		v1.setCompletedDate(new Date());
+//		v1.setCompletedDate(new Date());
 
-		Vaccination v2 = new Vaccination();
-		v2.setTaskName("Vaccine 2");
+//		Vaccination v2 = new Vaccination();
+//		v2.setTaskName("Vaccine 2");
 		//		v2.setCompletedBy(new Staff("Chase"));
-		v2.setCompletedDate(new Date());
+//		v2.setCompletedDate(new Date());
 
 		tester.setVisible(true);
 	}
