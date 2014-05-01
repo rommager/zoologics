@@ -1,7 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
-import java.util.StringTokenizer;
+
 
 public class VaccinationSchedule implements Serializable, DataIOable<VaccinationSchedule> {
 
@@ -81,7 +81,7 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 
 	@Override
 	public VaccinationSchedule getNewInstanceFromIO(String ioString) {
-		return new VaccinationSchedule(ioString);
+		return new VaccinationSchedule(vaccinationScheduleID, ioString, vaccine, ioString);
 	}
 
 	@Override

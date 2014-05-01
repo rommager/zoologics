@@ -61,7 +61,22 @@ public class RecurrenceInstance implements Cloneable, DataIOable<RecurrenceInsta
 		}
 		return false;					 // return false because no more of this recurrence instance remains
 	}
+	public RecurrenceInstance getNewInstanceFromIO(String ioString) {
+		return new RecurrenceInstance();
+	}
+	
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(recurrenceInstanceIDCounter); sb.append("|");
+		sb.append(intervalCount); sb.append("|");
+		sb.append(intervalType); sb.append("|");
+		sb.append(numberOfRecurrences); sb.append("|");
+		sb.append(numberRemaining); sb.append("|");
+		sb.append(recurrenceInstanceID); sb.append("|");
 
+		return sb.toString();
+	}
 	public int getNumberOfRecurrences() {
 		return numberOfRecurrences;
 	}
