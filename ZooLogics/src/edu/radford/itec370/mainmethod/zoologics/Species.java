@@ -30,7 +30,21 @@ public class Species implements DataIOable<Species> {
 		setSpeciesID(speciesID);
 		this.speciesName = speciesName;
 	}
+	public Species getNewInstanceFromIO(String ioString) {
+		return new Species(ioString);
+	}
 	
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(speciesIDCounter); sb.append("|");
+		sb.append(parentList); sb.append("|");
+		sb.append(speciesID); sb.append("|");
+		sb.append(speciesName); sb.append("|");
+		sb.append(vaccinationSchedule); sb.append("|");
+
+		return sb.toString();
+	}
 	// methods
 	
 		

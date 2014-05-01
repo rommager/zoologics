@@ -27,7 +27,18 @@ public class Vaccine implements Serializable, DataIOable<Vaccine> {
 	public String toString() {
 		return vaccineName;
 	}
+	public Vaccine getNewInstanceFromIO(String ioString) {
+		return new Vaccine(vaccineID, ioString);
+	}
+	
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(vaccineIDCounter); sb.append("|");
+		sb.append(vaccineID); sb.append("|");
 
+		return sb.toString();
+	}
 	public int getVaccineID() {
 		return vaccineID;
 	}

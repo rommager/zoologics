@@ -61,7 +61,20 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 		}
 		return newRecurrences;
 	}
+	public RecurrenceSchedule getNewInstanceFromIO(String ioString) {
+		return new RecurrenceSchedule();
+	}
+	
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(fromCompletedDate); sb.append("|");
+		sb.append(isTemplate); sb.append("|");
+		sb.append(recurrenceScheduleID); sb.append("|");
 
+
+		return sb.toString();
+	}
 	public int getRecurrenceScheduleID() {
 		return recurrenceScheduleID;
 	}

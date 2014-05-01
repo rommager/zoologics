@@ -40,7 +40,23 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 		this(id, scheduleName, vaccine, dosage);
 		this.taskRecurrences = taskRecurrences;
 	}
+	public VaccinationSchedule getNewInstanceFromIO(String ioString) {
+		return new VaccinationSchedule(animalID, ioString, vaccine, ioString);
+	}
+	
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(vaccinationScheduleIDCounter); sb.append("|");
+		sb.append(animalID); sb.append("|");
+		sb.append(dosage); sb.append("|");
+		sb.append(scheduleName); sb.append("|");
+		sb.append(taskRecurrences); sb.append("|");
+		sb.append(vaccinationScheduleID); sb.append("|");
+		sb.append(vaccine); sb.append("|");
 
+		return sb.toString();
+	}
 	// setters and getters
 	public String getScheduleName() {
 		return scheduleName;
