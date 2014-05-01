@@ -90,14 +90,4 @@ public class DataIO<T extends DataIOable<T>> {
 //		}
 //		//System.out.println(test.replaceAll("\n", "\\\\n"));
 //	}
-	
-	public static void main (String[] args) throws IOException {
-		File file = Application.getFile(DATA_FOLDER, "Animals.dta");
-		System.out.println(file.getAbsolutePath());
-		System.out.println(file.getCanonicalPath());
-		System.out.println(file.getName());
-		System.out.println(file.getPath());
-		System.out.println(file.getParentFile());
-	}
-
 }

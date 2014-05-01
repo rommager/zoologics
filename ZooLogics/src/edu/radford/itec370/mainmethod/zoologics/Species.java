@@ -1,35 +1,39 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
-/**
- * @author Sean
- * The Species class is used as an object to describe the species of the animal.
- * It consists of a collection of Vaccines, and 
- */
 public class Species implements DataIOable<Species> {
 	private static int speciesIDCounter = 91001;
 	private int speciesID;
 	private String speciesName;
-	private ArrayList<VaccinationSchedule> vaccinationSchedule = new ArrayList<VaccinationSchedule>();
+	private ArrayList<VaccinationSchedule> vaccinationSchedules = new ArrayList<VaccinationSchedule>();
 	private ArrayList<Species> parentList;
 
 	// constructors
 	public Species() {
 		super();
-		speciesID = speciesIDCounter++;
-	}
-
-	public Species(String speciesName) {
-		this();
-		this.speciesName = speciesName;
+		this.speciesID = speciesIDCounter++;
 	}
 	
+	public Species(int id) {
+		super();
+		this.speciesID = id;
+	}
+
 	public Species(int speciesID, String speciesName) {
 		super();
 		setSpeciesID(speciesID);
 		this.speciesName = speciesName;
 	}
+	
+	public Species(String ioString) {
+		super();
+		StringTokenizer st = new StringTokenizer(ioString,Application.DELIMITER);
+		setSpeciesID(Integer.parseInt(st.nextToken()));
+		
+	}
+	
 	public Species getNewInstanceFromIO(String ioString) {
 		return new Species(ioString);
 	}
@@ -37,12 +41,9 @@ public class Species implements DataIOable<Species> {
 	@Override
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(speciesIDCounter); sb.append("|");
-		sb.append(parentList); sb.append("|");
 		sb.append(speciesID); sb.append("|");
 		sb.append(speciesName); sb.append("|");
-		sb.append(vaccinationSchedule); sb.append("|");
-
+		sb.append(vaccinationSchedules.getVaccinationScheduleID()); sb.append("|");
 		return sb.toString();
 	}
 	// methods
@@ -58,11 +59,11 @@ public class Species implements DataIOable<Species> {
 	}
 	
 	public ArrayList<VaccinationSchedule> getVaccinationSchedule() {
-		return vaccinationSchedule;
+		return vaccinationSchedules;
 	}
 
 	public void setVaccinationSchedule(ArrayList<VaccinationSchedule> vaccinationSchedule) {
-		this.vaccinationSchedule = vaccinationSchedule;
+		this.vaccinationSchedules = vaccinationSchedule;
 	}
 
 	public int getSpeciesID() {

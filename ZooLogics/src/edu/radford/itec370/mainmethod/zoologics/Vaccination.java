@@ -8,10 +8,15 @@ import edu.radford.itec370.mainmethod.zoologics.gui.VaccinationPanel;
 
 //TODO figure out the best way to save all 3 task types
 
-public class Vaccination extends AnimalTask implements DataIOable<Vaccination> {
+public class Vaccination extends AnimalTask implements DataIOable<Task> {
 
 	private static final long serialVersionUID = -5452735200526026986L;
 	private static final String TASK_TYPE = "Vaccination";
+	
+	public Vaccination(int id) {
+		super();
+		this.taskID = id;
+	}
 	
 	public Vaccination(String ioString){
 		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);

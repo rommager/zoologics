@@ -5,13 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
 import edu.radford.itec370.mainmethod.zoologics.gui.TaskPanel;
 
-public class Task implements Serializable, Filterable {
+public class Task implements Serializable, Filterable, DataIOable<Task> {
 
 	// public constants
 	public static final int ACTIVE = 1;
@@ -294,5 +295,33 @@ public class Task implements Serializable, Filterable {
 	public boolean isVisibleWithFilter(String filter) {
 		// tasks are not filterable
 		return false;
+	}
+
+	public Task(String ioString) {
+		super();
+		StringTokenizer st = new StringTokenizer(ioString,Application.DELIMITER);
+	}
+	
+	@Override
+	public Task getNewInstanceFromIO(String ioString) {
+		return new Task(ioString);
+	}
+
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(taskID); sb.append("|");
+		sb.append(taskName); sb.append("|");
+		sb.append(notes); sb.append("|");
+		if (dueDate != null)
+			sb.append(Application.formatDateToString(dueDate));
+		sb.append("|");
+		if (completedDate != null)
+			sb.append(Application.formatDateToString(completedDate));
+		sb.append("|");
+		if (completedBy != null)
+			sb.append(completedBy.getStaffID());
+		sb.append("|");
+		return sb.toString();
 	}
 }

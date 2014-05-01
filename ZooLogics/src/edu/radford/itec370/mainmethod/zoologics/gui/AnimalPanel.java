@@ -337,7 +337,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		try {
 			Animal a = getItem();
 			a.setName(txtName.getText());
-			a.setSpecies(new Species(txtSpecies.getText()));   //TODO lookup existing species from Application
+			a.setSpecies(Application.findSpeciesByName(txtSpecies.getText()));
 			if (!txtSex.getText().isEmpty())
 				a.setSex(txtSex.getText().toCharArray()[0]);
 			else

@@ -38,7 +38,7 @@ public class Application implements Runnable {
 	private ArrayList<Animal> animals;
 	private ArrayList<Task> allActiveTasks;    // used to store all active tasks
 	private ArrayList<Task> inactiveTasks;     // used to store all inactive tasks (completed or dismissed tasks)
-	private ArrayList<Task> outstandingTasks;  // used to store all outstanding tasks (all active tasks with an upcoming due date) 
+	private ArrayList<Task> activeTasks;  // used to store all outstanding tasks (all active tasks with an upcoming due date) 
 
 	// reference data variables
 	private static StaffHive staffHive; 
@@ -54,7 +54,7 @@ public class Application implements Runnable {
 			animals = new ArrayList<Animal>();
 			allActiveTasks = new ArrayList<Task>();
 			inactiveTasks = new ArrayList<Task>();
-			outstandingTasks = new ArrayList<Task>();
+			activeTasks = new ArrayList<Task>();
 
 			vaccines = new ArrayList<Vaccine>();
 			allSpecies = new ArrayList<Species>();
@@ -67,7 +67,7 @@ public class Application implements Runnable {
 
 	public static void main(String[] args) {
 		//new LogonDialog();
-		
+
 		Staff authStaff = getStaffHive().findUser("master");
 		Application app = new Application(authStaff);
 		app.run();
@@ -83,15 +83,17 @@ public class Application implements Runnable {
 
 	public void loadDataFromIO() {
 		//TODO implement use of DataIO class
-		animals = new DataIO<Animal>("Animals.dta").loadData(new Animal(-1));
+		allSpecies = new DataIO<Species>("Species.dta").loadData(new Species(-1));
 		vaccines = new DataIO<Vaccine>("Vaccines.dta").loadData(new Vaccine(-1));
+		animals = new DataIO<Animal>("Animals.dta").loadData(new Animal(-1));
+		activeTasks = new DataIO<Task>("Task.dta").loadData(new Vaccination(-1));
 	}
-	
+
 	public void saveDataToIO() {
 		// TODO add more of each savable element
 		new DataIO<Animal>("Animals.dta").saveData(animals);
 		new DataIO<Vaccine>("Vaccines.dta").saveData(vaccines);
-		
+
 	}
 
 
@@ -113,25 +115,25 @@ public class Application implements Runnable {
 		return APPLICATION_NAME;
 	}
 
-//	public static Application generateTestData() {
-//		// Generate an Application class with user "master" as the app user
-//		Application newApp = new Application(new Staff(0, "master", "master", "master"));
-//
-//		Species s1 = new Species("Tiger");
-//
-//		Species s2 = new Species("Monkey");
-//		Species s3 = new Species("Zebra");
-//
-//		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true,
-//				"A12343212", "", new Date(), "stripes",
-//				"Gentle, needs special attention"));
-//		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba",
-//				"Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
-//
-//		return newApp;
-//
-//	}
-	
+	//	public static Application generateTestData() {
+	//		// Generate an Application class with user "master" as the app user
+	//		Application newApp = new Application(new Staff(0, "master", "master", "master"));
+	//
+	//		Species s1 = new Species("Tiger");
+	//
+	//		Species s2 = new Species("Monkey");
+	//		Species s3 = new Species("Zebra");
+	//
+	//		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true,
+	//				"A12343212", "", new Date(), "stripes",
+	//				"Gentle, needs special attention"));
+	//		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba",
+	//				"Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
+	//
+	//		return newApp;
+	//
+	//	}
+
 	public static String formatDateToString(Date dateIn) {
 		return dateFormat.format(dateIn);
 	}
@@ -144,7 +146,7 @@ public class Application implements Runnable {
 			throw e;
 		}		
 	}
-	
+
 	public static Animal findAnimal(int id) {
 		for(Animal animal : application.animals) {
 			if (animal.getAnimalID() == id)
@@ -152,7 +154,7 @@ public class Application implements Runnable {
 		}
 		return null;
 	}
-	
+
 	public static Task findActiveTask(int id) {
 		for (Task task : application.allActiveTasks) {
 			if (task.getTaskID() == id)
@@ -160,7 +162,7 @@ public class Application implements Runnable {
 		}
 		return null;
 	}
-	
+
 	public static Task findInactiveTask(int id) {
 		for (Task task : application.inactiveTasks) {
 			if (task.getTaskID() == id)
@@ -168,13 +170,24 @@ public class Application implements Runnable {
 		}
 		return null;
 	}
-	
+
 	public static Species findSpecies(int id) {
 		for (Species species : application.allSpecies) {
 			if (species.getSpeciesID() == id)
 				return species;
 		}
 		return null;
+	}
+
+	public static Species findSpeciesByName(String name) {
+		for (Species species : application.allSpecies) {
+			if (species.getSpeciesName().equalsIgnoreCase(name))
+				return species;
+		}
+		Species species = new Species();
+		species.setSpeciesName(name);
+		application.allSpecies.add(species);
+		return species;
 	}
 
 	public ArrayList<Animal> getAnimals() {
@@ -230,11 +243,11 @@ public class Application implements Runnable {
 	}
 
 	public ArrayList<Task> getOutstandingTasks() {
-		return outstandingTasks;
+		return activeTasks;
 	}
 
 	public void setOutstandingTasks(ArrayList<Task> outstandingTasks) {
-		this.outstandingTasks = outstandingTasks;
+		this.activeTasks = outstandingTasks;
 	}
 
 	public ArrayList<RecurrenceSchedule> getRecurrenceScheduleTemplates() {
@@ -291,21 +304,18 @@ public class Application implements Runnable {
 
 	public static File getFile(String path, String filename) {
 		URL url = getLocalFilePath(path, filename);
-		
+
 		return(getFile(url));
 	}
 
 	public static File getFile(URL url) {
 		File newFile;
 		String decoded = "";
-		
+
 		try {
 			decoded = URLDecoder.decode(url.getPath(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		} catch (UnsupportedEncodingException e) { }
+
 		newFile = new File(decoded);
 		return newFile;
 	}
