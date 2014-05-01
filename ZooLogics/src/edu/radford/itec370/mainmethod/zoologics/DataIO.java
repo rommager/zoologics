@@ -25,14 +25,14 @@ public class DataIO<T extends DataIOable<T>> {
 	public void saveData(ArrayList<T> arrayList) {
 		createBackup(filename);
 		File file = Application.getFile(DATA_FOLDER, filename);
-		System.out.println(file.getPath());
+//		System.out.println(file.getPath());
 		BufferedWriter writer = null;
 		try {
 			file.createNewFile();
 			writer = new BufferedWriter(new FileWriter(file));
 			for (T item : arrayList) {
 				writer.write(item.getIOLine());
-				System.out.println(item.getIOLine());
+//				System.out.println(item.getIOLine());
 				writer.newLine();
 			}
 			writer.close();
