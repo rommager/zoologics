@@ -112,15 +112,16 @@ public class MainScreen extends JFrame implements WindowListener {
 		mntmAdminPanel.addActionListener(new MenuListener());
 		mnFile.add(mntmAdminPanel);
 
+		mntmPrint = new JMenuItem("Print");
+		mntmPrint.setMnemonic(KeyEvent.VK_X);
+		mntmPrint.addActionListener(new MenuListener());
+		mnFile.add(mntmPrint); 
+		
 		mntmExit = new JMenuItem("Exit");
 		mntmExit.setMnemonic(KeyEvent.VK_X);
 		mntmExit.addActionListener(new MenuListener());
 		mnFile.add(mntmExit);
 
-		mntmPrint = new JMenuItem("Print");
-		mntmPrint.setMnemonic(KeyEvent.VK_X);
-		mntmPrint.addActionListener(new MenuListener());
-		mnFile.add(mntmPrint); 
 
 		JMenu mnAbout = new JMenu("About");
 		mnAbout.setMnemonic(KeyEvent.VK_B);
