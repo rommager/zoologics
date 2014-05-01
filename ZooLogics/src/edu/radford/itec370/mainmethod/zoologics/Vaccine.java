@@ -54,7 +54,7 @@ public class Vaccine implements Serializable, DataIOable<Vaccine> {
 
 	@Override
 	public Vaccine getNewInstanceFromIO(String ioString) {
-		return new vaccine(ioString);
+		return new Vaccine(ioString);
 	}
 
 	@Override
