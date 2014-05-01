@@ -43,7 +43,7 @@ public class Application implements Runnable {
 	// reference data variables
 	private static StaffHive staffHive;
 	private ArrayList<Vaccine> vaccines;
-	private ArrayList<Species> species;
+	private ArrayList<Species> allSpecies;
 	private ArrayList<RecurrenceSchedule> recurrenceScheduleTemplates;
 	private ArrayList<VaccinationSchedule> vaccinationScheduleTemplates;
 
@@ -57,7 +57,7 @@ public class Application implements Runnable {
 			outstandingTasks = new ArrayList<Task>();
 
 			vaccines = new ArrayList<Vaccine>();
-			species = new ArrayList<Species>();
+			allSpecies = new ArrayList<Species>();
 			recurrenceScheduleTemplates = new ArrayList<RecurrenceSchedule>();
 			vaccinationScheduleTemplates = new ArrayList<VaccinationSchedule>();
 		} 
@@ -140,6 +140,38 @@ public class Application implements Runnable {
 			throw e;
 		}		
 	}
+	
+	public static Animal findAnimal(int id) {
+		for(Animal animal : application.animals) {
+			if (animal.getAnimalID() == id)
+				return animal;
+		}
+		return null;
+	}
+	
+	public static Task findActiveTask(int id) {
+		for (Task task : application.allActiveTasks) {
+			if (task.getTaskID() == id)
+				return task;
+		}
+		return null;
+	}
+	
+	public static Task findInactiveTask(int id) {
+		for (Task task : application.inactiveTasks) {
+			if (task.getTaskID() == id)
+				return task;
+		}
+		return null;
+	}
+	
+	public static Species findSpecies(int id) {
+		for (Species species : application.allSpecies) {
+			if (species.getSpeciesID() == id)
+				return species;
+		}
+		return null;
+	}
 
 	public ArrayList<Animal> getAnimals() {
 		return animals;
@@ -158,11 +190,11 @@ public class Application implements Runnable {
 	}
 
 	public ArrayList<Species> getSpecies() {
-		return species;
+		return allSpecies;
 	}
 
 	public void setSpecies(ArrayList<Species> species) {
-		this.species = species;
+		this.allSpecies = species;
 	}
 
 	public void setCurrentUser(Staff currentUser) {
