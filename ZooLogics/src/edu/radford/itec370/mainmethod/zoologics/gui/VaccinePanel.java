@@ -145,7 +145,6 @@ public class VaccinePanel extends JFrame implements ActionListener, WindowListen
 		}
 
 		public void addRow(Vaccine vaccine) {
-			System.out.println("addRow");
 			rowData.add(vaccine);
 			int newRow = rowData.indexOf(vaccine);
 			this.fireTableRowsInserted(newRow,  newRow);
@@ -158,7 +157,6 @@ public class VaccinePanel extends JFrame implements ActionListener, WindowListen
 		}
 
 		public void setValueAt(Object value, int row, int col) {
-			System.out.println("setValueAt");
 			Vaccine item = rowData.get(row);
 			switch (col) {
 			case 1:
@@ -182,6 +180,4 @@ public class VaccinePanel extends JFrame implements ActionListener, WindowListen
 	@Override public void windowDeiconified(WindowEvent e) {}
 	@Override public void windowIconified(WindowEvent e) {}
 	@Override public void windowOpened(WindowEvent e) {}
-
-
 }
