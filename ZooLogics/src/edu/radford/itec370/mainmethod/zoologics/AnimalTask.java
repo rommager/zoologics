@@ -11,7 +11,7 @@ public class AnimalTask extends Task {
 	private static final long serialVersionUID = 2033805125227771447L;
 
 	private static final String TASK_TYPE = "Animal Task";
-	private Animal animal;
+	protected Animal animal;
 
 	public AnimalTask() {
 		super();
