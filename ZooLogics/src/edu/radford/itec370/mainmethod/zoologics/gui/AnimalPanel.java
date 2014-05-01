@@ -14,6 +14,7 @@ import java.net.URL;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
+import edu.radford.itec370.mainmethod.zoologics.DataIO;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 
 import java.awt.BorderLayout;
@@ -401,5 +402,6 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 
 		AnimalPanel panel = new AnimalPanel(animals);
 		panel.setVisible(true);
+		DataIO.saveAnimals(animals);
 	}	
 }

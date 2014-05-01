@@ -7,8 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,11 +67,11 @@ public class Application implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		//new LogonDialog();
-		URL url = getLocalFilePath("./photos/","leopard.jpg");
-		System.out.println(url.getFile());
-		File file = getFile("./photos/","leopard.jpg");
-		System.out.println(file);
+		new LogonDialog();
+//		URL url = getLocalFilePath("./photos/","leopard.jpg");
+//		System.out.println(url.getFile());
+//		File file = getFile("./photos/","leopard.jpg");
+//		System.out.println(file);
 	}
 
 	@Override
@@ -82,6 +84,12 @@ public class Application implements Runnable {
 
 	public void loadDataFromIO() {
 		//TODO implement use of DataIO class
+		try {
+			animals = DataIO.loadAnimals();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Staff getCurrentUser() {
@@ -102,24 +110,24 @@ public class Application implements Runnable {
 		return APPLICATION_NAME;
 	}
 
-	public static Application generateTestData() {
-		// Generate an Application class with user "master" as the app user
-		Application newApp = new Application(new Staff(0, "master", "master", "master"));
-
-		Species s1 = new Species("Tiger");
-
-		Species s2 = new Species("Monkey");
-		Species s3 = new Species("Zebra");
-
-		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true,
-				"A12343212", "", new Date(), "stripes",
-				"Gentle, needs special attention"));
-		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba",
-				"Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
-
-		return newApp;
-
-	}
+//	public static Application generateTestData() {
+//		// Generate an Application class with user "master" as the app user
+//		Application newApp = new Application(new Staff(0, "master", "master", "master"));
+//
+//		Species s1 = new Species("Tiger");
+//
+//		Species s2 = new Species("Monkey");
+//		Species s3 = new Species("Zebra");
+//
+//		newApp.animals.add(new Animal(1001, "Puja", s1, 'M', "Simba", "", true,
+//				"A12343212", "", new Date(), "stripes",
+//				"Gentle, needs special attention"));
+//		newApp.animals.add(new Animal(1002, "Sir Rawr", s1, 'M', "Simba",
+//				"Puma", true, "A43212", "", new Date(), "spots", "Alpha"));
+//
+//		return newApp;
+//
+//	}
 
 	public static String formatDateToString(Date dateIn) {
 		return dateFormat.format(dateIn);
@@ -248,11 +256,22 @@ public class Application implements Runnable {
 
 	public static File getFile(String path, String filename) {
 		URL url = getLocalFilePath(path, filename);
+		
 		return(getFile(url));
 	}
 
 	public static File getFile(URL url) {
-		File newFile = new File(url.getPath());
+		File newFile;
+		String decoded = "";
+		
+		try {
+			decoded = URLDecoder.decode(url.getPath(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		newFile = new File(decoded);
 		return newFile;
 	}
 
