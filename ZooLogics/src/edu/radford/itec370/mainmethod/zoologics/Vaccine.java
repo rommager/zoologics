@@ -1,6 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
+import java.util.StringTokenizer;
 
 public class Vaccine implements Serializable, DataIOable<Vaccine> {
 
@@ -18,6 +19,11 @@ public class Vaccine implements Serializable, DataIOable<Vaccine> {
 		super();
 		setVaccineID(vaccineID);
 		this.vaccineName = vaccineName;
+	}
+	public Vaccine(String ioString){
+		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);
+		setVaccineID(Integer.parseInt(st.nextToken()));
+		vaccineName = st.nextToken();
 	}
 	
 	public Object[] getVaccinePanelRow() {
@@ -55,6 +61,19 @@ public class Vaccine implements Serializable, DataIOable<Vaccine> {
 
 	public void setVaccineName(String vaccineName) {
 		this.vaccineName = vaccineName;
+	}
+
+	@Override
+	public Vaccine getNewInstanceFromIO(String ioString) {
+		return new Vaccine(ioString);
+	}
+
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(vaccineID); sb.append("|");
+		sb.append(vaccineName); sb.append("|");
+		return sb.toString(); 
 	}
 
 }
