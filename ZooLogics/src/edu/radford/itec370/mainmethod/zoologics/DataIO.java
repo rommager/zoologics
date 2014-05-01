@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class DataIO<T extends DataIOable<T>> {
 	public static final String DATA_FOLDER = "./data/";
@@ -23,13 +22,11 @@ public class DataIO<T extends DataIOable<T>> {
 		this.filename = filename;
 	}
 	
-	private void createPath(String path) {
-		
-	}
-	
 	public void saveData(ArrayList<T> arrayList) {
 		createBackup(filename);
 		File file = Application.getFile(DATA_FOLDER, filename);
+		if (!file.getParentFile().exists()) 
+			file.getParentFile().mkdirs();   // creates the folder if it doesn't exist
 //		System.out.println(file.getPath());
 		BufferedWriter writer = null;
 		try {
@@ -68,13 +65,9 @@ public class DataIO<T extends DataIOable<T>> {
 	}
 
 	public static void createBackup(String filename) {
-		//TODO This happens on save
-		
-		String backupName = filename + ".backup";
-		
-	// delete backupName
-	// rename the existing something backupName
-		
+		File source = Application.getFile(DATA_FOLDER, filename);
+		File dest = Application.getFile(DATA_FOLDER, filename + ".backup");
+		Application.copyFile(source, dest);
 	}
 
 	public String getFilename() {
@@ -97,5 +90,14 @@ public class DataIO<T extends DataIOable<T>> {
 //		}
 //		//System.out.println(test.replaceAll("\n", "\\\\n"));
 //	}
+	
+	public static void main (String[] args) throws IOException {
+		File file = Application.getFile(DATA_FOLDER, "Animals.dta");
+		System.out.println(file.getAbsolutePath());
+		System.out.println(file.getCanonicalPath());
+		System.out.println(file.getName());
+		System.out.println(file.getPath());
+		System.out.println(file.getParentFile());
+	}
 
 }
