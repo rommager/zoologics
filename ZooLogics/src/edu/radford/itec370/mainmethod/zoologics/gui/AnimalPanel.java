@@ -4,17 +4,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 import edu.radford.itec370.mainmethod.zoologics.Application;
-import edu.radford.itec370.mainmethod.zoologics.DataIO;
 import edu.radford.itec370.mainmethod.zoologics.Species;
 
 import java.awt.BorderLayout;
@@ -47,7 +40,6 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 	public static final String WINDOW_TITLE = Application.getAppName() + " Animal Profile";
 	public static final String PHOTO_FOLDER = "./photos/";
 	public static final String DEFAULT_THUMBNAIL_FILE = "default_thumbnail.png";
-	private String photoFileName;
 	// gui elements
 	private JTextField txtName;
 	private JTextField txtSpecies;
@@ -281,8 +273,8 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 					File destinationFile = Application.getFile(PHOTO_FOLDER, sourceFile.getName());
 					boolean success = Application.copyFile(sourceFile, destinationFile);
 					if (success) {
-						photoFileName = sourceFile.getName();
-						updatePhoto(photoFileName);}
+						getItem().setThumbnail(sourceFile.getName());
+						updatePhoto();}
 					else {
 						//TODO show file error dialog
 					}
@@ -329,7 +321,7 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		else {
 			this.rdbtnChipNo.setSelected(true);
 		}
-		this.updatePhoto(getItem().getThumbnail());
+		this.updatePhoto();
 	}
 
 	@Override
@@ -354,7 +346,6 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 			else
 				a.setIdenficationChip(false);
 			a.setDateOfBirth(Application.parseDate(txtDOB.getText()));
-			a.setThumbnail(photoFileName);
 			updateGUI();
 			return true;
 		}
@@ -374,8 +365,8 @@ public class AnimalPanel extends DataManagerFrame<Animal> {
 		pnlPhoto.setBackground(color);
 	}
 
-	// setters and getters 
-	public void updatePhoto(String filename)  {
+	public void updatePhoto()  {
+		String filename = getItem().getThumbnail();
 		URL imageURL = Application.getLocalFilePath(PHOTO_FOLDER, filename);
 
 		if (!Application.getFile(imageURL).exists())

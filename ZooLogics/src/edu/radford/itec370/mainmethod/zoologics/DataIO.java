@@ -53,7 +53,8 @@ public class DataIO<T extends DataIOable<T>> {
 			reader = new BufferedReader(new FileReader(file));
 			inLine = reader.readLine();
 			while (inLine != null) {
-				arrayList.add(template.getNewInstanceFromIO(inLine));
+				
+				arrayList.add(template.getNewInstanceFromIO(inLine.replaceAll("\\\\n", "\n")));
 				inLine = reader.readLine();
 			}
 			reader.close();

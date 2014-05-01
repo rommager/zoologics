@@ -29,9 +29,10 @@ public class Species implements DataIOable<Species> {
 	
 	public Species(String ioString) {
 		super();
+		
 		StringTokenizer st = new StringTokenizer(ioString,Application.DELIMITER);
 		setSpeciesID(Integer.parseInt(st.nextToken()));
-		
+		speciesName = st.nextToken();
 	}
 	
 	public Species getNewInstanceFromIO(String ioString) {
@@ -43,7 +44,7 @@ public class Species implements DataIOable<Species> {
 		StringBuilder sb = new StringBuilder();
 		sb.append(speciesID); sb.append("|");
 		sb.append(speciesName); sb.append("|");
-		sb.append(vaccinationSchedules.getVaccinationScheduleID()); sb.append("|");
+		//sb.append(vaccinationSchedules.getVaccinationScheduleID()); sb.append("|");
 		return sb.toString();
 	}
 	// methods

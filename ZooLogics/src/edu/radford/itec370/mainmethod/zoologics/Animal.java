@@ -1,6 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -81,9 +82,33 @@ public class Animal implements Printable, Serializable, Filterable, DataIOable<A
 	// IO constructor
 	public Animal(String lineIO) {
 		super();
-		StringTokenizer st = new StringTokenizer(lineIO, Application.DELIMITER);
-		setAnimalID(Integer.parseInt(st.nextToken()));
-		name = st.nextToken();
+		String[] str = lineIO.split("\\|");
+		
+		setAnimalID(Integer.parseInt(str[0]));
+		
+		name = str[1];
+		
+		try {species = Application.findSpecies(Integer.parseInt(str[2]));}
+		catch (NumberFormatException e) {species = null;}
+		
+		sex = str[3].toCharArray()[0];
+		
+		father = str[4];
+		
+		mother = str[5];
+		
+		identificationChip = str[6].equals("true");
+		
+		breed = str[7];
+		
+		try {dateOfBirth = Application.parseDate(str[8]);} 
+		catch (ParseException e) {dateOfBirth = null;}
+		
+		markings = str[9];
+		
+		notes = str[10];
+		
+		thumbnail = str[11];
 	}
 
 	@Override
@@ -104,9 +129,10 @@ public class Animal implements Printable, Serializable, Filterable, DataIOable<A
 		sb.append(mother); sb.append("|");
 		sb.append(identificationChip); sb.append("|");
 		sb.append(breed); sb.append("|");
-		sb.append(dateOfBirth); sb.append("|");
+		sb.append(Application.formatDateToString(dateOfBirth)); sb.append("|");
 		sb.append(markings); sb.append("|");
 		sb.append(notes); sb.append("|");
+		sb.append(thumbnail); sb.append("|");
 		return sb.toString();
 	}
 

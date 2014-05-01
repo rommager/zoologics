@@ -75,8 +75,8 @@ public class Application implements Runnable {
 
 	@Override
 	public void run() {
-		loadDataFromIO();
 		Application.application = this;
+		loadDataFromIO();
 		MainScreen gui = new MainScreen(this);
 		gui.setVisible(true);
 	}
@@ -86,16 +86,17 @@ public class Application implements Runnable {
 		allSpecies = new DataIO<Species>("Species.dta").loadData(new Species(-1));
 		vaccines = new DataIO<Vaccine>("Vaccines.dta").loadData(new Vaccine(-1));
 		animals = new DataIO<Animal>("Animals.dta").loadData(new Animal(-1));
-		activeTasks = new DataIO<Task>("Task.dta").loadData(new Vaccination(-1));
+		activeTasks = new DataIO<Task>("Tasks.dta").loadData(new Vaccination(-1));
 	}
 
 	public void saveDataToIO() {
 		// TODO add more of each savable element
-		new DataIO<Animal>("Animals.dta").saveData(animals);
+		new DataIO<Species>("Species.dta").saveData(allSpecies);
 		new DataIO<Vaccine>("Vaccines.dta").saveData(vaccines);
-
+		new DataIO<Animal>("Animals.dta").saveData(animals);
+		new DataIO<Task>("Tasks.dta").saveData(activeTasks);
+		
 	}
-
 
 	public Staff getCurrentUser() {
 		return currentUser;
@@ -172,9 +173,15 @@ public class Application implements Runnable {
 	}
 
 	public static Species findSpecies(int id) {
-		for (Species species : application.allSpecies) {
-			if (species.getSpeciesID() == id)
-				return species;
+		if (application == null)
+			System.out.println("App is null");
+		if (application.getSpecies() == null)
+			System.out.println("species is null");
+		if (application.allSpecies.size() != 0) {
+			for (Species species : application.allSpecies) {
+				if (species.getSpeciesID() == id)
+					return species;
+			}
 		}
 		return null;
 	}
