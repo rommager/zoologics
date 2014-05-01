@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class DataIO<T extends DataIOable<T>> {
 	public static final String DATA_FOLDER = "./data/";
@@ -31,7 +32,8 @@ public class DataIO<T extends DataIOable<T>> {
 			file.createNewFile();
 			writer = new BufferedWriter(new FileWriter(file));
 			for (T item : arrayList) {
-				writer.write(item.getIOLine());
+				String ioLine = item.getIOLine().replaceAll("\n", "\\\\n");  // converts returns to '\n' for storage
+				writer.write(ioLine);
 //				System.out.println(item.getIOLine());
 				writer.newLine();
 			}
@@ -79,10 +81,17 @@ public class DataIO<T extends DataIOable<T>> {
 		this.filename = filename;
 	}
 
-	// tester method
-	public static void main (String[] args) {
-		System.out.println(DataIO.class.getSimpleName());
-		
-	}
+//	// tester method
+//	public static void main (String[] args) {
+//		//System.out.println(DataIO.class.getSimpleName());
+//		String test = "Test1|test2|This\nis\na\ntest|123|Hello!";
+//		StringTokenizer st = new StringTokenizer(test,"|");
+//		String token = st.nextToken();
+//		while (token != null) {
+//			System.out.println(token+"\n");
+//			token = st.nextToken();
+//		}
+//		//System.out.println(test.replaceAll("\n", "\\\\n"));
+//	}
 
 }
