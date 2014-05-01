@@ -9,8 +9,65 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DataIO {
+public class DataIO<T extends Savable> {
 	public static final String DATA_FOLDER = "./data/";
+	private ArrayList<T> items;
+
+	public static void main (String[] args) {
+		System.out.println(DataIO.class.getSimpleName());
+		
+	}
+	
+	public DataIO(ArrayList<T> items) {
+		super();
+		this.items = items;
+	}
+
+	public void saveData(String filename) {
+		File file = Application.getFile(DATA_FOLDER, filename);
+		System.out.println(file.getPath());
+		BufferedWriter writer = null;
+		try {
+			file.createNewFile();
+			writer = new BufferedWriter(new FileWriter(file));
+			for (T item : items) {
+				writer.write(item.getIOLine());
+				System.out.println(item.getIOLine());
+				writer.newLine();
+			}
+			writer.close();
+		} catch (IOException e) {e.printStackTrace();} 
+		finally { }
+	}
+	
+	public ArrayList<T> loadData(String filename) {
+		BufferedReader read = null;
+		File file = Application.getFile(DATA_FOLDER, filename);
+		String inLine;
+		ArrayList<T> items = new ArrayList<T>();
+		try {
+			read = new BufferedReader(new FileReader(file));
+			inLine = read.readLine();
+			while (inLine != null) {
+//				T item = new T();
+//				items.add(new Animal(inLine));
+				inLine = read.readLine();
+			}
+			read.close();
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();			
+		}
+		finally{ }
+
+		return items;
+
+	}
+
+
 
 	public static void saveAnimals(ArrayList<Animal> animals) {
 		File file = Application.getFile(DATA_FOLDER, "Animals.dta");
@@ -52,7 +109,7 @@ public class DataIO {
 
 	}
 
-	public static ArrayList<Animal> loadAnimals() throws IOException {
+	public static ArrayList<Animal> loadAnimals() {
 		BufferedReader read = null;
 		File file = Application.getFile(DATA_FOLDER, "Animals.dta");
 		String inLine;
@@ -62,19 +119,20 @@ public class DataIO {
 			inLine = read.readLine();
 			while (inLine != null) {
 				animals.add(new Animal(inLine));
-
 				inLine = read.readLine();
 			}
-
+			read.close();
 		}
 		catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally{
 			
 		}
-		read.close();
+		catch (IOException e) {
+			e.printStackTrace();			
+		}
+		finally{
+
+		}
+
 		return animals;
 
 	}

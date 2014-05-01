@@ -84,12 +84,7 @@ public class Application implements Runnable {
 
 	public void loadDataFromIO() {
 		//TODO implement use of DataIO class
-		try {
-			animals = DataIO.loadAnimals();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		animals = DataIO.loadAnimals();
 	}
 
 	public Staff getCurrentUser() {
@@ -128,6 +123,11 @@ public class Application implements Runnable {
 //		return newApp;
 //
 //	}
+	
+	public void save() {
+		new DataIO<Animal>(animals).saveData("Animals.dta");
+		
+	}
 
 	public static String formatDateToString(Date dateIn) {
 		return dateFormat.format(dateIn);

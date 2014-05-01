@@ -12,7 +12,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
 
-public class Animal implements Printable, Serializable, Filterable {
+public class Animal implements Printable, Serializable, Filterable, Savable {
 
 	// Constants and static counters
 	private static final long serialVersionUID = 5761796477851733790L;
@@ -32,7 +32,7 @@ public class Animal implements Printable, Serializable, Filterable {
 	private String markings;
 	private String notes;
 	private String thumbnail;
-	
+
 	// Collections
 	private ArrayList<Task> activeTasks;
 	private ArrayList<Task> completedTasks;
@@ -72,33 +72,28 @@ public class Animal implements Printable, Serializable, Filterable {
 
 		this.thumbnail = thumbnail;
 	}
-	
+
 	// IO constructor
 	public Animal(String lineIO) {
 		super();
-		StringTokenizer st = new StringTokenizer(lineIO, Application.DELIMITER);
+
+	}
+
+	@Override
+	public void buildInstanceFromIO(String ioString) {
+		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);
 		setAnimalID(Integer.parseInt(st.nextToken()));
-		name = st.nextToken();
-		
-	}
-
-
-	public static void main(String[] args) {
-		Animal animal = new Animal(2001, "Puja", new Species("Feline"), 'M', "Simba", "", true, "A12343212", "Orange Tiger", new Date(), "Orange with stripes", "Gentle, needs special attention","tiger.jpg");
-		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPrintable(animal);
-		HashPrintRequestAttributeSet att = new HashPrintRequestAttributeSet();
-		
-	
-		PrintPreview preview = new PrintPreview(animal, job.getPageFormat(att));
-	
+		name = st.nextToken();		
 	}
 	
+	@Override
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(animalID); sb.append("|");
 		sb.append(name); sb.append("|");
-		sb.append(species.getSpeciesID()); sb.append("|");
+		if (species != null)
+			sb.append(species.getSpeciesID());
+		sb.append("|");
 		sb.append(sex); sb.append("|");
 		sb.append(father); sb.append("|");
 		sb.append(mother); sb.append("|");
@@ -107,10 +102,7 @@ public class Animal implements Printable, Serializable, Filterable {
 		sb.append(dateOfBirth); sb.append("|");
 		sb.append(markings); sb.append("|");
 		sb.append(notes); sb.append("|");
-		
 		return sb.toString();
-		
-// example output:		Puja|23400|M|3276|4358  (except it contains all the fields
 	}
 
 	@Override

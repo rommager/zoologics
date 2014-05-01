@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
-public class MainScreen extends JFrame {
+public class MainScreen extends JFrame implements WindowListener {
 
 	// constants
 	private static final long serialVersionUID = -6514056067808688533L;
@@ -50,7 +52,8 @@ public class MainScreen extends JFrame {
 		setIconImage(Application.getAppImage());
 		setSize(new Dimension(650, 449));
 		getContentPane().setLayout(new BorderLayout());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
+		addWindowListener(this);
 
 		// build north panel
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -166,5 +169,47 @@ public class MainScreen extends JFrame {
 			}
 
 		}
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		application.save();
+		System.exit(0);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
