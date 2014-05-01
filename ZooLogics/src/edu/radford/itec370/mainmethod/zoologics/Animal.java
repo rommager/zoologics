@@ -12,7 +12,7 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
 
-public class Animal implements Printable, Serializable, Filterable, Savable<Animal> {
+public class Animal implements Printable, Serializable, Filterable, DataIOable<Animal> {
 
 	// Constants and static counters
 	private static final long serialVersionUID = 5761796477851733790L;

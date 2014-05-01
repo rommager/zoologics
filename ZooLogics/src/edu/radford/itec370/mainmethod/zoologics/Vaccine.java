@@ -2,7 +2,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
 
-public class Vaccine implements Serializable {
+public class Vaccine implements Serializable, DataIOable<Vaccine> {
 
 	private static final long serialVersionUID = -4084693244451360926L;
 	public static int vaccineIDCounter = 92001;

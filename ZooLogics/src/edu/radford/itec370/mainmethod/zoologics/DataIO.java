@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DataIO<T extends Savable<T>> {
+public class DataIO<T extends DataIOable<T>> {
 	public static final String DATA_FOLDER = "./data/";
 	private String filename;
 

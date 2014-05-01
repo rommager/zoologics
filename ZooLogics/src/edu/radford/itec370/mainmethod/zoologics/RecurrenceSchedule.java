@@ -3,7 +3,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements Cloneable {
+public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements Cloneable, DataIOable<RecurrenceSchedule> {
 
 	private static final long serialVersionUID = -578725875891715725L;
 	

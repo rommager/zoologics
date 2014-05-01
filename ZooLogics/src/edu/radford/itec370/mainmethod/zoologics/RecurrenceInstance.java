@@ -3,7 +3,7 @@ package edu.radford.itec370.mainmethod.zoologics;
 import java.util.Calendar;
 import java.util.Date;
 
-public class RecurrenceInstance implements Cloneable {
+public class RecurrenceInstance implements Cloneable, DataIOable<RecurrenceInstance> {
 
 	private static int recurrenceInstanceIDCounter = 42001;
 	private int recurrenceInstanceID;

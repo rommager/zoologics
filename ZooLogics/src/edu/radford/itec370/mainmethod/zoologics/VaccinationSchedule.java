@@ -2,17 +2,12 @@ package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
 
-/**
- * @author Sean
- * A VaccinationSchedule is a template for creating a VaccinationTask for an individual Animal.
- * It consists of a single Vaccine and a TaskRecurrences collection.
- * To assign a vaccination schedule to an animal 
- */
-public class VaccinationSchedule implements Serializable {
+public class VaccinationSchedule implements Serializable, DataIOable<VaccinationSchedule> {
 
 	private static final long serialVersionUID = -3195843828057553503L;
 	private static int vaccinationScheduleIDCounter = 93001;
 	private int vaccinationScheduleID;
+	private int animalID;
 	private String scheduleName;
 	private Vaccine vaccine;
 	private String dosage;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * The Species class is used as an object to describe the species of the animal.
  * It consists of a collection of Vaccines, and 
  */
-public class Species {
+public class Species implements DataIOable<Species> {
 	private static int speciesIDCounter = 91001;
 	private int speciesID;
 	private String speciesName;
