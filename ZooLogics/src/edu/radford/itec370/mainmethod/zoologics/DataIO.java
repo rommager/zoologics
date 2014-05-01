@@ -23,6 +23,10 @@ public class DataIO<T extends DataIOable<T>> {
 		this.filename = filename;
 	}
 	
+	private void createPath(String path) {
+		
+	}
+	
 	public void saveData(ArrayList<T> arrayList) {
 		createBackup(filename);
 		File file = Application.getFile(DATA_FOLDER, filename);
@@ -38,7 +42,7 @@ public class DataIO<T extends DataIOable<T>> {
 				writer.newLine();
 			}
 			writer.close();
-		} catch (IOException e) { } 
+		} catch (IOException e) { e.printStackTrace(); } 
 		finally { }
 	}
 	

@@ -5,100 +5,69 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
-import java.util.Date;
 
-import javax.swing.ButtonGroup;
+import javax.swing.CellEditor;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.Vaccine;
 
-public class VaccinePanel extends JFrame implements ActionListener {
+public class VaccinePanel extends JFrame implements ActionListener, WindowListener {
 
 	private static final long serialVersionUID = -3966249468484312613L; 
-	private static final String[] COLUMN_NAMES = new String[] {"VaccineID","Vaccine Name"};
 	private ArrayList<Vaccine> vaccines;
 	private int index = 0;
-	
-	DefaultTableModel model;
+
+	VaccineTableModel model;
 	JTable table;
-	
+
 	private VaccinePanel() {
 		super();
-	}
-	
-	public VaccinePanel(ArrayList<Vaccine> vaccines) {
-		this();
-		this.vaccines = vaccines;
-		buildGUI();
-		refreshGUI();
-	}
-	
-	public void buildGUI() {
 		// set up JFrame
 		setIconImage(Application.getAppImage());
 		setTitle(Application.getAppName() + " - Vaccines");
-		this.setSize(new Dimension(640, 480));
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addWindowListener(this);
+		setSize(new Dimension(640, 480));
 		getContentPane().setLayout(new BorderLayout());
 
 		// create center panel
-		model = new DefaultTableModel(null, COLUMN_NAMES);
+		model = new VaccineTableModel();
 		table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		getContentPane().add(scrollPane,BorderLayout.CENTER);
-		
+
 		// create button panel
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton btnAdd = new JButton("Add New Vaccine");
 		btnAdd.addActionListener(this);
 		buttonPanel.add(btnAdd);
-		JButton btnSave = new JButton("Save");
-		btnSave.addActionListener(this);
-		buttonPanel.add(btnSave);
 		JButton btnClose = new JButton("Close");
 		btnClose.addActionListener(this);
 		buttonPanel.add(btnClose);
 		getContentPane().add(buttonPanel,BorderLayout.SOUTH);
-		
 	}
+
+	public VaccinePanel(ArrayList<Vaccine> vaccines) {
+		this();
+		this.vaccines = vaccines;
+		model.setRowData(vaccines);
+	}
+
 	public Vaccine getVaccine() {
 		return vaccines.get(index);
 	}
-	
+
 	public ArrayList<Vaccine> getVaccines() {
 		return vaccines;
-	}
-
-	public void setVaccines(ArrayList<Vaccine> vaccines) {
-		this.vaccines = vaccines;
-		refreshGUI();
-	}
-	
-	public void refreshGUI() {
-		model.setDataVector(null, COLUMN_NAMES);
-		for (Vaccine vaccine : vaccines) {
-			model.addRow(vaccine.getVaccinePanelRow());
-		}
-	}
-	
-	public void save() {
-		int count = model.getRowCount();
-		for (int x = 0; x < count; x++) {
-			Vaccine vacc = (Vaccine) model.getValueAt(x, 1);
-			vacc.setVaccineName(model.getValueAt(x, 1).toString());
-			System.out.println(vacc);
-		}
 	}
 
 	public Vaccine findVaccine(int id) {
@@ -109,22 +78,25 @@ public class VaccinePanel extends JFrame implements ActionListener {
 		return null;
 	}
 	
+	public void closeWindow() {
+		CellEditor editor = table.getCellEditor();
+		if (editor != null)
+			editor.stopCellEditing();   // this forces any in progress edit to complete (which saves the cell value!)
+		this.dispose();
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
-		
+
 		if (command.equals("Add New Vaccine")) {
 			Vaccine newVaccine = new Vaccine();
-			vaccines.add(newVaccine);
-			model.addRow(newVaccine.getVaccinePanelRow());
-		}
-		else if (command.equals("Save")) {
-			save();
+			model.addRow(newVaccine);
 		}
 		else if (command.equals("Close")) {
-			
+			closeWindow();
 		}
-		
+
 	}
 
 	// tester method
@@ -138,28 +110,78 @@ public class VaccinePanel extends JFrame implements ActionListener {
 		panel.setVisible(true);
 		panel.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	/*
+
+	@SuppressWarnings("serial")
 	class VaccineTableModel extends AbstractTableModel {
 		private final String[] COLUMN_NAMES = new String[] {"VaccineID","Vaccine Name"}; 
-	    public String getColumnName(int col) {
-	        return columnNames[col].toString();
-	    }
-	    
-	    public int getRowCount() { return rowData.length; }
-	    
-	    public int getColumnCount() { return columnNames.length; }
-	    
-	    public Object getValueAt(int row, int col) {
-	        return rowData[row][col];
-	    }
-	    
-	    public boolean isCellEditable(int row, int col)
-	        { return true; }
-	    
-	    public void setValueAt(Object value, int row, int col) {
-	        rowData[row][col] = value;
-	        fireTableCellUpdated(row, col);
-	    }
-	}*/
-	
+		private ArrayList<Vaccine> rowData;
+
+		public VaccineTableModel() {
+			super();
+		}
+		public VaccineTableModel(ArrayList<Vaccine> rowData) {
+			super();
+			this.rowData = rowData;
+		}
+
+		public String getColumnName(int col) {
+			return COLUMN_NAMES[col];
+		}
+
+		public int getRowCount() { return rowData.size(); }
+
+		public int getColumnCount() { return COLUMN_NAMES.length; }
+
+		public Object getValueAt(int row, int col) {
+			Vaccine item = rowData.get(row);
+			switch (col) {
+			case 0:
+				return item.getVaccineID();
+			case 1:
+				return item.getVaccineName();
+			default:
+				return null;
+			}
+		}
+
+		public void addRow(Vaccine vaccine) {
+			System.out.println("addRow");
+			rowData.add(vaccine);
+			int newRow = rowData.indexOf(vaccine);
+			this.fireTableRowsInserted(newRow,  newRow);
+		}
+
+		public boolean isCellEditable(int row, int col) {
+			if (col == 0)
+				return false;
+			return true;
+		}
+
+		public void setValueAt(Object value, int row, int col) {
+			System.out.println("setValueAt");
+			Vaccine item = rowData.get(row);
+			switch (col) {
+			case 1:
+				item.setVaccineName((String) value);
+			}
+			fireTableCellUpdated(row, col);
+		}
+		public ArrayList<Vaccine> getRowData() {
+			return rowData;
+		}
+		public void setRowData(ArrayList<Vaccine> rowData) {
+			this.rowData = rowData;
+		}
+	}
+
+	// WindowListener implementation (calls closeWindow() method when red X is clicked
+	@Override public void windowClosing(WindowEvent e) { closeWindow(); }
+	@Override public void windowActivated(WindowEvent e) {}
+	@Override public void windowClosed(WindowEvent e) {}
+	@Override public void windowDeactivated(WindowEvent e) {}
+	@Override public void windowDeiconified(WindowEvent e) {}
+	@Override public void windowIconified(WindowEvent e) {}
+	@Override public void windowOpened(WindowEvent e) {}
+
+
 }

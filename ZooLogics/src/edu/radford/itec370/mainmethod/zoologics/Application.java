@@ -66,7 +66,11 @@ public class Application implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		new LogonDialog();
+		//new LogonDialog();
+		
+		Staff authStaff = getStaffHive().findUser("master");
+		Application app = new Application(authStaff);
+		app.run();
 	}
 
 	@Override
@@ -79,14 +83,14 @@ public class Application implements Runnable {
 
 	public void loadDataFromIO() {
 		//TODO implement use of DataIO class
-		//animals = DataIO.loadAnimals();
-		DataIO<Animal> animalIO = new DataIO<Animal>("Animals.dta");
-		animals = animalIO.loadData(new Animal(-1));
+		animals = new DataIO<Animal>("Animals.dta").loadData(new Animal(-1));
+		vaccines = new DataIO<Vaccine>("Vaccines.dta").loadData(new Vaccine(-1));
 	}
 	
 	public void saveDataToIO() {
 		// TODO add more of each savable element
 		new DataIO<Animal>("Animals.dta").saveData(animals);
+		new DataIO<Vaccine>("Vaccines.dta").saveData(vaccines);
 		
 	}
 
