@@ -1,7 +1,5 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import java.util.StringTokenizer;
-
 import javax.swing.JPanel;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.VaccinationPanel;
@@ -22,13 +20,12 @@ public class Vaccination extends AnimalTask implements DataIOable<Task> {
 		this.taskID = id;
 	}
 	
-	public Vaccination(String ioString){
-		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);
-		setTaskID(Integer.parseInt(st.nextToken()));
-		taskName = st.nextToken();
-		status = Integer.parseInt(st.nextToken());
-		notes = st.nextToken();
-		animal = Application.findAnimal(Integer.parseInt(st.nextToken()));
+	public Vaccination(String[] io){
+		setTaskID(Integer.parseInt(io[0]));
+		taskName = io[1];
+		status = Integer.parseInt(io[2]);
+		notes = io[3];
+		animal = Application.findAnimal(Integer.parseInt(io[4]));
 	}
 	
 	@Override
@@ -41,8 +38,8 @@ public class Vaccination extends AnimalTask implements DataIOable<Task> {
 	}
 	
 	@Override
-	public Vaccination getNewInstanceFromIO(String ioString) {
-		return new Vaccination(ioString);
+	public Vaccination getNewInstanceFromIO(String[] io) {
+		return new Vaccination(io);
 	}
 
 	@Override

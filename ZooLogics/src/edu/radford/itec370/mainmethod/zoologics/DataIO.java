@@ -27,7 +27,6 @@ public class DataIO<T extends DataIOable<T>> {
 		File file = Application.getFile(DATA_FOLDER, filename);
 		if (!file.getParentFile().exists()) 
 			file.getParentFile().mkdirs();   // creates the folder if it doesn't exist
-//		System.out.println(file.getPath());
 		BufferedWriter writer = null;
 		try {
 			file.createNewFile();
@@ -35,12 +34,11 @@ public class DataIO<T extends DataIOable<T>> {
 			for (T item : arrayList) {
 				String ioLine = item.getIOLine().replaceAll("\n", "\\\\n");  // converts returns to '\n' for storage
 				writer.write(ioLine);
-//				System.out.println(item.getIOLine());
 				writer.newLine();
 			}
 			writer.close();
 		} catch (IOException e) { e.printStackTrace(); } 
-		finally { }
+		finally { }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions too, so it can't go in finally block...?
 	}
 	
 	public ArrayList<T> loadData(T template) {
@@ -61,7 +59,7 @@ public class DataIO<T extends DataIOable<T>> {
 		}
 		catch (FileNotFoundException e) { }
 		catch (IOException e) {	}
-		finally{ }
+		finally{ }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions too, so it can't go in finally block...?
 		return arrayList;
 	}
 

@@ -43,8 +43,8 @@ public class Application implements Runnable {
 	private static StaffHive staffHive; 
 	private ArrayList<Vaccine> vaccines;
 	private ArrayList<Species> allSpecies;
-	private ArrayList<RecurrenceSchedule> recurrenceScheduleTemplates;
-	private ArrayList<VaccinationSchedule> vaccinationScheduleTemplates;
+	private ArrayList<RecurrenceSchedule> recurrenceSchedules;
+	private ArrayList<VaccinationSchedule> vaccinationSchedules;
 
 	public Application(Staff authenticatedUser) {
 		super();
@@ -57,8 +57,8 @@ public class Application implements Runnable {
 
 			vaccines = new ArrayList<Vaccine>();
 			allSpecies = new ArrayList<Species>();
-			recurrenceScheduleTemplates = new ArrayList<RecurrenceSchedule>();
-			vaccinationScheduleTemplates = new ArrayList<VaccinationSchedule>();
+			recurrenceSchedules = new ArrayList<RecurrenceSchedule>();
+			vaccinationSchedules = new ArrayList<VaccinationSchedule>();
 		} 
 		else
 			System.exit(0);
@@ -266,22 +266,22 @@ public class Application implements Runnable {
 		this.activeTasks = outstandingTasks;
 	}
 
-	public ArrayList<RecurrenceSchedule> getRecurrenceScheduleTemplates() {
-		return recurrenceScheduleTemplates;
+	public ArrayList<RecurrenceSchedule> getRecurrenceSchedules() {
+		return recurrenceSchedules;
 	}
 
-	public void setRecurrenceScheduleTemplates(
-			ArrayList<RecurrenceSchedule> recurrenceScheduleTemplates) {
-		this.recurrenceScheduleTemplates = recurrenceScheduleTemplates;
+	public void setRecurrenceSchedules(
+			ArrayList<RecurrenceSchedule> recurrenceSchedules) {
+		this.recurrenceSchedules = recurrenceSchedules;
 	}
 
-	public ArrayList<VaccinationSchedule> getVaccinationScheduleTemplates() {
-		return vaccinationScheduleTemplates;
+	public ArrayList<VaccinationSchedule> getVaccinationSchedules() {
+		return vaccinationSchedules;
 	}
 
-	public void setVaccinationScheduleTemplates(
-			ArrayList<VaccinationSchedule> vaccinationScheduleTemplates) {
-		this.vaccinationScheduleTemplates = vaccinationScheduleTemplates;
+	public void setVaccinationSchedules(
+			ArrayList<VaccinationSchedule> vaccinationSchedules) {
+		this.vaccinationSchedules = vaccinationSchedules;
 	}
 
 	public static StaffHive getStaffHive() {
@@ -292,6 +292,30 @@ public class Application implements Runnable {
 			staffHive.add(defaultStaff);
 		}
 		return staffHive;
+	}
+	
+	public Staff findStaff(int id) {
+		for (Staff staff : staffHive) {
+			if (staff.getStaffID() == id)
+				return staff;
+		}
+		return null;
+	}
+	
+	public Vaccine findVaccine(int id) {
+		for (Vaccine vacc : vaccines) {
+			if (vacc.getVaccineID() == id)
+				return vacc;
+		}
+		return null;
+	}
+	
+	public RecurrenceSchedule findRecurrenceSchedule(int id) {
+		for (RecurrenceSchedule sched : recurrenceSchedules) {
+			if (sched.getRecurrenceScheduleID() == id)
+				return sched;
+		}
+		return null;
 	}
 
 	private static void cacheStaffHive() {

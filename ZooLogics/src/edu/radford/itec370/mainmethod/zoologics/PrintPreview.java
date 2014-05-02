@@ -12,7 +12,7 @@ import javax.swing.event.*;
 import java.awt.print.*;
 
 import javax.swing.border.*;
-
+// TODO See how this works and create a new tailored PrintPreview window.
 @SuppressWarnings("serial")
 class PrintPreview extends JFrame implements ActionListener, ChangeListener, ItemListener
 {

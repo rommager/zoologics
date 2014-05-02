@@ -2,9 +2,8 @@ package edu.radford.itec370.mainmethod.zoologics;
 
 import edu.radford.itec370.mainmethod.zoologics.Animal;
 
-
 public class Photo {
-
+	//TODO need to do SOMETHING with this class - so far it is unused.
 	private static int photoIDCounter = 22001;
 	private int photoID;
 	private Animal animal;
