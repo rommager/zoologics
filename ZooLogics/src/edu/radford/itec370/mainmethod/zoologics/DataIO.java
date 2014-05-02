@@ -54,7 +54,7 @@ public class DataIO<T extends DataIOable<T>> {
 			inLine = reader.readLine();
 			while (inLine != null) {
 				
-				arrayList.add(template.getNewInstanceFromIO(inLine.replaceAll("\\\\n", "\n")));
+				arrayList.add(template.getNewInstanceFromIO(inLine.replaceAll("\\\\n", "\n").split("\\|",-1)));
 				inLine = reader.readLine();
 			}
 			reader.close();
@@ -79,16 +79,4 @@ public class DataIO<T extends DataIOable<T>> {
 		this.filename = filename;
 	}
 
-//	// tester method
-//	public static void main (String[] args) {
-//		//System.out.println(DataIO.class.getSimpleName());
-//		String test = "Test1|test2|This\nis\na\ntest|123|Hello!";
-//		StringTokenizer st = new StringTokenizer(test,"|");
-//		String token = st.nextToken();
-//		while (token != null) {
-//			System.out.println(token+"\n");
-//			token = st.nextToken();
-//		}
-//		//System.out.println(test.replaceAll("\n", "\\\\n"));
-//	}
 }

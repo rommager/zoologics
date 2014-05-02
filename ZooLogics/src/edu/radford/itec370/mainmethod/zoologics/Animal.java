@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.StringTokenizer;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.*;
-
-import javax.print.attribute.HashPrintRequestAttributeSet;
 
 import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
 
@@ -44,7 +41,7 @@ public class Animal implements Printable, Serializable, Filterable, DataIOable<A
 		super();
 		this.animalID = animalIDCounter++;
 	}
-	
+
 	public Animal(int id) {
 		super();
 		this.animalID = id;
@@ -80,59 +77,49 @@ public class Animal implements Printable, Serializable, Filterable, DataIOable<A
 	}
 
 	// IO constructor
-	public Animal(String lineIO) {
+	public Animal(String[] str) {
 		super();
-		String[] str = lineIO.split("\\|");
-		
 		setAnimalID(Integer.parseInt(str[0]));
-		
 		name = str[1];
-		
 		try {species = Application.findSpecies(Integer.parseInt(str[2]));}
 		catch (NumberFormatException e) {species = null;}
-		
 		sex = str[3].toCharArray()[0];
-		
 		father = str[4];
-		
 		mother = str[5];
-		
 		identificationChip = str[6].equals("true");
-		
 		breed = str[7];
-		
 		try {dateOfBirth = Application.parseDate(str[8]);} 
 		catch (ParseException e) {dateOfBirth = null;}
-		
 		markings = str[9];
-		
 		notes = str[10];
-		
 		thumbnail = str[11];
+		chipID = str[12];
 	}
 
 	@Override
-	public Animal getNewInstanceFromIO(String ioString) {
+	public Animal getNewInstanceFromIO(String[] ioString) {
 		return new Animal(ioString);
 	}
-	
+
 	@Override
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(animalID); sb.append("|");
-		sb.append(name); sb.append("|");
+		sb.append(animalID).append(Application.DELIMITER);  // 0
+		sb.append(name).append(Application.DELIMITER);  // 1
 		if (species != null)
-			sb.append(species.getSpeciesID());
-		sb.append("|");
-		sb.append(sex); sb.append("|");
-		sb.append(father); sb.append("|");
-		sb.append(mother); sb.append("|");
-		sb.append(identificationChip); sb.append("|");
-		sb.append(breed); sb.append("|");
-		sb.append(Application.formatDateToString(dateOfBirth)); sb.append("|");
-		sb.append(markings); sb.append("|");
-		sb.append(notes); sb.append("|");
-		sb.append(thumbnail); sb.append("|");
+			sb.append(species.getSpeciesID()).append(Application.DELIMITER);  // 2
+		else
+			sb.append(Application.DELIMITER);  // 2
+		sb.append(sex).append(Application.DELIMITER);  // 3
+		sb.append(father).append(Application.DELIMITER);  // 4
+		sb.append(mother).append(Application.DELIMITER);  // 5
+		sb.append(identificationChip).append(Application.DELIMITER);  // 6
+		sb.append(breed).append(Application.DELIMITER);  // 7
+		sb.append(Application.formatDateToString(dateOfBirth)).append(Application.DELIMITER);  // 8
+		sb.append(markings).append(Application.DELIMITER);  // 9
+		sb.append(notes).append(Application.DELIMITER);  // 10
+		sb.append(thumbnail).append(Application.DELIMITER);  // 11
+		sb.append(chipID).append(Application.DELIMITER);  // 12
 		return sb.toString();
 	}
 

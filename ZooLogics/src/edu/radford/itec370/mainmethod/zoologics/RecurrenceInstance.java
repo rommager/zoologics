@@ -40,7 +40,7 @@ public class RecurrenceInstance implements Cloneable, DataIOable<RecurrenceInsta
 		validate();
 	}
 
-	// full constructor with ID for IO
+	// full constructor
 	public RecurrenceInstance(int recurrenceInstanceID,
 			int numberOfRecurrences, int numberRemaining, int intervalType,
 			int intervalCount) {
@@ -51,7 +51,38 @@ public class RecurrenceInstance implements Cloneable, DataIOable<RecurrenceInsta
 		this.intervalType = intervalType;
 		this.intervalCount = intervalCount;
 	}
+	
+	// IO constructor
+	public RecurrenceInstance(String[] io) {
+		recurrenceInstanceID = Integer.parseInt(io[0]);
+		intervalCount = Integer.parseInt(io[1]);
+		intervalType = Integer.parseInt(io[2]);
+		numberOfRecurrences = Integer.parseInt(io[3]);
+		numberRemaining = Integer.parseInt(io[4]);
+	}
+	
+	// id constructor for DataIOable templates
+	public RecurrenceInstance(int id) {
+		super();
+		this.recurrenceInstanceID = id;
+	}
 
+	@Override
+	public RecurrenceInstance getNewInstanceFromIO(String[] io) {
+		return new RecurrenceInstance(io);
+	}
+	
+	@Override
+	public String getIOLine() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(recurrenceInstanceID).append(Application.DELIMITER);  // 0
+		sb.append(intervalCount).append(Application.DELIMITER);  // 1
+		sb.append(intervalType).append(Application.DELIMITER);  // 2
+		sb.append(numberOfRecurrences).append(Application.DELIMITER);  // 3
+		sb.append(numberRemaining).append(Application.DELIMITER);  // 4
+		return sb.toString();
+	}
+	
 	public boolean hasMoreRecurrences() {
 		if (numberOfRecurrences == -1) {     // if -1 then recurrences are indefinite
 			return true;
@@ -61,22 +92,7 @@ public class RecurrenceInstance implements Cloneable, DataIOable<RecurrenceInsta
 		}
 		return false;					 // return false because no more of this recurrence instance remains
 	}
-	public RecurrenceInstance getNewInstanceFromIO(String ioString) {
-		return new RecurrenceInstance();
-	}
-	
-	@Override
-	public String getIOLine() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(recurrenceInstanceIDCounter); sb.append("|");
-		sb.append(intervalCount); sb.append("|");
-		sb.append(intervalType); sb.append("|");
-		sb.append(numberOfRecurrences); sb.append("|");
-		sb.append(numberRemaining); sb.append("|");
-		sb.append(recurrenceInstanceID); sb.append("|");
 
-		return sb.toString();
-	}
 	public int getNumberOfRecurrences() {
 		return numberOfRecurrences;
 	}

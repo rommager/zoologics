@@ -2,7 +2,6 @@ package edu.radford.itec370.mainmethod.zoologics;
 
 import java.io.Serializable;
 
-
 public class VaccinationSchedule implements Serializable, DataIOable<VaccinationSchedule> {
 
 	private static final long serialVersionUID = -3195843828057553503L;
@@ -11,7 +10,7 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 	private String scheduleName;
 	private Vaccine vaccine;
 	private String dosage;
-	private RecurrenceSchedule taskRecurrences;
+	private RecurrenceSchedule recurrenceSchedule;
 
 	// constructors
 	public VaccinationSchedule() {
@@ -38,7 +37,15 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 			String dosage,
 			RecurrenceSchedule taskRecurrences) {
 		this(id, scheduleName, vaccine, dosage);
-		this.taskRecurrences = taskRecurrences;
+		this.recurrenceSchedule = taskRecurrences;
+	}
+	
+	public VaccinationSchedule(String[] io) {
+		vaccinationScheduleID = Integer.parseInt(io[0]);
+		scheduleName = io[1];
+		vaccine = Application.getRunningInstance().findVaccine(Integer.parseInt(io[2]));
+		dosage = io[3];
+		recurrenceSchedule = Application.getRunningInstance().findRecurrenceSchedule(Integer.parseInt(io[4]));		
 	}
 
 	// setters and getters
@@ -55,10 +62,10 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 		this.vaccine = vaccine;
 	}
 	public RecurrenceSchedule getTaskRecurrences() {
-		return taskRecurrences;
+		return recurrenceSchedule;
 	}
 	public void setTaskRecurrences(RecurrenceSchedule taskRecurrences) {
-		this.taskRecurrences = taskRecurrences;
+		this.recurrenceSchedule = taskRecurrences;
 	}
 
 	public int getVaccinationScheduleID() {
@@ -80,20 +87,19 @@ public class VaccinationSchedule implements Serializable, DataIOable<Vaccination
 	}
 
 	@Override
-	public VaccinationSchedule getNewInstanceFromIO(String ioString) {
-		return new VaccinationSchedule(vaccinationScheduleID, ioString, vaccine, ioString);
+	public VaccinationSchedule getNewInstanceFromIO(String[] io) {
+		return new VaccinationSchedule(io);
 	}
 
 	@Override
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(vaccinationScheduleID); sb.append("|");
-		sb.append(scheduleName); sb.append("|");
-		sb.append(vaccine.getVaccineID()); sb.append("|");
-		sb.append(dosage); sb.append("|");
-		sb.append(taskRecurrences.getRecurrenceScheduleID()); sb.append("|");
+		sb.append(vaccinationScheduleID).append("|");
+		sb.append(scheduleName).append("|");
+		sb.append(vaccine.getVaccineID()).append("|");
+		sb.append(dosage).append("|");
+		sb.append(recurrenceSchedule.getRecurrenceScheduleID()).append("|");
 		return sb.toString(); 
-		// TODO Auto-generated method stub
 	}
 	
 }

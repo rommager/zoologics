@@ -10,7 +10,7 @@ public class GUITester {
 		// TODO Auto-generated method stub
 		JFrame frame = new JFrame("Task Recurrence Setup");
 		frame.setLayout(new GridLayout(1,1));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.pack();

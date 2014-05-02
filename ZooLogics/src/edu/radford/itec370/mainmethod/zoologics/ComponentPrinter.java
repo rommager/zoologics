@@ -9,7 +9,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.text.MessageFormat;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
 

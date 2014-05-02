@@ -9,12 +9,25 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 	
 	private static int recurrenceScheduleIDCounter = 41001;
 	private int recurrenceScheduleID;
-	private boolean fromCompletedDate;    // determines if next due date will be calculated from the last due date, or last completion date
+	private boolean fromDateCompleted;    // determines if next due date will be calculated from the last due date, or last completion date
 	private boolean isTemplate;
 
 	public RecurrenceSchedule() {
 		super();
 		this.recurrenceScheduleID = recurrenceScheduleIDCounter++;
+	}
+	
+	// DataIOable template constructor
+	public RecurrenceSchedule(int id) {
+		super();
+		this.recurrenceScheduleID = id;
+	}
+	
+	public RecurrenceSchedule(String[] io) {
+		super();
+		setRecurrenceScheduleID(Integer.parseInt(io[0]));
+		fromDateCompleted = io[1].equals("true");
+		isTemplate = io[2].equals("true");
 	}
 	
 	public Date getNextRecurrenceDate(Date inDate) {
@@ -61,20 +74,22 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 		}
 		return newRecurrences;
 	}
-	public RecurrenceSchedule getNewInstanceFromIO(String ioString) {
-		return new RecurrenceSchedule();
+	
+	@Override
+	public RecurrenceSchedule getNewInstanceFromIO(String[] io) {
+		return new RecurrenceSchedule(io);
 	}
 	
 	@Override
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(fromCompletedDate); sb.append("|");
-		sb.append(isTemplate); sb.append("|");
-		sb.append(recurrenceScheduleID); sb.append("|");
-
-
+		sb.append(recurrenceScheduleID).append(Application.DELIMITER);
+		sb.append(fromDateCompleted).append(Application.DELIMITER);
+		sb.append(isTemplate).append(Application.DELIMITER);
 		return sb.toString();
 	}
+	
+	// setters and getters
 	public int getRecurrenceScheduleID() {
 		return recurrenceScheduleID;
 	}
@@ -86,11 +101,11 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 	}
 
 	public boolean isFromCompletedDate() {
-		return fromCompletedDate;
+		return fromDateCompleted;
 	}
 
 	public void setFromCompletedDate(boolean fromCompletedDate) {
-		this.fromCompletedDate = fromCompletedDate;
+		this.fromDateCompleted = fromCompletedDate;
 	}
 
 	public boolean isTemplate() {
@@ -100,6 +115,5 @@ public class RecurrenceSchedule extends ArrayList<RecurrenceInstance> implements
 	public void setTemplate(boolean isTemplate) {
 		this.isTemplate = isTemplate;
 	}
-
 
 }

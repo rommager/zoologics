@@ -1,7 +1,6 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Species implements DataIOable<Species> {
 	private static int speciesIDCounter = 91001;
@@ -27,16 +26,15 @@ public class Species implements DataIOable<Species> {
 		this.speciesName = speciesName;
 	}
 	
-	public Species(String ioString) {
+	public Species(String[] io) {
 		super();
-		
-		StringTokenizer st = new StringTokenizer(ioString,Application.DELIMITER);
-		setSpeciesID(Integer.parseInt(st.nextToken()));
-		speciesName = st.nextToken();
+		setSpeciesID(Integer.parseInt(io[0]));
+		speciesName = io[1];
 	}
 	
-	public Species getNewInstanceFromIO(String ioString) {
-		return new Species(ioString);
+	@Override
+	public Species getNewInstanceFromIO(String[] io) {
+		return new Species(io);
 	}
 	
 	@Override
@@ -47,8 +45,6 @@ public class Species implements DataIOable<Species> {
 		//sb.append(vaccinationSchedules.getVaccinationScheduleID()); sb.append("|");
 		return sb.toString();
 	}
-	// methods
-	
 		
 	// setters and getters
 	public String getSpeciesName() {

@@ -19,7 +19,6 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import edu.radford.itec370.mainmethod.zoologics.gui.LogonDialog;
 import edu.radford.itec370.mainmethod.zoologics.gui.MainScreen;
 
 public class Application implements Runnable {
@@ -66,11 +65,11 @@ public class Application implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		new LogonDialog();
+		//new LogonDialog();
 
-		/*Staff authStaff = getStaffHive().findUser("master");
+		Staff authStaff = getStaffHive().findUser("master");
 		Application app = new Application(authStaff);
-		app.run();*/
+		app.run();
 	}
 
 	@Override
@@ -86,11 +85,12 @@ public class Application implements Runnable {
 		allSpecies = new DataIO<Species>("Species.dta").loadData(new Species(-1));
 		vaccines = new DataIO<Vaccine>("Vaccines.dta").loadData(new Vaccine(-1));
 		animals = new DataIO<Animal>("Animals.dta").loadData(new Animal(-1));
-		activeTasks = new DataIO<Task>("Tasks.dta").loadData(new Vaccination(-1));
+		activeTasks = new DataIO<Task>("ActiveTasks.dta").loadData(new Task(-1));
+		activeTasks = new DataIO<Task>("InactiveTasks.dta").loadData(new Task(-1));
 	}
 
 	public void saveDataToIO() {
-		// TODO add more of each savable element
+		// TODO add more of each DataIOable element
 		new DataIO<Species>("Species.dta").saveData(allSpecies);
 		new DataIO<Vaccine>("Vaccines.dta").saveData(vaccines);
 		new DataIO<Animal>("Animals.dta").saveData(animals);
@@ -194,6 +194,16 @@ public class Application implements Runnable {
 		species.setSpeciesName(name);
 		application.allSpecies.add(species);
 		return species;
+	}
+	
+	public String[] getVaccineOptions() {
+		String[] out = new String[vaccines.size()];
+		int index = 0;
+		for (Vaccine vacc : vaccines) {
+			out[index] = vacc.getVaccineName();
+			index++;
+		}
+		return out;
 	}
 
 	public ArrayList<Animal> getAnimals() {

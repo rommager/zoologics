@@ -1,6 +1,5 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import java.util.StringTokenizer;
 
 public class Vaccine implements DataIOable<Vaccine> {
 
@@ -24,10 +23,9 @@ public class Vaccine implements DataIOable<Vaccine> {
 		this.vaccineName = vaccineName;
 	}
 	
-	public Vaccine(String ioString){
-		StringTokenizer st = new StringTokenizer(ioString, Application.DELIMITER);
-		setVaccineID(Integer.parseInt(st.nextToken()));
-		vaccineName = st.nextToken();
+	public Vaccine(String[] io){
+		setVaccineID(Integer.parseInt(io[0]));
+		vaccineName = io[1];
 	}
 		
 	public String toString() {
@@ -53,8 +51,8 @@ public class Vaccine implements DataIOable<Vaccine> {
 	}
 
 	@Override
-	public Vaccine getNewInstanceFromIO(String ioString) {
-		return new Vaccine(ioString);
+	public Vaccine getNewInstanceFromIO(String[] io) {
+		return new Vaccine(io);
 	}
 
 	@Override

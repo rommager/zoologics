@@ -46,6 +46,11 @@ public class Task implements Serializable, Filterable, DataIOable<Task> {
 		status = Task.ACTIVE;
 		taskID = taskIDCounter++;
 	}
+	
+	public Task(int id) {
+		super();
+		this.taskID = id;
+	}
 
 	// constructor for new blank task
 	public Task(ArrayList<Task> parentTaskList) {
@@ -78,7 +83,7 @@ public class Task implements Serializable, Filterable, DataIOable<Task> {
 		this.parentTaskList = parentTaskList;
 	}
 
-	// Full constructor for IO
+	// Full constructor
 	public Task(int taskID,
 			String taskName,
 			String notes, 
@@ -96,40 +101,22 @@ public class Task implements Serializable, Filterable, DataIOable<Task> {
 		this.status = status;
 		//TODO Resolve StaffID and put into staff variable
 		this.parentTaskList = parentTaskList;
-
 	}
-
-	public static void main(String[] args) {
-		ArrayList<Task> list = new ArrayList<Task>();
-
-		Task newTask = new Task("Reminder to clean toilets", "11/17/2011", list);
-		RecurrenceSchedule newRecurrences = new RecurrenceSchedule();
-		newTask.setRecurrences(newRecurrences);
-		newRecurrences.add(new RecurrenceInstance(3,WEEK,2));
-		newRecurrences.add(new RecurrenceInstance(2,MONTH,1));
-		newRecurrences.add(new RecurrenceInstance(-1,YEAR,1));
-		list.add(newTask);
-		list.add(new Task("Vet Visit for Puja", "05/17/2014", list));
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-		newTask =  newTask.spawnNextTaskRecurrence();
-		System.out.println("SPAWNED: " + newTask);
-
-
-		System.out.println(list.toString());
-
+	
+	// IO Constructor
+	public Task(String[] io) {
+		super();
+		taskID = Integer.parseInt(io[0]);
+		taskName = io[1];
+		notes = io[2];
+		
+		try {dueDate = Application.parseDate(io[3]);}
+		catch (ParseException e) {dueDate = null;}
+		
+		try {completedDate = Application.parseDate(io[4]);}
+		catch (ParseException e) {dueDate = null;}
+		
+		completedBy = Application.getRunningInstance().findStaff(Integer.parseInt(io[5]));
 	}
 
 	public static String intervalToString(int interval) {
@@ -296,29 +283,27 @@ public class Task implements Serializable, Filterable, DataIOable<Task> {
 		// tasks are not filterable
 		return false;
 	}
-
-	public Task(String ioString) {
-		super();
-		StringTokenizer st = new StringTokenizer(ioString,Application.DELIMITER);
+	
+	@Override
+	public Task getNewInstanceFromIO(String[] io) {
+		return new Task(io);
 	}
 	
 	@Override
-	public Task getNewInstanceFromIO(String ioString) {
-		return new Task(ioString);
-	}
-
-	@Override
 	public String getIOLine() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(taskID); sb.append("|");
-		sb.append(taskName); sb.append("|");
-		sb.append(notes); sb.append("|");
+		sb.append(taskID).append("|");
+		sb.append(taskName).append("|");
+		sb.append(notes).append("|");
+		
 		if (dueDate != null)
 			sb.append(Application.formatDateToString(dueDate));
 		sb.append("|");
+		
 		if (completedDate != null)
 			sb.append(Application.formatDateToString(completedDate));
 		sb.append("|");
+		
 		if (completedBy != null)
 			sb.append(completedBy.getStaffID());
 		sb.append("|");
