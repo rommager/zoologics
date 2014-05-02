@@ -2,7 +2,6 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;

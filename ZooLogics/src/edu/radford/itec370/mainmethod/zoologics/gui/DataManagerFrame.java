@@ -2,7 +2,6 @@ package edu.radford.itec370.mainmethod.zoologics.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -16,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import edu.radford.itec370.mainmethod.zoologics.Application;
 import edu.radford.itec370.mainmethod.zoologics.ComponentPrinter;
 
 public abstract class DataManagerFrame<T extends Filterable> extends JFrame implements Navigable, WindowListener  {
