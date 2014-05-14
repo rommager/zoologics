@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,9 +21,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import edu.radford.itec370.mainmethod.zoologics.Application;
+import edu.radford.itec370.mainmethod.zoologics.Task;
 
 public class MainScreen extends JFrame implements WindowListener {
 
@@ -180,44 +183,78 @@ public class MainScreen extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowActivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void windowClosing(WindowEvent arg0) {
 		application.saveDataToIO();
 		System.exit(0);
 	}
+	
+	@Override public void windowActivated(WindowEvent arg0) { }
+	@Override public void windowClosed(WindowEvent arg0) { }
+	@Override public void windowDeactivated(WindowEvent arg0) { }
+	@Override public void windowDeiconified(WindowEvent arg0) { }
+	@Override public void windowIconified(WindowEvent arg0) { }
+	@Override public void windowOpened(WindowEvent arg0) { }
+	
+	@SuppressWarnings("serial")
+	class TaskTableModel extends AbstractTableModel {
+		private final String[] COLUMN_NAMES = new String[] {"Task Type","Animal","Description","Due"}; 
+		private ArrayList<Task> rowData;
 
-	@Override
-	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		public TaskTableModel() {
+			super();
+		}
 		
+		public TaskTableModel(ArrayList<Task> rowData) {
+			super();
+			this.rowData = rowData;
+		}
+
+		public String getColumnName(int col) {
+			return COLUMN_NAMES[col];
+		}
+
+		public int getRowCount() { return rowData.size(); }
+
+		public int getColumnCount() { return COLUMN_NAMES.length; }
+
+		public Object getValueAt(int row, int col) {
+			Task item = rowData.get(row);
+			switch (col) {
+			case 0:
+				//return task type
+			case 1:
+				//return animal
+			default:
+				return null;
+			}
+		}
+
+		public void addRow(Task task) {
+			rowData.add(task);
+			int newRow = rowData.indexOf(task);
+			this.fireTableRowsInserted(newRow,  newRow);
+		}
+
+		public boolean isCellEditable(int row, int col) {
+			if (col == 0)
+				return false;
+			return true;
+		}
+
+		public void setValueAt(Object value, int row, int col) {
+			Task item = rowData.get(row);
+			switch (col) {
+			case 1:
+				//item.setVaccineName((String) value);
+			}
+			fireTableCellUpdated(row, col);
+		}
+		public ArrayList<Task> getRowData() {
+			return rowData;
+		}
+		public void setRowData(ArrayList<Task> rowData) {
+			this.rowData = rowData;
+		}
 	}
 
-	@Override
-	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

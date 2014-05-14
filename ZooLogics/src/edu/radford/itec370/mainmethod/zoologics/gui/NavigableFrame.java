@@ -17,7 +17,7 @@ import javax.swing.event.DocumentListener;
 
 import edu.radford.itec370.mainmethod.zoologics.ComponentPrinter;
 
-public abstract class DataManagerFrame<T extends Filterable> extends JFrame implements Navigable, WindowListener  {
+public abstract class NavigableFrame<T extends Filterable> extends JFrame implements Navigable, WindowListener  {
 
 	private static final long serialVersionUID = 2450406106011886854L;
 	protected String windowTitle;
@@ -33,7 +33,7 @@ public abstract class DataManagerFrame<T extends Filterable> extends JFrame impl
 	
 	protected DirtyDataListener dirtyListener;
 
-	public DataManagerFrame() {
+	public NavigableFrame() {
 		super();
 		index = 0;
 		dirtyListener = new DirtyDataListener();

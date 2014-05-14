@@ -6,10 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JPanel;
-
 import edu.radford.itec370.mainmethod.zoologics.gui.Filterable;
-import edu.radford.itec370.mainmethod.zoologics.gui.TaskPanel;
 
 public class Task implements Serializable, Filterable, DataIOable<Task> {
 
@@ -272,11 +269,7 @@ public class Task implements Serializable, Filterable, DataIOable<Task> {
 		if (taskID >= taskIDCounter)
 			taskIDCounter = taskID + 1;
 	}
-
-	public JPanel getPanel() {
-		return new TaskPanel(this);
-	}
-
+	
 	@Override
 	public boolean isVisibleWithFilter(String filter) {
 		// tasks are not filterable

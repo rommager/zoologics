@@ -2,10 +2,6 @@ package edu.radford.itec370.mainmethod.zoologics;
 
 import java.util.Date;
 
-import javax.swing.JPanel;
-
-import edu.radford.itec370.mainmethod.zoologics.gui.AnimalTaskPanel;
-
 public class AnimalTask extends Task {
 
 	private static final long serialVersionUID = 2033805125227771447L;
@@ -38,10 +34,4 @@ public class AnimalTask extends Task {
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
 	}
-
-	@Override
-	public JPanel getPanel() {
-		return new AnimalTaskPanel(this);
-	}
-
 }

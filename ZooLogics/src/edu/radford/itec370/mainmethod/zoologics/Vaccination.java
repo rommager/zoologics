@@ -1,9 +1,5 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
-import javax.swing.JPanel;
-
-import edu.radford.itec370.mainmethod.zoologics.gui.VaccinationPanel;
-
 //TODO figure out the best way to save all 3 task types
 
 public class Vaccination extends AnimalTask implements DataIOable<Task> {
@@ -32,11 +28,7 @@ public class Vaccination extends AnimalTask implements DataIOable<Task> {
 	public String getTaskType() {
 		return TASK_TYPE;
 	}
-	
-	public JPanel getPanel() {
-		return new VaccinationPanel(this);
-	}
-	
+		
 	@Override
 	public Vaccination getNewInstanceFromIO(String[] io) {
 		return new Vaccination(io);

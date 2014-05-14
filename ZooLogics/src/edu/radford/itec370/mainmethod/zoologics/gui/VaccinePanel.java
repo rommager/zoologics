@@ -119,6 +119,7 @@ public class VaccinePanel extends JFrame implements ActionListener, WindowListen
 		public VaccineTableModel() {
 			super();
 		}
+		
 		public VaccineTableModel(ArrayList<Vaccine> rowData) {
 			super();
 			this.rowData = rowData;

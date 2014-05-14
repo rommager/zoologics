@@ -32,7 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.MaskFormatter;
 
-public class AnimalPanel extends DataManagerFrame<Animal> {
+public class AnimalPanel extends NavigableFrame<Animal> {
 
 	// constants
 	private static final long serialVersionUID = 6632886394131544115L;
