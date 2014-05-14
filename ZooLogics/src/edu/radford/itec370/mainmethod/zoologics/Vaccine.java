@@ -1,7 +1,7 @@
 package edu.radford.itec370.mainmethod.zoologics;
 
 
-public class Vaccine implements DataIOable<Vaccine> {
+public class Vaccine implements DataIOable<Vaccine>, Tableable {
 
 	public static int vaccineIDCounter = 92001;
 	private int vaccineID;
@@ -61,6 +61,34 @@ public class Vaccine implements DataIOable<Vaccine> {
 		sb.append(vaccineID); sb.append("|");
 		sb.append(vaccineName); sb.append("|");
 		return sb.toString(); 
+	}
+
+	@Override
+	public Object getValue(int col, int rowConfig) {
+		switch (col) {
+		case 0:
+			return getVaccineID();
+		case 1:
+			return getVaccineName();
+		default:
+			return null;
+		} 
+	}
+
+	@Override
+	public void setValue(Object value, int col, int rowConfig) {
+		switch (col) {
+		case 1:
+			setVaccineName((String) value);
+		}
+		
+	}
+
+	@Override
+	public boolean isFieldEditable(int col) {
+		if (col == 0)
+			return false;
+		return true;
 	}
 
 }

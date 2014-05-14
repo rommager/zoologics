@@ -89,10 +89,6 @@ public class RecurrenceSchedulePanel extends JPanel implements ActionListener {
 		}
 	}
 
-	public static void main(String[] args) {
-		GUITester.launchTestFrame(new RecurrenceSchedulePanel());
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
