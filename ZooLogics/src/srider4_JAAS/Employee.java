@@ -1,8 +1,9 @@
 package srider4_JAAS;
 
-public class Employee {
+public class Employee implements DataIOable<Employee>{
 	private int id;
 	private String name;
+	private String position;
 	private Employee supervisor;
 	private int salary;
 	
@@ -44,6 +45,17 @@ public class Employee {
 
 	public void setSalary(int salary) {
 		this.salary = salary;
+	}
+
+	@Override
+	public Employee getNewInstanceFromIO(String[] io) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getIOLine() {
+		return Integer.toString(id) + "|" + name + supervisor.getName() + " (" + supervisor.getId() + ") " + salary;
 	}
 	
 }
