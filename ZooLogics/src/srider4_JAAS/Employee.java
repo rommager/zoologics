@@ -1,6 +1,11 @@
 package srider4_JAAS;
 
+import java.util.ArrayList;
+
 public class Employee implements DataIOable<Employee>{
+	
+	private static ArrayList<Employee> employees;
+	
 	private int id;
 	private String name;
 	private String position;
@@ -8,7 +13,22 @@ public class Employee implements DataIOable<Employee>{
 	private int salary;
 	
 	public Employee() {
-		
+		super();
+		employees.add(this);
+	}
+	
+	public Employee(String[] data) {
+		this();
+		this.id = Integer.parseInt(data[0]);
+		this.name = data[1];
+		this.position = data[2];
+		this.setSupervisor(Integer.parseInt(data[3]));
+		this.salary = Integer.parseInt(data[4]);
+	}
+	
+	public Employee(int id) {
+		this();
+		this.id = id;
 	}
 	
 	public String toString() {
@@ -30,6 +50,14 @@ public class Employee implements DataIOable<Employee>{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
 	public Employee getSupervisor() {
 		return supervisor;
@@ -39,6 +67,16 @@ public class Employee implements DataIOable<Employee>{
 		this.supervisor = supervisor;
 	}
 
+	public void setSupervisor(int supervisorId) {
+		Employee supervisor = null;
+		for (Employee employee : employees) {
+			if (supervisorId == employee.getId())
+				supervisor = employee;
+		}
+		if (supervisor != null)
+			this.supervisor = supervisor;
+	}
+	
 	public int getSalary() {
 		return salary;
 	}
@@ -48,14 +86,20 @@ public class Employee implements DataIOable<Employee>{
 	}
 
 	@Override
-	public Employee getNewInstanceFromIO(String[] io) {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee getNewInstanceFromIOData(String[] input) {
+		Employee employee = new Employee(input);		
+		return employee;
 	}
 
 	@Override
-	public String getIOLine() {
-		return Integer.toString(id) + "|" + name + supervisor.getName() + " (" + supervisor.getId() + ") " + salary;
+	public String[] getIOData() {
+		String[] output = new String[5];
+		output[0] = Integer.toString(id);
+		output[1] = name;
+		output[2] = position;
+		output[3] = Integer.toString(supervisor.getId());
+		output[4] = Integer.toString(salary);
+		return output;
 	}
 	
 }

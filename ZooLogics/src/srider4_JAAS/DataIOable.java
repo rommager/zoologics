@@ -2,8 +2,8 @@ package srider4_JAAS;
 
 public interface DataIOable<T> {
 
-    public T getNewInstanceFromIO(String[] io);
+    public T getNewInstanceFromIOData(String[] io);
     
-	public String getIOLine();
+	public String[] getIOData();
 	
 }

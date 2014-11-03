@@ -16,18 +16,19 @@ import java.util.ArrayList;
 import edu.radford.itec370.mainmethod.zoologics.Application;
 
 public class DataIO<T extends DataIOable<T>> {
-	private static final String DATA_FOLDER = "./";
-	private String filename;
+	private String dataFolder;
+	private char delimiter;
 	private File file;
 
 	private DataIO() {
 		super();
+		this.dataFolder = "./";
+		this.delimiter = '|';
 	}
 	
 	public DataIO(String filename) {
 		this();
-		this.filename = filename;
-		file = getFile(DATA_FOLDER, filename);
+		this.file = getFile(dataFolder, filename);
 	}
 	
 	public void saveData(ArrayList<T> arrayList) {
@@ -40,13 +41,19 @@ public class DataIO<T extends DataIOable<T>> {
 			file.createNewFile();
 			writer = new BufferedWriter(new FileWriter(file));
 			for (T item : arrayList) {
-				String ioLine = item.getIOLine().replaceAll("\n", "\\\\n");  // converts returns to '\n' for storage
-				writer.write(ioLine);
+				String[] data = item.getIOData();
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < data.length; i++) {
+					sb.append(data[i].replaceAll("\n", "\\\\n"));
+					if (i < data.length - 1)
+						sb.append(delimiter);
+				}
+				writer.write(sb.toString());
 				writer.newLine();
 			}
 			writer.close();
 		} catch (IOException e) { System.out.println("Error: IO Exception!"); } 
-		finally { }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions too, so it can't go in finally block...?
+		finally { }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions, so it can't go in finally block...?
 	}
 	
 	public ArrayList<T> loadData(T template) {
@@ -60,14 +67,14 @@ public class DataIO<T extends DataIOable<T>> {
 			inLine = reader.readLine();
 			while (inLine != null) {
 				
-				arrayList.add(template.getNewInstanceFromIO(inLine.replaceAll("\\\\n", "\n").split("\\|",-1)));
+				arrayList.add(template.getNewInstanceFromIOData(inLine.replaceAll("\\\\n", "\n").split("\\|",-1)));
 				inLine = reader.readLine();
 			}
 			reader.close();
 		}
 		catch (FileNotFoundException e) { System.out.println("Error: File not found!"); }
 		catch (IOException e) { System.out.println("Error: IO Exception!"); }
-		finally{ }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions too, so it can't go in finally block...?
+		finally{ }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions, so it can't go in finally block...?
 		return arrayList;
 	}
 	
@@ -100,18 +107,10 @@ public class DataIO<T extends DataIOable<T>> {
 		return newFile;
 	}
 
-	public static void createBackup(String filename) {
-		File source = getFile(DATA_FOLDER, filename);
-		File dest = getFile(DATA_FOLDER, filename + ".backup");
+/*	private void createBackup(String filename) {
+		File source = getFile(dataFolder, filename);
+		File dest = getFile(dataFolder, filename + ".backup");
 		Application.copyFile(source, dest);
-	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+	}*/
 
 }
