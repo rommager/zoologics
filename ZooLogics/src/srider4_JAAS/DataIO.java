@@ -101,7 +101,7 @@ public class DataIO<T extends DataIOable<T>> {
 
 		try {
 			decoded = URLDecoder.decode(url.getPath(), "UTF-8");
-		} catch (UnsupportedEncodingException e) { }
+		} catch (UnsupportedEncodingException e) { System.out.println("Error: Unsupported Encoding Exception"); }
 
 		newFile = new File(decoded);
 		return newFile;

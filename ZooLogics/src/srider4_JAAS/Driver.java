@@ -6,6 +6,7 @@ public class Driver {
 
 	Employee user;
 	ArrayList<Employee> Employees;
+	DataIO<Employee> io;
 	
 	public static void main(String[] args) {
 	
@@ -14,12 +15,10 @@ public class Driver {
 	}
 	
 	public void run() {
+		io = new DataIO<Employee>("employees.txt");
+		io.loadData(new Employee());
 		
 	}
 	
-	private ArrayList<Employee> loadEmployees() {
-		
-		return null;
-	}
 
 }

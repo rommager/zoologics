@@ -14,6 +14,8 @@ public class Employee implements DataIOable<Employee>{
 	
 	public Employee() {
 		super();
+		if (employees == null)
+			employees = new ArrayList<Employee>();
 		employees.add(this);
 	}
 	
@@ -68,6 +70,10 @@ public class Employee implements DataIOable<Employee>{
 	}
 
 	public void setSupervisor(int supervisorId) {
+		if (supervisorId == -1) {
+			supervisor = null;
+			return;
+		}
 		Employee supervisor = null;
 		for (Employee employee : employees) {
 			if (supervisorId == employee.getId())
