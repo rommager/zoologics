@@ -1,22 +1,17 @@
 package srider4_JAAS;
 
-import java.util.ArrayList;
-
 public class Employee implements DataIOable<Employee>{
 	
-	private static ArrayList<Employee> employees;
+//	private static ArrayList<Employee> employees;
 	
 	private int id;
 	private String name;
 	private String position;
-	private Employee supervisor;
+	private int supervisorId;
 	private int salary;
 	
 	public Employee() {
-		super();
-		if (employees == null)
-			employees = new ArrayList<Employee>();
-		employees.add(this);
+		super();		
 	}
 	
 	public Employee(String[] data) {
@@ -24,7 +19,11 @@ public class Employee implements DataIOable<Employee>{
 		this.id = Integer.parseInt(data[0]);
 		this.name = data[1];
 		this.position = data[2];
-		this.setSupervisor(Integer.parseInt(data[3]));
+		
+		if (!data[3].isEmpty())
+			this.supervisorId = Integer.parseInt(data[3]);
+		else
+			this.supervisorId = 0;
 		this.salary = Integer.parseInt(data[4]);
 	}
 	
@@ -34,7 +33,7 @@ public class Employee implements DataIOable<Employee>{
 	}
 	
 	public String toString() {
-		return Integer.toString(id) + " " + name + supervisor.getName() + " (" + supervisor.getId() + ") " + salary;
+		return Integer.toString(id) + ", " + name + ", " + position + ", " + supervisorId + ", " + salary;
 	}
 
 	public int getId() {
@@ -61,15 +60,15 @@ public class Employee implements DataIOable<Employee>{
 		this.position = position;
 	}
 
-	public Employee getSupervisor() {
-		return supervisor;
+	public int getSupervisorId() {
+		return supervisorId;
 	}
 
-	public void setSupervisor(Employee supervisor) {
-		this.supervisor = supervisor;
+	public void setSupervisorId(int supervisorId) {
+		this.supervisorId = supervisorId;
 	}
 
-	public void setSupervisor(int supervisorId) {
+/*	public void setSupervisor(int supervisorId) {
 		if (supervisorId == -1) {
 			supervisor = null;
 			return;
@@ -81,7 +80,7 @@ public class Employee implements DataIOable<Employee>{
 		}
 		if (supervisor != null)
 			this.supervisor = supervisor;
-	}
+	}*/
 	
 	public int getSalary() {
 		return salary;
@@ -103,7 +102,10 @@ public class Employee implements DataIOable<Employee>{
 		output[0] = Integer.toString(id);
 		output[1] = name;
 		output[2] = position;
-		output[3] = Integer.toString(supervisor.getId());
+		if (supervisorId == 0) 
+			output[3] = "";
+		else
+			output[3] = Integer.toString(supervisorId);
 		output[4] = Integer.toString(salary);
 		return output;
 	}

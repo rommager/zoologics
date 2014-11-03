@@ -17,23 +17,24 @@ import edu.radford.itec370.mainmethod.zoologics.Application;
 
 public class DataIO<T extends DataIOable<T>> {
 	private String dataFolder;
+	private String filename;
 	private char delimiter;
-	private File file;
+	//private File file;
 
 	private DataIO() {
 		super();
-		this.dataFolder = "./";
 		this.delimiter = '|';
 	}
 	
 	public DataIO(String filename) {
 		this();
-		this.file = getFile(dataFolder, filename);
+		this.filename = filename;
+		//this.dataFolder = folder;
 	}
 	
 	public void saveData(ArrayList<T> arrayList) {
 //		createBackup(filename);
-//		File file = Application.getFile(DATA_FOLDER, filename);
+		File file = getFile(filename);
 		if (!file.getParentFile().exists()) 
 			file.getParentFile().mkdirs();   // creates the folder if it doesn't exist
 		BufferedWriter writer = null;
@@ -58,7 +59,8 @@ public class DataIO<T extends DataIOable<T>> {
 	
 	public ArrayList<T> loadData(T template) {
 		BufferedReader reader = null;
-//		File file = Application.getFile(DATA_FOLDER, filename);
+		File file = getFile(filename);
+
 		String inLine;
 		ArrayList<T> arrayList = new ArrayList<T>();
 
@@ -72,8 +74,8 @@ public class DataIO<T extends DataIOable<T>> {
 			}
 			reader.close();
 		}
-		catch (FileNotFoundException e) { System.out.println("Error: File not found!"); }
-		catch (IOException e) { System.out.println("Error: IO Exception!"); }
+		 catch (FileNotFoundException e) { System.out.println("Error: File not found!"); }
+		 catch (IOException e) { System.out.println("Error: IO Exception!"); }
 		finally{ }  //TODO - I'm pretty sure we need to close something here, but writer.close throws IOExceptions, so it can't go in finally block...?
 		return arrayList;
 	}
@@ -87,6 +89,11 @@ public class DataIO<T extends DataIOable<T>> {
 			// do nothing
 		}
 		return outputURL;
+	}
+	
+	private static File getFile(String filename) {
+		File file = new File(filename);
+		return file;
 	}
 	
 	private static File getFile(String path, String filename) {

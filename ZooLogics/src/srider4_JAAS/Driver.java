@@ -1,5 +1,6 @@
 package srider4_JAAS;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Driver {
@@ -14,9 +15,15 @@ public class Driver {
 		program.run();
 	}
 	
-	public void run() {
-		io = new DataIO<Employee>("employees.txt");
-		io.loadData(new Employee());
+	private void run() {
+		String filename = "d:/proj2/employees.txt";
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		io = new DataIO<Employee>(filename);		
+		employees = io.loadData(new Employee());
+		
+		for (Employee emp : employees) {
+			System.out.println(emp.toString());
+		}
 		
 	}
 	
