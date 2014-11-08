@@ -155,4 +155,63 @@ public class LoginModuleP2 implements LoginModule {
 		subject.getPrincipals().remove(examplePrincipal);
 		return true;
 	}
+//	MessageDigest md = MessageDigest.getInstance("SHA");
+//
+//	 try {
+//	     md.update(toChapter1);
+//	     MessageDigest tc1 = md.clone();
+//	     byte[] toChapter1Digest = tc1.digest();
+//	     md.update(toChapter2);
+//	     ...etc.
+//	 } catch (CloneNotSupportedException cnse) {
+//	     throw new DigestException("couldn't make digest of partial content");
+//	 }
+	 
+	
+/*	public class SHACheckSumExample 
+	{
+	    public static void main(String[] args)throws Exception
+	    {
+	        MessageDigest md = MessageDigest.getInstance("SHA-256");
+	        FileInputStream fis = new FileInputStream("c:\\loging.log");
+	 
+	        byte[] dataBytes = new byte[1024];
+	 
+	        int nread = 0; 
+	        while ((nread = fis.read(dataBytes)) != -1) {
+	          md.update(dataBytes, 0, nread);
+	        };
+	        byte[] mdbytes = md.digest();
+	 
+	        //convert the byte to hex format method 1
+	        StringBuffer sb = new StringBuffer();
+	        for (int i = 0; i < mdbytes.length; i++) {
+	          sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+	        }
+	 
+	        System.out.println("Hex format : " + sb.toString());
+	 
+	       //convert the byte to hex format method 2
+	        StringBuffer hexString = new StringBuffer();
+	    	for (int i=0;i<mdbytes.length;i++) {
+	    	  hexString.append(Integer.toHexString(0xFF & mdbytes[i]));
+	    	}
+	 
+	    	System.out.println("Hex format : " + hexString.toString());
+	    }
+	}*/
+
+	/*
+	public void testVerifyPassword() throws Exception {
+		  String password="star12345";
+		  FileOutputStream outputStream=getContext().openFileOutput(FILE_NAME,Context.MODE_PRIVATE);
+		  MessageDigest digest=MessageDigest.getInstance("SHA-256");
+		  digest.update(password.getBytes());
+		  byte[] hashPassword=digest.digest();
+		  outputStream.write(hashPassword);
+		  FileInputStream inputStream=getContext().openFileInput(FILE_NAME);
+		  PasswordStorage storage=new PasswordStorage(inputStream);
+		  assert(storage.verifyPassword(password));
+		}
+	*/
 }
