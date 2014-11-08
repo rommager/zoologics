@@ -73,7 +73,7 @@ public class Staff implements Serializable {
 				return true;
 			}
 		}	
-		return false;
+		return false;		
 	}
 	
 	private byte[] generateHash(char[] password) {
