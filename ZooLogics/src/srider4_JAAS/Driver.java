@@ -53,7 +53,7 @@ public class Driver {
 
 
 	private void run() {
-		System.out.println("We're in");
+		System.out.println("Welcome to the Employee Database");
 		scan = new Scanner(System.in);
 		/*		for (Employee emp : employees) {
 			System.out.println(emp.toString());
