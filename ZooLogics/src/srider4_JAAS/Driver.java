@@ -3,6 +3,8 @@ package srider4_JAAS;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.security.auth.login.LoginException;
+
 public class Driver {
 
 	private Employee user;
@@ -17,7 +19,21 @@ public class Driver {
 		program.run();
 	}
 	
+	private void login() {
+		LoginModuleP2 lm = new LoginModuleP2();
+		try {
+			lm.login();
+		}
+		catch (LoginException e) {
+			System.out.println("Username/password incorrect! " + e);
+			return;
+		}
+		run();
+	}
+	
+	
 	private void run() {
+		System.out.println("We're in");
 		String filename = "src/srider4_JAAS/employees.txt";
 		employees = new ArrayList<Employee>();		
 		io = new DataIO<Employee>(filename);		
