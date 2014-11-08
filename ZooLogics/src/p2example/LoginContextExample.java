@@ -29,8 +29,7 @@ public class LoginContextExample {
 			
     static LoginContext lc;
 	
-    public static void main(String[] args) {
-
+    public static void main(String[] args) {    	
 //		LoginContextExample lce = new LoginContextExample();
 		
 		/* Create a call back handler. This call back handler will be populated with

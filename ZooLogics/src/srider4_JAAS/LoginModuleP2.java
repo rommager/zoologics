@@ -1,7 +1,11 @@
 
 
 package srider4_JAAS;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -38,9 +42,6 @@ public class LoginModuleP2 implements LoginModule {
 	// Salt app constant part for password hash 
 	private static final byte[] SALT = "employeeDB".getBytes();
 
-	// ArrayList for Employee Database, where usernames and password hashes are stored
-	private ArrayList<Employee> employees;
-
 	/*
 	 * String username
 	 * byte[] password 
@@ -57,11 +58,6 @@ public class LoginModuleP2 implements LoginModule {
 	CallbackHandler cbh;
 	Map sharedState;
 	Map options;
-	
-	public LoginModuleP2(ArrayList<Employee> employees) {
-		super();
-		this.employees = employees;
-	}
 
 	/*
 	 * This method is called by the login context automatically.
@@ -77,7 +73,6 @@ public class LoginModuleP2 implements LoginModule {
 		this.cbh = cbh;
 		this.sharedState = sharedState;
 		this.options = options;
-
 	}
 
 	/*
@@ -143,6 +138,7 @@ public class LoginModuleP2 implements LoginModule {
 		System.out.println("Enter password");
 		password = scan.next().getBytes();
 
+//		scan.close();
 		// Now populate username/passwords etc. from the handler
 		//		username = ((NameCallback) exampleCallbacks[0]).getName();
 		//		password = new String (
@@ -158,28 +154,50 @@ public class LoginModuleP2 implements LoginModule {
 				successfulLogin = true; 
 				return true; // successful login.			
 		}*/
-		for (Employee emp : employees) {
-			if (username.equalsIgnoreCase(emp.getUsername())) { 
-				byte[] hashCheck = generateHash(username.getBytes(), password);
-				byte[] storedHash = emp.getPasshash();
-				if (Arrays.equals(hashCheck, storedHash)) 
-				{
-					successfulLogin = true; 
-					return true; // successful login.	
-				}				
-				/*     
+		String[] data = findUser(username);
+		if (data != null) {
+			byte[] hashCheck = generateHash(username.getBytes(), password);
+			byte[] storedHash = DatatypeConverter.parseHexBinary(data[2]);
+			if (Arrays.equals(hashCheck, storedHash))
+			{
+				successfulLogin = true; 
+				return true; // successful login.	
+			}				
+			/*     
 		  		byte[] array = new BigInteger("1111000011110001", 2).toByteArray();
 				byte[] secondArray = new BigInteger("1111000011110001", 2).toByteArray();
 				if (Arrays.equals(array, secondArray))
 				{
 				    System.out.println("Yup, they're the same!");
 				}  
-				*/				
-			}
+			 */				
 		}
 
-		System.out.println("Invalid login.");
 		return false;
+	}
+
+	private String[] findUser(String username) {
+		BufferedReader reader = null;
+		String[] user = null;
+		File file = new File("src/srider4_JAAS/logins.txt");
+		String inLine;
+
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			inLine = reader.readLine();
+			while (inLine != null) {
+
+				String[] fields = inLine.split("\\|",-1);
+				if (fields[0].equalsIgnoreCase(username))
+					user = fields;
+				inLine = reader.readLine();
+			}
+			reader.close();
+		}
+		catch (FileNotFoundException e) { System.out.println("Error: File not found!"); }
+		catch (IOException e) { System.out.println("Error: IO Exception!"); }
+		catch (Exception e) { e.printStackTrace(); }
+		return user;
 	}
 
 	/*  public boolean authenticate(Connection con, String login, String password)
@@ -197,7 +215,7 @@ public class LoginModuleP2 implements LoginModule {
 	               login="";
 	               password="";
 	           }
-	 
+
 	           ps = con.prepareStatement("SELECT PASSWORD, SALT FROM CREDENTIAL WHERE LOGIN = ?");
 	           ps.setString(1, login);
 	           rs = ps.executeQuery();
@@ -252,10 +270,10 @@ public class LoginModuleP2 implements LoginModule {
 		catch (IOException e) { }
 		byte c[] = outputStream.toByteArray( );
 		return c;
-		
-//		final Random r = new SecureRandom();
-//		byte[] salt = new byte[32];
-//		r.nextBytes(salt);
+
+		//		final Random r = new SecureRandom();
+		//		byte[] salt = new byte[32];
+		//		r.nextBytes(salt);
 	}
 
 }

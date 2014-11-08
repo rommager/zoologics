@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+
+import p2example.CallBackHandlerExample;
 
 public class Driver {
 
@@ -14,6 +17,7 @@ public class Driver {
 	private DataIO<Employee> io;
 	private Scanner scan;
 	private boolean loggedIn;
+	private LoginContext lc;
 
 	public static void main(String[] args) {
 
@@ -24,18 +28,33 @@ public class Driver {
 	private void login() {
 		loggedIn = false;
 		loadEmployees();
-		LoginModuleP2 lm = new LoginModuleP2(employees);
+		//LoginModuleP2 lm = new LoginModuleP2(employees);
+		CallBackHandlerP2 cbe = new CallBackHandlerP2(); 
+		
+		/* Create a new login context. 
+		 * @param Policy Name : We defined a policy in the file JAASPolicy.txt 
+		 *                      and it is called "JAASExample"
+		 * @param Call Back Handler
+		 */
 		try {
-			loggedIn = lm.login();
+			lc = new LoginContext("JAASPolicyP2", cbe);
+		}
+		catch (LoginException e) {
+			System.err.println("Login exception."); 
+		}
+		
+		try {
+			lc.login();
 		}
 		catch (LoginException e) {
 			System.out.println("Username/password incorrect!");
 			return;
 		}
-		if (loggedIn)
-			run();
+		
+		run();
+		
 		try {
-			lm.logout();
+			lc.logout();
 		} catch (LoginException e) {
 			System.out.println("Something went wrong logging out.");
 			return;
@@ -123,7 +142,8 @@ public class Driver {
 					selection = -1;
 			}
 			else {
-				scan.next();
+				if (scan.hasNext())
+					scan.next();
 				selection = -1;
 			}
 			if (selection == -1)

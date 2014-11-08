@@ -1,0 +1,3 @@
+JAASPolicyP2 {
+	srider4_JAAS.LoginModuleP2 required debug=false; 
+};
