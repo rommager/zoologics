@@ -74,7 +74,9 @@ public class Employee implements DataIOable<Employee>{
 		this.supervisorId = supervisorId;
 	}
 
-/*	public void setSupervisor(int supervisorId) {
+	
+	
+	/*	public void setSupervisor(int supervisorId) {
 		if (supervisorId == -1) {
 			supervisor = null;
 			return;
@@ -88,6 +90,22 @@ public class Employee implements DataIOable<Employee>{
 			this.supervisor = supervisor;
 	}*/
 	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public byte[] getPasshash() {
+		return passhash;
+	}
+
+	public void setPasshash(byte[] passhash) {
+		this.passhash = passhash;
+	}
+
 	public int getSalary() {
 		return salary;
 	}

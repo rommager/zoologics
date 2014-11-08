@@ -152,9 +152,19 @@ public class LoginModuleP2 implements LoginModule {
 				return true; // successful login.			
 		}*/
 		for (Employee emp : employees) {
-			if (username.equalsIgnoreCase(emp.getUserName())) { // TODO make this work - gen setters & getters for new fields
-				byte[] hash = generateHash(username,password);
+			if (username.equalsIgnoreCase(emp.getName())) { // TODO make this work - gen setters & getters for new fields
+				byte[] hashCheck = generateHash(username,password);
 				// TODO compare hash to the passhash in the employee record - might need to google example for comparing byte arrays
+				byte[] storedHash = 
+				/*     
+		  		byte[] array = new BigInteger("1111000011110001", 2).toByteArray();
+				byte[] secondArray = new BigInteger("1111000011110001", 2).toByteArray();
+				if (Arrays.equals(array, secondArray))
+				{
+				    System.out.println("Yup, they're the same!");
+				}  
+				*/
+				
 				{
 					successfulLogin = true; 
 					return true; // successful login.	
@@ -168,7 +178,42 @@ public class LoginModuleP2 implements LoginModule {
 		return false;
 	}
 
-	
+	/*  public boolean authenticate(Connection con, String login, String password)
+	           throws SQLException, NoSuchAlgorithmException{
+	       boolean authenticated=false;
+	       PreparedStatement ps = null;
+	       ResultSet rs = null;
+	       try {
+	           boolean userExist = true;
+	           // INPUT VALIDATION
+	           if (login==null||password==null){
+	               // TIME RESISTANT ATTACK
+	               // Computation time is equal to the time needed by a legitimate user
+	               userExist = false;
+	               login="";
+	               password="";
+	           }
+	 
+	           ps = con.prepareStatement("SELECT PASSWORD, SALT FROM CREDENTIAL WHERE LOGIN = ?");
+	           ps.setString(1, login);
+	           rs = ps.executeQuery();
+	           String digest, salt;
+	           if (rs.next()) {
+	               digest = rs.getString("PASSWORD");
+	               salt = rs.getString("SALT");
+	               // DATABASE VALIDATION
+	               if (digest == null || salt == null) {
+	                   throw new SQLException("Database inconsistant Salt or Digested Password altered");
+	               }
+	               if (rs.next()) { // Should not append, because login is the primary key
+	                   throw new SQLException("Database inconsistent two CREDENTIALS with the same LOGIN");
+	               }
+	           } else { // TIME RESISTANT ATTACK (Even if the user does not exist the
+	               // Computation time is equal to the time needed for a legitimate user
+	               digest = "000000000000000000000000000=";
+	               salt = "00000000000=";
+	               userExist = false;
+	           } */
 	/*
 	 * 
 	 * @see javax.security.auth.spi.LoginModule#logout()
@@ -201,82 +246,7 @@ public class LoginModuleP2 implements LoginModule {
 		return sb.toString().getBytes();
 	}
 
-	//	MessageDigest md = MessageDigest.getInstance("SHA");
-	//
-	//	 try {
-	//	     md.update(toChapter1);
-	//	     MessageDigest tc1 = md.clone();
-	//	     byte[] toChapter1Digest = tc1.digest();
-	//	     md.update(toChapter2);
-	//	     ...etc.
-	//	 } catch (CloneNotSupportedException cnse) {
-	//	     throw new DigestException("couldn't make digest of partial content");
-	//	 }
 
-
-	/*	public class SHACheckSumExample 
-	{
-	    public static void main(String[] args)throws Exception
-	    {
-	        MessageDigest md = MessageDigest.getInstance("SHA-256");
-	        FileInputStream fis = new FileInputStream("c:\\loging.log");
-
-	        byte[] dataBytes = new byte[1024];
-
-	        int nread = 0; 
-	        while ((nread = fis.read(dataBytes)) != -1) {
-	          md.update(dataBytes, 0, nread);
-	        };
-	        byte[] mdbytes = md.digest();
-
-	        //convert the byte to hex format method 1
-	        StringBuffer sb = new StringBuffer();
-	        for (int i = 0; i < mdbytes.length; i++) {
-	          sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
-	        }
-
-	        System.out.println("Hex format : " + sb.toString());
-
-	       //convert the byte to hex format method 2
-	        StringBuffer hexString = new StringBuffer();
-	    	for (int i=0;i<mdbytes.length;i++) {
-	    	  hexString.append(Integer.toHexString(0xFF & mdbytes[i]));
-	    	}
-
-	    test test
-
-	    	System.out.println("Hex format : " + hexString.toString());
-	    }
-	}*/
-
-	/*
-	public void testVerifyPassword() throws Exception {
-		  String password="star12345";
-		  FileOutputStream outputStream=getContext().openFileOutput(FILE_NAME,Context.MODE_PRIVATE);
-		  MessageDigest digest=MessageDigest.getInstance("SHA-256");
-		  digest.update(password.getBytes());
-		  byte[] hashPassword=digest.digest();
-		  outputStream.write(hashPassword);
-		  FileInputStream inputStream=getContext().openFileInput(FILE_NAME);
-		  PasswordStorage storage=new PasswordStorage(inputStream);
-		  assert(storage.verifyPassword(password));
-
-		}
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public byte[] getPassword() {
-		return password;
-	}
-
-	public void setPassword(byte[] password) {
-		this.password = password;
-	}
+	
 
 }
