@@ -168,6 +168,7 @@ public class LoginModuleP2 implements LoginModule {
 		return false;
 	}
 
+	
 	/*
 	 * 
 	 * @see javax.security.auth.spi.LoginModule#logout()
@@ -262,4 +263,20 @@ public class LoginModuleP2 implements LoginModule {
 
 		}
 	 */
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public byte[] getPassword() {
+		return password;
+	}
+
+	public void setPassword(byte[] password) {
+		this.password = password;
+	}
+
 }
