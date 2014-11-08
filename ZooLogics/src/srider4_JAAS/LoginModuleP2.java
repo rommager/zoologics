@@ -1,11 +1,13 @@
 
 
 package srider4_JAAS;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -30,18 +32,18 @@ public class LoginModuleP2 implements LoginModule {
 	// Variable that keeps track of the principal.
 	Principal examplePrincipal;
 
-	/*
-	 * Subject keeps track of who is currently logged in.
-	 */
+	// Subject keeps track of who is currently logged in.
 	Subject subject;
-	
-	private static final char[] SALT = "employeeDB".toCharArray();
 
+	// Salt app constant part for password hash 
+	private static final byte[] SALT = "employeeDB".getBytes();
+
+	// ArrayList for Employee Database, where usernames and password hashes are stored
 	private ArrayList<Employee> employees;
 
 	/*
 	 * String username
-	 * String password 
+	 * byte[] password 
 	 * Temporary storage for usernames and passwords (before authentication).
 	 * After authentication we can clear these variables. 
 	 */
@@ -49,12 +51,17 @@ public class LoginModuleP2 implements LoginModule {
 	byte[] password;
 
 	/*
-	 * Other variables that are initialized by the login context. 
+	 * Other variables that are initialized by the login context.
 	 */
 
 	CallbackHandler cbh;
 	Map sharedState;
 	Map options;
+	
+	public LoginModuleP2(ArrayList<Employee> employees) {
+		super();
+		this.employees = employees;
+	}
 
 	/*
 	 * This method is called by the login context automatically.
@@ -152,10 +159,14 @@ public class LoginModuleP2 implements LoginModule {
 				return true; // successful login.			
 		}*/
 		for (Employee emp : employees) {
-			if (username.equalsIgnoreCase(emp.getName())) { // TODO make this work - gen setters & getters for new fields
-				byte[] hashCheck = generateHash(username,password);
-				// TODO compare hash to the passhash in the employee record - might need to google example for comparing byte arrays
-				byte[] storedHash = 
+			if (username.equalsIgnoreCase(emp.getUsername())) { 
+				byte[] hashCheck = generateHash(username.getBytes(), password);
+				byte[] storedHash = emp.getPasshash();
+				if (Arrays.equals(hashCheck, storedHash)) 
+				{
+					successfulLogin = true; 
+					return true; // successful login.	
+				}				
 				/*     
 		  		byte[] array = new BigInteger("1111000011110001", 2).toByteArray();
 				byte[] secondArray = new BigInteger("1111000011110001", 2).toByteArray();
@@ -163,15 +174,8 @@ public class LoginModuleP2 implements LoginModule {
 				{
 				    System.out.println("Yup, they're the same!");
 				}  
-				*/
-				
-				{
-					successfulLogin = true; 
-					return true; // successful login.	
-				}
+				*/				
 			}
-
-
 		}
 
 		System.out.println("Invalid login.");
@@ -225,7 +229,7 @@ public class LoginModuleP2 implements LoginModule {
 		return true;
 	}
 
-	private byte[] generateHash(String username, byte[] password) {
+	private byte[] generateHash(byte[] username, byte[] password) {
 		byte[] returnHash;
 		try {
 			MessageDigest md;
@@ -238,15 +242,20 @@ public class LoginModuleP2 implements LoginModule {
 		return returnHash;
 	}
 
-	private byte[] addSalt(String username, byte[] password) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(SALT);
-		sb.append(username);
-		sb.append(password);
-		return sb.toString().getBytes();
+	private byte[] addSalt(byte[] username, byte[] password) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+		try {
+			outputStream.write(SALT);
+			outputStream.write(username);
+			outputStream.write(password);
+		}
+		catch (IOException e) { }
+		byte c[] = outputStream.toByteArray( );
+		return c;
+		
+//		final Random r = new SecureRandom();
+//		byte[] salt = new byte[32];
+//		r.nextBytes(salt);
 	}
-
-
-	
 
 }

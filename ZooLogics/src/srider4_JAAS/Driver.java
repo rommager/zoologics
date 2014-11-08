@@ -13,6 +13,7 @@ public class Driver {
 	private ArrayList<Employee> employees;
 	private DataIO<Employee> io;
 	private Scanner scan;
+	private boolean loggedIn;
 
 	public static void main(String[] args) {
 
@@ -21,21 +22,25 @@ public class Driver {
 	}
 
 	private void login() {
+		loggedIn = false;
 		loadEmployees();
-		LoginModuleP2 lm = new LoginModuleP2();
+		LoginModuleP2 lm = new LoginModuleP2(employees);
 		try {
-			lm.login();
+			loggedIn = lm.login();
 		}
 		catch (LoginException e) {
 			System.out.println("Username/password incorrect!");
 			return;
 		}
-		run();
+		if (loggedIn)
+			run();
 		try {
 			lm.logout();
 		} catch (LoginException e) {
-			System.out.println("Something went wrong.");
+			System.out.println("Something went wrong logging out.");
+			return;
 		}
+		System.out.println("You have logged out successfully.");
 	}
 
 	/*	private void dummyLogin() {
