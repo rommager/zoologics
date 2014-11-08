@@ -197,6 +197,8 @@ public class LoginModuleP2 implements LoginModule {
 	    	  hexString.append(Integer.toHexString(0xFF & mdbytes[i]));
 	    	}
 	 
+	    	
+	    	
 	    	System.out.println("Hex format : " + hexString.toString());
 	    }
 	}*/
@@ -212,6 +214,7 @@ public class LoginModuleP2 implements LoginModule {
 		  FileInputStream inputStream=getContext().openFileInput(FILE_NAME);
 		  PasswordStorage storage=new PasswordStorage(inputStream);
 		  assert(storage.verifyPassword(password));
+		  
 		}
 	*/
 }
