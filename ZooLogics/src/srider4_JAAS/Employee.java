@@ -1,5 +1,7 @@
 package srider4_JAAS;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class Employee implements DataIOable<Employee>{
 	
 //	private static ArrayList<Employee> employees;
@@ -9,6 +11,8 @@ public class Employee implements DataIOable<Employee>{
 	private String position;
 	private int supervisorId;
 	private int salary;
+	private String username;
+	private byte[] passhash;
 	
 	public Employee() {
 		super();		
@@ -25,6 +29,8 @@ public class Employee implements DataIOable<Employee>{
 		else
 			this.supervisorId = 0;
 		this.salary = Integer.parseInt(data[4]);
+		this.username = data[5];
+		this.passhash = DatatypeConverter.parseHexBinary(data[6]);
 	}
 	
 	public Employee(int id) {
@@ -33,7 +39,7 @@ public class Employee implements DataIOable<Employee>{
 	}
 	
 	public String toString() {
-		return Integer.toString(id) + ", " + name + ", " + position + ", " + supervisorId + ", " + salary;
+		return Integer.toString(id) + ", " + name + ", " + position + ", " + supervisorId + ", " + salary + ", " + username + ", " + DatatypeConverter.printHexBinary(passhash);
 	}
 
 	public int getId() {
@@ -107,6 +113,8 @@ public class Employee implements DataIOable<Employee>{
 		else
 			output[3] = Integer.toString(supervisorId);
 		output[4] = Integer.toString(salary);
+		output[5] = username;
+		output[6] = DatatypeConverter.printHexBinary(passhash);
 		return output;
 	}
 	

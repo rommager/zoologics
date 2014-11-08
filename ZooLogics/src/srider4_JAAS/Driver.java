@@ -21,6 +21,7 @@ public class Driver {
 	}
 
 	private void login() {
+		loadEmployees();
 		LoginModuleP2 lm = new LoginModuleP2();
 		try {
 			lm.login();
@@ -55,7 +56,7 @@ public class Driver {
 	private void run() {
 		System.out.println("Welcome to the Employee Database");
 		scan = new Scanner(System.in);
-		/*		for (Employee emp : employees) {
+/*		for (Employee emp : employees) {
 			System.out.println(emp.toString());
 		}*/
 		do {

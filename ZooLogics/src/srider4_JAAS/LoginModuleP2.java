@@ -2,7 +2,10 @@
 
 package srider4_JAAS;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,6 +17,7 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
+import javax.xml.bind.DatatypeConverter;
 
 import p2example.ExamplePrincipal;
 
@@ -25,28 +29,33 @@ public class LoginModuleP2 implements LoginModule {
 
 	// Variable that keeps track of the principal.
 	Principal examplePrincipal;
-	
+
 	/*
 	 * Subject keeps track of who is currently logged in.
 	 */
 	Subject subject;
 	
+	private static final char[] SALT = "employeeDB".toCharArray();
+
+	private ArrayList<Employee> employees;
+
 	/*
 	 * String username
 	 * String password 
 	 * Temporary storage for usernames and passwords (before authentication).
 	 * After authentication we can clear these variables. 
 	 */
-	String username, password;
-	
+	String username;
+	byte[] password;
+
 	/*
 	 * Other variables that are initialized by the login context. 
 	 */
-	
+
 	CallbackHandler cbh;
 	Map sharedState;
 	Map options;
-	
+
 	/*
 	 * This method is called by the login context automatically.
 	 * @see javax.security.auth.spi.LoginModule#initialize(javax.security.auth.Subject, 
@@ -56,21 +65,21 @@ public class LoginModuleP2 implements LoginModule {
 			CallbackHandler cbh,
 			Map sharedState,
 			Map options) {
-		
+
 		this.subject = subject;
 		this.cbh = cbh;
 		this.sharedState = sharedState;
 		this.options = options;
-		
+
 	}
-	
+
 	/*
 	 * If a user tries to abort a login then the state is reset. 
 	 * @see javax.security.auth.spi.LoginModule#abort()
 	 */
 	public boolean abort() throws LoginException {
 		if (!successfulLogin) {
-			
+
 			username = null;
 			password = null;
 			return false; 
@@ -78,7 +87,7 @@ public class LoginModuleP2 implements LoginModule {
 			logout(); 
 			return true; 
 		}
-		
+
 	}
 
 	/*
@@ -88,19 +97,19 @@ public class LoginModuleP2 implements LoginModule {
 	 * @see javax.security.auth.spi.LoginModule#commit()
 	 */
 	public boolean commit() throws LoginException {
-		
+
 		if (successfulLogin) {
-			
+
 			// Example Principal object stores the logged in user name.
-				examplePrincipal = new ExamplePrincipal(username);
-				// subject stores the current logged in user.
-				subject.getPrincipals().add(examplePrincipal);
-				return true; 
+			examplePrincipal = new ExamplePrincipal(username);
+			// subject stores the current logged in user.
+			subject.getPrincipals().add(examplePrincipal);
+			return true; 
 		}
-		
+
 		return false;
 	}
-	
+
 	/*
 	 * The actual login method that performs the authentication
 	 * @see javax.security.auth.spi.LoginModule#login()
@@ -109,42 +118,56 @@ public class LoginModuleP2 implements LoginModule {
 		Scanner scan = new Scanner(System.in);
 		// We will use two call backs - one for username and the other
 		// for password. 
-//		Callback exampleCallbacks[] = new Callback[2];
-//		exampleCallbacks[0] = new NameCallback("username: ");
-//		exampleCallbacks[1] = new PasswordCallback("password: ", false);
+		//		Callback exampleCallbacks[] = new Callback[2];
+		//		exampleCallbacks[0] = new NameCallback("username: ");
+		//		exampleCallbacks[1] = new PasswordCallback("password: ", false);
 		// pass the callbacks to the handler. 
-//		try {
-//			cbh.handle(exampleCallbacks);
-//		} catch (IOException e) {
-//			 e.printStackTrace();
-//		} catch (UnsupportedCallbackException e) {
-//			e.printStackTrace();
-//		}
-//		
+		//		try {
+		//			cbh.handle(exampleCallbacks);
+		//		} catch (IOException e) {
+		//			 e.printStackTrace();
+		//		} catch (UnsupportedCallbackException e) {
+		//			e.printStackTrace();
+		//		}
+		//		
 		System.out.println("Enter username");
-			username = scan.next();
-		
+		username = scan.next();
+
 		System.out.println("Enter password");
-			password = scan.next();
-		
+		password = scan.next().getBytes();
+
 		// Now populate username/passwords etc. from the handler
-//		username = ((NameCallback) exampleCallbacks[0]).getName();
-//		password = new String (
-//					((PasswordCallback) exampleCallbacks[1]).getPassword());
-//		
+		//		username = ((NameCallback) exampleCallbacks[0]).getName();
+		//		password = new String (
+		//					((PasswordCallback) exampleCallbacks[1]).getPassword());
+		//		
 		// Now perform validation. This part, you can either read from a file or a 
 		// database. You can also incorporate secure password  handling here. 
 		// As an example, we are going to use hard-coded passwords. 
-		System.out.println("Checking username and password: " + username +"/" + password);
+
+		/*		System.out.println("Checking username and password: " + username +"/" + password);
 		if ((username.equals("team") && password.equals("security")) ||
 				(username.equals("root") && password.equals("security"))){
 				successfulLogin = true; 
 				return true; // successful login.			
+		}*/
+		for (Employee emp : employees) {
+			if (username.equalsIgnoreCase(emp.getUserName())) { // TODO make this work - gen setters & getters for new fields
+				byte[] hash = generateHash(username,password);
+				// TODO compare hash to the passhash in the employee record - might need to google example for comparing byte arrays
+				{
+					successfulLogin = true; 
+					return true; // successful login.	
+				}
+			}
+
+
 		}
-		
+
+		System.out.println("Invalid login.");
 		return false;
 	}
-		
+
 	/*
 	 * 
 	 * @see javax.security.auth.spi.LoginModule#logout()
@@ -155,50 +178,72 @@ public class LoginModuleP2 implements LoginModule {
 		subject.getPrincipals().remove(examplePrincipal);
 		return true;
 	}
-//	MessageDigest md = MessageDigest.getInstance("SHA");
-//
-//	 try {
-//	     md.update(toChapter1);
-//	     MessageDigest tc1 = md.clone();
-//	     byte[] toChapter1Digest = tc1.digest();
-//	     md.update(toChapter2);
-//	     ...etc.
-//	 } catch (CloneNotSupportedException cnse) {
-//	     throw new DigestException("couldn't make digest of partial content");
-//	 }
-	 
-	
-/*	public class SHACheckSumExample 
+
+	private byte[] generateHash(String username, byte[] password) {
+		byte[] returnHash;
+		try {
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA1");
+			returnHash = md.digest(addSalt(username, password));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			returnHash = new String().getBytes();
+		}
+		return returnHash;
+	}
+
+	private byte[] addSalt(String username, byte[] password) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(SALT);
+		sb.append(username);
+		sb.append(password);
+		return sb.toString().getBytes();
+	}
+
+	//	MessageDigest md = MessageDigest.getInstance("SHA");
+	//
+	//	 try {
+	//	     md.update(toChapter1);
+	//	     MessageDigest tc1 = md.clone();
+	//	     byte[] toChapter1Digest = tc1.digest();
+	//	     md.update(toChapter2);
+	//	     ...etc.
+	//	 } catch (CloneNotSupportedException cnse) {
+	//	     throw new DigestException("couldn't make digest of partial content");
+	//	 }
+
+
+	/*	public class SHACheckSumExample 
 	{
 	    public static void main(String[] args)throws Exception
 	    {
 	        MessageDigest md = MessageDigest.getInstance("SHA-256");
 	        FileInputStream fis = new FileInputStream("c:\\loging.log");
-	 
+
 	        byte[] dataBytes = new byte[1024];
-	 
+
 	        int nread = 0; 
 	        while ((nread = fis.read(dataBytes)) != -1) {
 	          md.update(dataBytes, 0, nread);
 	        };
 	        byte[] mdbytes = md.digest();
-	 
+
 	        //convert the byte to hex format method 1
 	        StringBuffer sb = new StringBuffer();
 	        for (int i = 0; i < mdbytes.length; i++) {
 	          sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
 	        }
-	 
+
 	        System.out.println("Hex format : " + sb.toString());
-	 
+
 	       //convert the byte to hex format method 2
 	        StringBuffer hexString = new StringBuffer();
 	    	for (int i=0;i<mdbytes.length;i++) {
 	    	  hexString.append(Integer.toHexString(0xFF & mdbytes[i]));
 	    	}
-	 
+
 	    test test
-	    	
+
 	    	System.out.println("Hex format : " + hexString.toString());
 	    }
 	}*/
@@ -214,7 +259,7 @@ public class LoginModuleP2 implements LoginModule {
 		  FileInputStream inputStream=getContext().openFileInput(FILE_NAME);
 		  PasswordStorage storage=new PasswordStorage(inputStream);
 		  assert(storage.verifyPassword(password));
-		  
+
 		}
-	*/
+	 */
 }
