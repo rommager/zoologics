@@ -4,6 +4,7 @@ package srider4_JAAS;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
@@ -105,26 +106,32 @@ public class LoginModuleP2 implements LoginModule {
 	 * @see javax.security.auth.spi.LoginModule#login()
 	 */
 	public boolean login() throws LoginException {
+		Scanner scan = new Scanner(System.in);
 		// We will use two call backs - one for username and the other
 		// for password. 
-		Callback exampleCallbacks[] = new Callback[2];
-		exampleCallbacks[0] = new NameCallback("username: ");
-		exampleCallbacks[1] = new PasswordCallback("password: ", false);
+//		Callback exampleCallbacks[] = new Callback[2];
+//		exampleCallbacks[0] = new NameCallback("username: ");
+//		exampleCallbacks[1] = new PasswordCallback("password: ", false);
 		// pass the callbacks to the handler. 
-		try {
-			cbh.handle(exampleCallbacks);
-		} catch (IOException e) {
-			 e.printStackTrace();
-		} catch (UnsupportedCallbackException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			cbh.handle(exampleCallbacks);
+//		} catch (IOException e) {
+//			 e.printStackTrace();
+//		} catch (UnsupportedCallbackException e) {
+//			e.printStackTrace();
+//		}
+//		
+		System.out.println("Enter username");
+			username = scan.next();
 		
+		System.out.println("Enter password");
+			password = scan.next();
 		
 		// Now populate username/passwords etc. from the handler
-		username = ((NameCallback) exampleCallbacks[0]).getName();
-		password = new String (
-					((PasswordCallback) exampleCallbacks[1]).getPassword());
-		
+//		username = ((NameCallback) exampleCallbacks[0]).getName();
+//		password = new String (
+//					((PasswordCallback) exampleCallbacks[1]).getPassword());
+//		
 		// Now perform validation. This part, you can either read from a file or a 
 		// database. You can also incorporate secure password  handling here. 
 		// As an example, we are going to use hard-coded passwords. 
