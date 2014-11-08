@@ -8,7 +8,7 @@ import java.security.Principal;
 public class ExamplePrincipal implements Principal {
 	String name;
 	
-	ExamplePrincipal(String name) {
+	public ExamplePrincipal(String name) {
 		this.name = name;
 	}
 	public String getName() {
