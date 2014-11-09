@@ -77,11 +77,16 @@ public class Driver {
 			case 1: 
 				printInfo(user);
 				break;
-			case 2:
-				// TODO add call to list employees under this employee
-				editEmployee();
+			case 2: 
+				editEmployee(user);
 				break;
 			case 3:
+				editEmployee();
+				break;
+			case 4: 
+				io.saveData(employees);
+				break;
+			case 5:
 				System.out.println("\nThank you!");
 				return;
 			}
@@ -95,16 +100,17 @@ public class Driver {
 		io = new DataIO<Employee>(filename);
 		employees = io.loadData(new Employee());
 	}
-
+	
 	private void printInfo(Employee employee) {
 		System.out.println("\nEmployee Information:\n");
 		System.out.println("Name:               " + employee.getName());
 		System.out.println("Employee ID Number: " + employee.getId());
 		System.out.println("Position:           " + employee.getPosition());
 		Employee supervisor = getEmployeeById(employee.getSupervisorId());
-		System.out.println("Your Supervisor:    " + supervisor.getName() + " (" + supervisor.getPosition() + ")"); 
-		System.out.println("Your Salary:        " + employee.getSalary());
-		System.out.println("Your Username:      " + employee + "\n");
+		System.out.println("Supervisor:         " + supervisor.getName() + " (" + supervisor.getPosition() + ")"); 
+		System.out.println("Salary:             " + employee.getSalary());
+		if (user == employee)
+			System.out.println("Username:           " + username + "\n");
 	}
 
 	private Employee getEmployeeById(int id) {
@@ -119,9 +125,51 @@ public class Driver {
 	private void editEmployee() {
 		Employee emp;
 		emp = selectEmployee();
+		editEmployee(emp);
+	}
+	
+	private void editEmployee(Employee emp) {
 		if (emp != null) {
-			System.out.println(emp.toString());
-		}		
+			printInfo(emp);
+			System.out.println("\n1) Edit Name");
+			System.out.println("2) Edit Position");
+			System.out.println("3) Edit Salary");
+			System.out.println("4) Cancel");
+			System.out.println("\n Please select an option above");
+			if (scan.hasNextInt()) {
+				int selection = scan.nextInt();
+				switch (selection) {
+				case 1: 
+					System.out.println("Enter new name:");
+					if (scan.hasNext())
+						emp.setName(scan.next().replace('|', ',')); // sanitize input as pipes are used in the database
+					else
+						System.out.println("invalid input\n");
+					break;
+				case 2:
+					System.out.println("Enter new position:");
+					if (scan.hasNext())
+						emp.setPosition(scan.next().replace('|', ',')); // sanitize input as pipes are used in the database					
+					else
+						System.out.println("invalid input\n");
+					break;
+				case 3:
+					if (emp != user) {
+						System.out.println("Enter new salary:");
+						if (scan.hasNextInt())
+							emp.setSalary(scan.nextInt()); // sanitize input as pipes are used in the database					
+						else
+							System.out.println("invalid input - enter digits only\n");
+					}
+					else
+						System.out.println("Sorry, you cannot edit your own salary.\n");
+					break;
+				default:
+					System.out.println("\nCancelling...\n");
+					return;
+				}
+			}
+		}
 	}
 
 	// recursive function to get all employees that have an employee as their supervisor
@@ -135,7 +183,7 @@ public class Driver {
 			}
 		}
 	}
-	
+
 	private Employee selectEmployee() {
 		ArrayList<Employee> employeeList = new ArrayList<Employee>();
 		getEmployees(employeeList, user.getId());
@@ -162,15 +210,17 @@ public class Driver {
 	private int getMenuSelection() {
 		System.out.println("Select Option From Menu:");
 		System.out.println(" 1) View my information");
-		System.out.println(" 2) Edit an employee's information");
-		System.out.println(" 3) Log out\n");
+		System.out.println(" 2) Change my information");
+		System.out.println(" 3) Edit one of my employee's information");
+		System.out.println(" 4) Save changes");
+		System.out.println(" 5) Log out\n");
 		System.out.println("Enter Option:");
 
 		int selection = -1;
 		do {
 			if (scan.hasNextInt()) {
 				selection = scan.nextInt();
-				if (selection < 1 || selection > 3)
+				if (selection < 1 || selection > 5)
 					selection = -1;
 			}
 			else {

@@ -11,4 +11,5 @@ grant {
 	permission java.io.FilePermission "src/srider4_JAAS/employees.txt", "write";
 	permission java.io.FilePermission "src/srider4_JAAS/logins.txt", "read";
 	permission java.io.FilePermission "src/srider4_JAAS/logins.txt", "write";
+	permission java.io.FilePermission "src/srider4_JAAS", "read";
 }; 

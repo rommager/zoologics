@@ -1,5 +1,7 @@
 4000|Mary|President||1
 4014|Mary|VP|4000|1000000
+4079|Chase|Associate|4077|450000
 4012|Bob|Manager|4014|500000
 4039|Alice|Associate|4012|100000
 4044|Tim|Associate|4012|30000
+4077|Sean|Manager|4000|600000
