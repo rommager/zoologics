@@ -1,6 +1,5 @@
-
-
 package srider4_JAAS;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -10,23 +9,15 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
 import javax.security.auth.Subject;
-import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.callback.NameCallback;
-import javax.security.auth.callback.PasswordCallback;
-import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 import javax.xml.bind.DatatypeConverter;
-
-import p2example.ExamplePrincipal;
-
 
 public class LoginModuleP2 implements LoginModule {
 
@@ -34,7 +25,7 @@ public class LoginModuleP2 implements LoginModule {
 	Boolean successfulLogin = false;
 
 	// Variable that keeps track of the principal.
-	Principal examplePrincipal;
+	Principal userPrincipal;
 
 	// Subject keeps track of who is currently logged in.
 	Subject subject;
@@ -50,6 +41,7 @@ public class LoginModuleP2 implements LoginModule {
 	 */
 	String username;
 	byte[] password;
+	int userId;
 
 	/*
 	 * Other variables that are initialized by the login context.
@@ -101,11 +93,10 @@ public class LoginModuleP2 implements LoginModule {
 	public boolean commit() throws LoginException {
 
 		if (successfulLogin) {
-
 			// Example Principal object stores the logged in user name.
-			examplePrincipal = new ExamplePrincipal(username);
+			userPrincipal = new PrincipalP2(username, userId);
 			// subject stores the current logged in user.
-			subject.getPrincipals().add(examplePrincipal);
+			subject.getPrincipals().add(userPrincipal);
 			return true; 
 		}
 
@@ -118,61 +109,33 @@ public class LoginModuleP2 implements LoginModule {
 	 */
 	public boolean login() throws LoginException {
 		Scanner scan = new Scanner(System.in);
-		// We will use two call backs - one for username and the other
-		// for password. 
-		//		Callback exampleCallbacks[] = new Callback[2];
-		//		exampleCallbacks[0] = new NameCallback("username: ");
-		//		exampleCallbacks[1] = new PasswordCallback("password: ", false);
-		// pass the callbacks to the handler. 
-		//		try {
-		//			cbh.handle(exampleCallbacks);
-		//		} catch (IOException e) {
-		//			 e.printStackTrace();
-		//		} catch (UnsupportedCallbackException e) {
-		//			e.printStackTrace();
-		//		}
-		//		
+
 		System.out.println("Enter username");
 		username = scan.next();
 
 		System.out.println("Enter password");
 		password = scan.next().getBytes();
 
-//		scan.close();
-		// Now populate username/passwords etc. from the handler
-		//		username = ((NameCallback) exampleCallbacks[0]).getName();
-		//		password = new String (
-		//					((PasswordCallback) exampleCallbacks[1]).getPassword());
-		//		
-		// Now perform validation. This part, you can either read from a file or a 
-		// database. You can also incorporate secure password  handling here. 
-		// As an example, we are going to use hard-coded passwords. 
+		//		scan.close();   // We realize we should close the scanner, but it causes the main app not to work correctly, because it also uses a Scanner.
 
-		/*		System.out.println("Checking username and password: " + username +"/" + password);
-		if ((username.equals("team") && password.equals("security")) ||
-				(username.equals("root") && password.equals("security"))){
-				successfulLogin = true; 
-				return true; // successful login.			
-		}*/
 		String[] data = findUser(username);
 		if (data != null) {
 			byte[] hashCheck = generateHash(username.getBytes(), password);
 			byte[] storedHash = DatatypeConverter.parseHexBinary(data[2]);
 			if (Arrays.equals(hashCheck, storedHash))
-			{
-				successfulLogin = true; 
+			{								
+				username = data[0];
+				try {
+					userId = Integer.parseInt(data[1]);
+				}
+				catch (NumberFormatException e) {
+					System.out.println("Login failed - account is not connected to a valid employee.  Please contact support.");
+					return false;
+				}
+				successfulLogin = true;
 				return true; // successful login.	
 			}				
-			/*     
-		  		byte[] array = new BigInteger("1111000011110001", 2).toByteArray();
-				byte[] secondArray = new BigInteger("1111000011110001", 2).toByteArray();
-				if (Arrays.equals(array, secondArray))
-				{
-				    System.out.println("Yup, they're the same!");
-				}  
-			 */				
 		}
-
 		return false;
 	}
 
@@ -200,50 +163,13 @@ public class LoginModuleP2 implements LoginModule {
 		return user;
 	}
 
-	/*  public boolean authenticate(Connection con, String login, String password)
-	           throws SQLException, NoSuchAlgorithmException{
-	       boolean authenticated=false;
-	       PreparedStatement ps = null;
-	       ResultSet rs = null;
-	       try {
-	           boolean userExist = true;
-	           // INPUT VALIDATION
-	           if (login==null||password==null){
-	               // TIME RESISTANT ATTACK
-	               // Computation time is equal to the time needed by a legitimate user
-	               userExist = false;
-	               login="";
-	               password="";
-	           }
-
-	           ps = con.prepareStatement("SELECT PASSWORD, SALT FROM CREDENTIAL WHERE LOGIN = ?");
-	           ps.setString(1, login);
-	           rs = ps.executeQuery();
-	           String digest, salt;
-	           if (rs.next()) {
-	               digest = rs.getString("PASSWORD");
-	               salt = rs.getString("SALT");
-	               // DATABASE VALIDATION
-	               if (digest == null || salt == null) {
-	                   throw new SQLException("Database inconsistant Salt or Digested Password altered");
-	               }
-	               if (rs.next()) { // Should not append, because login is the primary key
-	                   throw new SQLException("Database inconsistent two CREDENTIALS with the same LOGIN");
-	               }
-	           } else { // TIME RESISTANT ATTACK (Even if the user does not exist the
-	               // Computation time is equal to the time needed for a legitimate user
-	               digest = "000000000000000000000000000=";
-	               salt = "00000000000=";
-	               userExist = false;
-	           } */
 	/*
-	 * 
 	 * @see javax.security.auth.spi.LoginModule#logout()
 	 */
 	public boolean logout() throws LoginException {
 		username = null;
 		password = null;		
-		subject.getPrincipals().remove(examplePrincipal);
+		subject.getPrincipals().remove(userPrincipal);
 		return true;
 	}
 

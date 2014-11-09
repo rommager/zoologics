@@ -1,7 +1,5 @@
 package p2example;
-import java.io.File;
-import java.io.FilePermission;
-import java.security.PrivilegedAction;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.security.Principal;
@@ -10,7 +8,6 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.*;
 
 import p2example.RootAction;
-
 
 /* 
  * This class demonstrates 

@@ -11,6 +11,8 @@ public class ExamplePrincipal implements Principal {
 	public ExamplePrincipal(String name) {
 		this.name = name;
 	}
+	
+	
 	public String getName() {
 		return name;
 		

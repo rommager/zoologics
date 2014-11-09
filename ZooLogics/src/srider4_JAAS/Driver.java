@@ -1,22 +1,20 @@
 package srider4_JAAS;
 
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-import p2example.CallBackHandlerExample;
-
 public class Driver {
 
 	private Employee user;
-	private static String[] positions =  {"CEO","VP","Manager","Associate","Junior Associate"};
+//	private static String[] positions =  {"CEO","VP","Manager","Associate","Junior Associate"};
 	private ArrayList<Employee> employees;
 	private DataIO<Employee> io;
 	private Scanner scan;
-	private boolean loggedIn;
 	private LoginContext lc;
 
 	public static void main(String[] args) {
@@ -26,11 +24,10 @@ public class Driver {
 	}
 
 	private void login() {
-		loggedIn = false;
 		loadEmployees();
 		//LoginModuleP2 lm = new LoginModuleP2(employees);
 		CallBackHandlerP2 cbe = new CallBackHandlerP2(); 
-		
+
 		/* Create a new login context. 
 		 * @param Policy Name : We defined a policy in the file JAASPolicy.txt 
 		 *                      and it is called "JAASExample"
@@ -42,53 +39,43 @@ public class Driver {
 		catch (LoginException e) {
 			System.err.println("Login exception."); 
 		}
-		
+
 		try {
 			lc.login();
 		}
 		catch (LoginException e) {
-			System.out.println("Username/password incorrect!");
+			System.out.println("Username/password incorrect!  Application terminated.");
 			return;
 		}
-		
+
+
+		Iterator<Principal> i = lc.getSubject().getPrincipals().iterator();
+		while (i.hasNext()) {
+			PrincipalP2 principal = (PrincipalP2) i.next();
+			user = getEmployee(principal.getUserid());
+		}
 		run();
-		
+
 		try {
 			lc.logout();
 		} catch (LoginException e) {
-			System.out.println("Something went wrong logging out.");
+			System.out.println("Something went wrong when logging out.");
 			return;
 		}
 		System.out.println("You have logged out successfully.");
 	}
 
-	/*	private void dummyLogin() {
-		loadEmployees();
-		scan = new Scanner(System.in);
-		do {
-			System.out.println("Login ID: ");			
-			int id = scan.nextInt();		
-			user = getEmployee(id); 
-			if (user == null)
-				System.out.println("Invalid ID!"); }
-		while (user == null);
-		scan.close();
-		run();
-	}*/
-
-
 	private void run() {
 		System.out.println("Welcome to the Employee Database");
 		scan = new Scanner(System.in);
-/*		for (Employee emp : employees) {
-			System.out.println(emp.toString());
-		}*/
+
 		do {
 			int selection = getMenuSelection();
 			switch (selection) {
 			case 1:  viewMyInfo();
-				break;
-			case 2:  
+			break;
+			case 2:
+				// TODO add call to list employees under this employee
 				break;
 			case 3:
 				System.out.println("Thank you!");
@@ -119,7 +106,9 @@ public class Driver {
 	}
 
 	private void listEmployees() {
-
+		for (Employee emp : employees) {
+			System.out.println(emp.toString());
+		}
 	}
 
 	private void viewMyInfo() {
@@ -127,7 +116,6 @@ public class Driver {
 	}
 
 	private int getMenuSelection() {
-
 		System.out.println("Select Option From Menu:");
 		System.out.println(" 1) View my information");
 		System.out.println(" 2) Edit an employee's information");
