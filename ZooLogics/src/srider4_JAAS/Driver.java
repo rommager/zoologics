@@ -53,7 +53,7 @@ public class Driver {
 		Iterator<Principal> i = lc.getSubject().getPrincipals().iterator();
 		while (i.hasNext()) {
 			PrincipalP2 principal = (PrincipalP2) i.next();
-			user = getEmployee(principal.getUserid());
+			user = getEmployeeById(principal.getUserid());
 			username = principal.getName();
 		}
 		run();
@@ -75,20 +75,17 @@ public class Driver {
 			int selection = getMenuSelection();
 			switch (selection) {
 			case 1: 
-				printInfo();
+				printInfo(user);
 				break;
 			case 2:
 				// TODO add call to list employees under this employee
+				editEmployee();
 				break;
 			case 3:
 				System.out.println("\nThank you!");
 				return;
 			}
 		} while(true);
-
-	}
-
-	private void editEmployee(Employee employee) {
 
 	}
 
@@ -99,18 +96,18 @@ public class Driver {
 		employees = io.loadData(new Employee());
 	}
 
-	private void printInfo() {
-		System.out.println("\nYour Information:\n");
-		System.out.println("Name:               " + user.getName());
-		System.out.println("Employee ID Number: " + user.getId());
-		System.out.println("Position:           " + user.getPosition());
-		Employee supervisor = getEmployee(user.getSupervisorId());
+	private void printInfo(Employee employee) {
+		System.out.println("\nEmployee Information:\n");
+		System.out.println("Name:               " + employee.getName());
+		System.out.println("Employee ID Number: " + employee.getId());
+		System.out.println("Position:           " + employee.getPosition());
+		Employee supervisor = getEmployeeById(employee.getSupervisorId());
 		System.out.println("Your Supervisor:    " + supervisor.getName() + " (" + supervisor.getPosition() + ")"); 
-		System.out.println("Your Salary:        " + user.getSalary());
-		System.out.println("Your Username:      " + username + "\n");
+		System.out.println("Your Salary:        " + employee.getSalary());
+		System.out.println("Your Username:      " + employee + "\n");
 	}
 
-	private Employee getEmployee(int id) {
+	private Employee getEmployeeById(int id) {
 
 		for (Employee emp : employees) {
 			if (id == emp.getId())
@@ -119,10 +116,48 @@ public class Driver {
 		return null;
 	}
 
-	private void listEmployees() {
-		for (Employee emp : employees) {
+	private void editEmployee() {
+		Employee emp;
+		emp = selectEmployee();
+		if (emp != null) {
 			System.out.println(emp.toString());
 		}
+		
+	}
+
+	// recursive function to get all employees that have an employee as their supervisor
+	// returns all employees in the chain of command below the current supervisor
+	private void getEmployees(ArrayList<Employee> employeeList, int supervisorId) {
+		for (Employee emp : employees) {			
+			if (emp.getSupervisorId() == supervisorId && !employeeList.contains(emp)) {
+				employeeList.add(emp);
+				// recursively call method to add any employees that have the current employee as their supervisor 
+				getEmployees(employeeList, emp.getId());
+			}
+		}
+	}
+	
+	private Employee selectEmployee() {
+		ArrayList<Employee> employeeList = new ArrayList<Employee>();
+		getEmployees(employeeList, user.getId());
+		int selection = 0;
+		System.out.println("\nYour Employees:\n");
+		int c = 1;
+		for (Employee emp : employeeList) {
+			System.out.println(c++ + ") " + emp.toString());			
+		}
+		if (c == 1) {
+			System.out.println("\nYou have no employees who report to you.\n");
+			return null;
+		}
+		System.out.println(c + ") Cancel\n\nPlease select an employee to edit:");
+		if (scan.hasNextInt())
+			selection = scan.nextInt();		
+		if (selection < 1 || selection > employeeList.size()) {
+			System.out.println("\nNo employee selected.  Returning without editing.\n");
+			return null;
+		}
+		return employeeList.get(--selection);
 	}
 
 	private int getMenuSelection() {
