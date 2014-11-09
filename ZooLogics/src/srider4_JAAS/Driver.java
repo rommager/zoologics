@@ -11,11 +11,12 @@ import javax.security.auth.login.LoginException;
 public class Driver {
 
 	private Employee user;
-//	private static String[] positions =  {"CEO","VP","Manager","Associate","Junior Associate"};
+	//	private static String[] positions =  {"CEO","VP","Manager","Associate","Junior Associate"};
 	private ArrayList<Employee> employees;
 	private DataIO<Employee> io;
 	private Scanner scan;
 	private LoginContext lc;
+	private String username;
 
 	public static void main(String[] args) {
 
@@ -53,6 +54,7 @@ public class Driver {
 		while (i.hasNext()) {
 			PrincipalP2 principal = (PrincipalP2) i.next();
 			user = getEmployee(principal.getUserid());
+			username = principal.getName();
 		}
 		run();
 
@@ -66,19 +68,20 @@ public class Driver {
 	}
 
 	private void run() {
-		System.out.println("Welcome to the Employee Database");
+		System.out.println("\nWelcome to the Employee Database");
 		scan = new Scanner(System.in);
 
 		do {
 			int selection = getMenuSelection();
 			switch (selection) {
-			case 1:  viewMyInfo();
-			break;
+			case 1: 
+				printInfo();
+				break;
 			case 2:
 				// TODO add call to list employees under this employee
 				break;
 			case 3:
-				System.out.println("Thank you!");
+				System.out.println("\nThank you!");
 				return;
 			}
 		} while(true);
@@ -96,6 +99,17 @@ public class Driver {
 		employees = io.loadData(new Employee());
 	}
 
+	private void printInfo() {
+		System.out.println("\nYour Information:\n");
+		System.out.println("Name:               " + user.getName());
+		System.out.println("Employee ID Number: " + user.getId());
+		System.out.println("Position:           " + user.getPosition());
+		Employee supervisor = getEmployee(user.getSupervisorId());
+		System.out.println("Your Supervisor:    " + supervisor.getName() + " (" + supervisor.getPosition() + ")"); 
+		System.out.println("Your Salary:        " + user.getSalary());
+		System.out.println("Your Username:      " + username + "\n");
+	}
+
 	private Employee getEmployee(int id) {
 
 		for (Employee emp : employees) {
@@ -109,10 +123,6 @@ public class Driver {
 		for (Employee emp : employees) {
 			System.out.println(emp.toString());
 		}
-	}
-
-	private void viewMyInfo() {
-		System.out.println(user.toString());
 	}
 
 	private int getMenuSelection() {
