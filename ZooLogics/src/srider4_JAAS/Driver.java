@@ -121,8 +121,7 @@ public class Driver {
 		emp = selectEmployee();
 		if (emp != null) {
 			System.out.println(emp.toString());
-		}
-		
+		}		
 	}
 
 	// recursive function to get all employees that have an employee as their supervisor
